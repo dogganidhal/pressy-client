@@ -1,0 +1,6 @@
+{
+  "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImNhdGVnb3J5IjowLCJpYXQiOjE1NDk0ODc0OTksImV4cCI6MTU0OTQ5MTA5OSwiaXNzIjoicHJlc3N5Iiwic3ViIjoiYWNjZXNzIn0.bpvAaZ4gXRe482LEMk850Nujvvx92uIrukii9kGxd_1MX-A1o6HyWDUdM7xsJd3A5wJeQXqx3iUovu06ALoWfg",
+  "refreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImNhdGVnb3J5IjowLCJpYXQiOjE1NDk0ODc0OTksImlzcyI6InByZXNzeSIsInN1YiI6InJlZnJlc2gifQ.QuW_34lQzBMcb5VOg9y5LUH3LtLxo3kszknC4gZY1ouTgimB5cLum7hXEGDSezBR9-5VSmcGb_FyEMxoH1CT6A",
+  "type": "Bearer",
+  "expiresIn": 3600
+}

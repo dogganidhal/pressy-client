@@ -11,7 +11,7 @@ AuthCredentials _$AuthCredentialsFromJson(Map<String, dynamic> json) {
       accessToken: json['accessToken'] as String,
       refreshToken: json['refreshToken'] as String,
       expiresIn: (json['expiresIn'] as num)?.toDouble(),
-      tokenType: json['tokenType'] as String);
+      tokenType: json['type'] as String);
 }
 
 Map<String, dynamic> _$AuthCredentialsToJson(AuthCredentials instance) =>
@@ -19,5 +19,5 @@ Map<String, dynamic> _$AuthCredentialsToJson(AuthCredentials instance) =>
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,
       'expiresIn': instance.expiresIn,
-      'tokenType': instance.tokenType
+      'type': instance.tokenType
     };

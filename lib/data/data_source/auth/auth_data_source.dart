@@ -4,6 +4,5 @@ abstract class IAuthDataSource {
 
   Future<AuthCredentials> login(LoginRequestModel loginRequest);
   Future<AuthCredentials> refreshCredentials(String refreshToken);
-  Future<AuthCredentials> signUp(SignUpRequestModel signUpRequest);
 
 }

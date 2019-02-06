@@ -8,6 +8,7 @@ class AuthCredentials {
   final String accessToken;
   final String refreshToken;
   final double expiresIn;
+  @JsonKey(name: "type")
   final String tokenType;
 
   AuthCredentials({

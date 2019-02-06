@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:pressy_client/data/resources/provider/endpoint_provider.dart';
 
 typedef TEntity JsonModelBuilder<TEntity>(Map<String, dynamic> json);
 
 abstract class DataSource {
 
   final BaseClient client;
+  final ApiEndpointProvider apiEndpointProvider;
 
-  DataSource({this.client});
+  DataSource({this.client, this.apiEndpointProvider});
 
   Future<TEntity> doGet<TEntity>({
     String url, JsonModelBuilder<TEntity> responseConverter, Map<String, dynamic> headers

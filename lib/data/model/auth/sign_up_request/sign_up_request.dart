@@ -13,7 +13,7 @@ class SignUpRequestModel {
 
   SignUpRequestModel({
     @required this.email, @required this.password, @required this.fullName, @required this.phoneNumber
-  })
+  });
 
   factory SignUpRequestModel.fromJson(Map<String, dynamic> json) => _$SignUpRequestModelFromJson(json);
   Map<String, dynamic> toJson() => _$SignUpRequestModelToJson(this);

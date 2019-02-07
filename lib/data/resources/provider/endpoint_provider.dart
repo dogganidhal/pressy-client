@@ -26,6 +26,8 @@ class _ApiMemberEndpoints {
   final String signUp = "/member";
   final String memberProfile = "/member";
   final String editProfile = "/member";
+  String validateEmail(String email) => "/member/validate-email/$email";
+  String validatePhone(String phone) => "/member/validate-phone/$phone";
 
 }
 
@@ -34,6 +36,6 @@ class _ApiAddressEndpoints {
   final String memberAddresses = "/address";
   final String editAddress = "/address";
   final String createAddress = "/address";
-  final String deleteAddress = "/address";
+  String deleteAddress(int addressId) => "/address/$addressId";
 
 }

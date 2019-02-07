@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:pressy_client/data/resources/provider/endpoint_provider.dart';
 
-typedef TEntity JsonModelBuilder<TEntity>(Map<String, dynamic> json);
+typedef TEntity JsonModelBuilder<TEntity>(dynamic json);
 
 abstract class DataSource {
 
@@ -19,8 +19,7 @@ abstract class DataSource {
       url, headers: headers
     );
     var map = json.decode(response.body);
-    var responseModel = responseConverter(map);
-    return Future.value(responseModel);
+    return Future.value(responseConverter != null ? responseConverter(map) : null);
 
   }
 
@@ -33,33 +32,30 @@ abstract class DataSource {
       url, headers: headers, body: json.encode(body)
     );
     var map = json.decode(response.body);
-    var responseModel = responseConverter(map);
-    return Future.value(responseModel);
+    return Future.value(responseConverter != null ? responseConverter(map) : null);
 
   }
 
   Future<TEntity> doPatch<TEntity>({
-    String path, Map<String, dynamic> body, Map<String, dynamic> headers, 
+    String url, Map<String, dynamic> body, Map<String, dynamic> headers, 
     JsonModelBuilder<TEntity> responseConverter
   }) async {
 
     var response = await this.client.patch(
-      path, headers: headers, body: json.encode(body)
+      url, headers: headers, body: json.encode(body)
     );
     var map = json.decode(response.body);
-    var responseModel = responseConverter(map);
-    return Future.value(responseModel);
+    return Future.value(responseConverter != null ? responseConverter(map) : null);
 
   }
 
   Future<TEntity> doDelete<TEntity>({
-    String path, Map<String, dynamic> headers, JsonModelBuilder<TEntity> responseConverter
+    String url, Map<String, dynamic> headers, JsonModelBuilder<TEntity> responseConverter
   }) async {
 
-    var response = await this.client.delete(path, headers: headers);
+    var response = await this.client.delete(url, headers: headers);
     var map = json.decode(response.body);
-    var responseModel = responseConverter(map);
-    return Future.value(responseModel);
+    return Future.value(responseConverter != null ? responseConverter(map) : null);
 
   }
 

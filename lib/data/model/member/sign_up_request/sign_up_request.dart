@@ -9,10 +9,12 @@ class SignUpRequestModel {
   final String email;
   final String password;
   final String phoneNumber;
-  final String fullName;
+  final String firstName;
+  final String lastName;
 
   SignUpRequestModel({
-    @required this.email, @required this.password, @required this.fullName, @required this.phoneNumber
+    @required this.email, @required this.password, @required this.firstName, 
+    @required this.phoneNumber, @required this.lastName
   });
 
   factory SignUpRequestModel.fromJson(Map<String, dynamic> json) => _$SignUpRequestModelFromJson(json);

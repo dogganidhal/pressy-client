@@ -43,6 +43,9 @@ flutter:
 
   assets:
     - assets/mocks/v1/auth/post.json
+    - assets/mocks/v1/auth/refresh/post.json
+    - assets/mocks/v1/member/get.json
+    - assets/mocks/v1/member/post.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:pressy_client/data/data_source/base/base_data_source.dart';
 import 'package:pressy_client/data/data_source/member/member_data_source.dart';
 import 'package:pressy_client/data/model/auth/auth_credentials/auth_credentials.dart';
-import 'package:pressy_client/data/model/auth/sign_up_request/sign_up_request.dart';
+import 'package:pressy_client/data/model/member/sign_up_request/sign_up_request.dart';
 import 'package:pressy_client/data/resources/provider/endpoint_provider.dart';
 
 

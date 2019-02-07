@@ -10,8 +10,9 @@ SignUpRequestModel _$SignUpRequestModelFromJson(Map<String, dynamic> json) {
   return SignUpRequestModel(
       email: json['email'] as String,
       password: json['password'] as String,
-      fullName: json['fullName'] as String,
-      phoneNumber: json['phoneNumber'] as String);
+      firstName: json['firstName'] as String,
+      phoneNumber: json['phoneNumber'] as String,
+      lastName: json['lastName'] as String);
 }
 
 Map<String, dynamic> _$SignUpRequestModelToJson(SignUpRequestModel instance) =>
@@ -19,5 +20,6 @@ Map<String, dynamic> _$SignUpRequestModelToJson(SignUpRequestModel instance) =>
       'email': instance.email,
       'password': instance.password,
       'phoneNumber': instance.phoneNumber,
-      'fullName': instance.fullName
+      'firstName': instance.firstName,
+      'lastName': instance.lastName
     };

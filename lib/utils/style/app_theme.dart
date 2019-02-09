@@ -14,7 +14,12 @@ mixin AppThemeMixin {
   ThemeData get appThemeData => new ThemeData(
     primaryColor: ColorPalette.orange,
     indicatorColor: ColorPalette.orange,
+    cursorColor: ColorPalette.orange,
     fontFamily: "Avenir",
+    textSelectionHandleColor: ColorPalette.orange,
+    textSelectionColor: ColorPalette.orange.withOpacity(0.5),
+    buttonColor: ColorPalette.orange,
+    accentColor: ColorPalette.orange
   );
 
 }

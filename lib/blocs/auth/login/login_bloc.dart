@@ -16,11 +16,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthBloc authBloc;
   final IMemberDataSource memberDataSource;
   final IAuthDataSource authDataSource;
-  final IMemberSession userSession;
+  final IMemberSession memberSession;
 
   LoginBloc({
     @required this.authBloc, @required this.memberDataSource, 
-    @required this.userSession, @required this.authDataSource
+    @required this.memberSession, @required this.authDataSource
   });
   
   @override
@@ -51,7 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         ));
         
         MemberProfile memberProfile = await this.memberDataSource.getMemberProfile();
-        await this.userSession.persistMemberProfile(memberProfile);
+        await this.memberSession.persistMemberProfile(memberProfile);
         
         yield new LoginSuccessState();
 

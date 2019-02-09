@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:pressy_client/data/model/errors/api_error.dart';
 import 'package:pressy_client/data/resources/provider/endpoint_provider.dart';
 
 typedef TEntity JsonModelBuilder<TEntity>(dynamic json);
@@ -15,10 +16,11 @@ abstract class DataSource {
     String url, JsonModelBuilder<TEntity> responseConverter, Map<String, dynamic> headers
   }) async {
     
-    var response = await this.client.get(
-      url, headers: headers
-    );
+    var response = await this.client.get(url, headers: headers);
     var map = json.decode(response.body);
+    if (response.statusCode >= 400) {
+      throw new ApiError.fromJson(map);
+    }
     return Future.value(responseConverter != null ? responseConverter(map) : null);
 
   }
@@ -28,10 +30,11 @@ abstract class DataSource {
     JsonModelBuilder<TEntity> responseConverter
   }) async {
 
-    var response = await this.client.post(
-      url, headers: headers, body: json.encode(body)
-    );
+    var response = await this.client.post(url, headers: headers, body: json.encode(body));
     var map = json.decode(response.body);
+    if (response.statusCode >= 400) {
+      throw new ApiError.fromJson(map);
+    }
     return Future.value(responseConverter != null ? responseConverter(map) : null);
 
   }
@@ -41,10 +44,11 @@ abstract class DataSource {
     JsonModelBuilder<TEntity> responseConverter
   }) async {
 
-    var response = await this.client.patch(
-      url, headers: headers, body: json.encode(body)
-    );
+    var response = await this.client.patch(url, headers: headers, body: json.encode(body));
     var map = json.decode(response.body);
+    if (response.statusCode >= 400) {
+      throw new ApiError.fromJson(map);
+    }
     return Future.value(responseConverter != null ? responseConverter(map) : null);
 
   }
@@ -55,6 +59,9 @@ abstract class DataSource {
 
     var response = await this.client.delete(url, headers: headers);
     var map = json.decode(response.body);
+    if (response.statusCode >= 400) {
+      throw new ApiError.fromJson(map);
+    }
     return Future.value(responseConverter != null ? responseConverter(map) : null);
 
   }

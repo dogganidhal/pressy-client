@@ -1,11 +1,11 @@
 
 
-
 abstract class Validators {
 
-  String EmailValidator(String email) => null;
-  String PasswordValidator(String password) => null;
-  String PhoneNumberValidator(String email) => null;
-  String FullNameValidator(String password) => null;
+  static String emailValidator(String email) => null;
+  static String passwordValidator(String password) => null;
+  static String phoneNumberValidator(String email) => null;
+  static String nameValidator(String password) => null;
+  static String passwordConfirmationValidator(String password, String passwordConfirmation) => null;
 
 }

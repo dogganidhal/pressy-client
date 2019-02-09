@@ -32,15 +32,19 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
       bloc: this.widget.authBloc,
       child: new Scaffold(
         appBar: new AppBar(
+          elevation: 2,
+          backgroundColor: Colors.white,
+          title: new Text("Authentification"),
+          centerTitle: true,
           bottom: new TabBar(
             controller: this._tabController,
             tabs: <Widget>[
               new Container(
-                padding: new EdgeInsets.only(top: 8, bottom: 8),
+                padding: new EdgeInsets.only(bottom: 8),
                 child: new Text("INSCRIPTION")
               ),
               new Container(
-                padding: new EdgeInsets.only(top: 8, bottom: 8),
+                padding: new EdgeInsets.only(bottom: 8),
                 child: new Text("CONNEXON"),
               )
             ],

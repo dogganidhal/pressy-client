@@ -5,8 +5,9 @@ import 'package:pressy_client/blocs/auth/auth_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_event.dart';
 import 'package:pressy_client/data/session/auth/auth_session_impl.dart';
 import 'package:pressy_client/widgets/auth/auth_widget.dart';
+import 'package:pressy_client/utils/style/app_theme.dart';
 
-class Application extends StatelessWidget {
+class Application extends StatelessWidget with AppThemeMixin {
 
   final AuthBloc authBloc = new AuthBloc(
     authSession: new AuthSessionImpl()
@@ -20,12 +21,10 @@ class Application extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Pressy',
-      theme: new ThemeData(primarySwatch: Colors.blue,
-      ),
+      theme: this.appThemeData,
+      debugShowCheckedModeBanner: false,
       home: new BlocProvider<AuthBloc>(
-        bloc: new AuthBloc(
-          authSession: new AuthSessionImpl()
-        ),
+        bloc: new AuthBloc(authSession: new AuthSessionImpl()),
         child: new AuthWidget(
           authBloc: this.authBloc
         ),

@@ -40,11 +40,11 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
             controller: this._tabController,
             tabs: <Widget>[
               new Container(
-                padding: new EdgeInsets.only(bottom: 8),
+                padding: new EdgeInsets.only(bottom: 8, top: 8),
                 child: new Text("INSCRIPTION")
               ),
               new Container(
-                padding: new EdgeInsets.only(bottom: 8),
+                padding: new EdgeInsets.only(bottom: 8, top: 8),
                 child: new Text("CONNEXON"),
               )
             ],

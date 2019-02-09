@@ -53,8 +53,8 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
         body: new TabBarView(
           controller: this._tabController,
           children: <Widget>[
-            new LoginWidget(),
-            new SignUpWidget()
+            new SignUpWidget(),
+            new LoginWidget()
           ],
         ),
       ),

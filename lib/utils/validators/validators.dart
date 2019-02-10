@@ -28,8 +28,21 @@ abstract class Validators {
 
   static String loginPasswordValidator(String password) => password.isNotEmpty ? null : "Mot de passe vide";
 
-  static String phoneNumberValidator(String email) => null;
-  static String nameValidator(String password) => null;
-  static String passwordConfirmationValidator(String password, String passwordConfirmation) => null;
+  static String phoneNumberValidator(String phone) {
+    
+    // TODO: Find a better regex to validate phone numbers
+    RegExp regExp = new RegExp(r'^0[0-9]{9}$');
+    if (!regExp.hasMatch(phone)) {
+      return "Numéro de téléphone non valide";
+    }
+
+    return null;
+
+  }
+
+  static String nameValidator(String name) => name.isEmpty ? "Ce champ est obligatoire" : null;
+
+  static String passwordConfirmationValidator(String password, String passwordConfirmation) => 
+    password == passwordConfirmation ? null : "Les mots de passes ne sont pas identiques";
 
 }

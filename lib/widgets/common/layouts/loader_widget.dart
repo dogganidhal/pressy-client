@@ -37,7 +37,7 @@ class LoaderWidget extends StatelessWidget {
                     new CircularProgressIndicator(),
                     new SizedBox(height: 16),
                     new Text(
-                      "LOADING",
+                      "CHARGEMENT",
                       style: Theme.of(context)
                         .textTheme
                         .title

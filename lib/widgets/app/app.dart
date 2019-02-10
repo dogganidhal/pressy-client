@@ -31,7 +31,11 @@ class Application extends StatelessWidget with AppThemeMixin {
         child: new AuthWidget(
           authBloc: this.authBloc,
           memberSession: this.memberSession,
-          nextWidgetBuilder: (context) => new Scaffold(),
+          nextWidgetBuilder: (context) => new Scaffold(
+            body: new Center(
+              child: new Text("BIENVENU À PRESSY"),
+            ),
+          ),
         ),
       ),
     );

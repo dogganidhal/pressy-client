@@ -6,7 +6,7 @@ import 'package:pressy_client/blocs/auth/login/login_bloc.dart';
 import 'package:pressy_client/blocs/auth/login/login_event.dart';
 import 'package:pressy_client/blocs/auth/login/login_state.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
-import 'package:pressy_client/data/session/member/member_session_impl.dart';
+import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/utils/validators/validators.dart';
 import 'package:pressy_client/widgets/common/mixins/lifecycle_mixin.dart';
@@ -14,6 +14,12 @@ import 'package:pressy_client/widgets/common/mixins/loader_mixin.dart';
 import 'package:pressy_client/widgets/common/mixins/error_mixin.dart';
 
 class LoginWidget extends StatefulWidget {
+
+  final IMemberSession memberSession;
+  final WidgetBuilder nextWidgetBuilder;
+
+  LoginWidget({@required this.memberSession, @required this.nextWidgetBuilder}) :
+    assert(memberSession != null);
 
   @override
   State<StatefulWidget> createState() => new _LoginWidgetState();
@@ -34,7 +40,7 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
       authBloc: BlocProvider.of<AuthBloc>(this.context), 
       authDataSource: DataSourceFactory.createAuthDataSource(), 
       memberDataSource: DataSourceFactory.createMemberDataSource(), 
-      memberSession: new MemberSessionImpl(),
+      memberSession: this.widget.memberSession
     );
   }
 
@@ -43,24 +49,7 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
     return new BlocBuilder<LoginEvent, LoginState>(
       bloc: this._loginBloc, 
       builder: (context, state) {
-
-        this.onWidgetDidBuild(() {
-
-          if (state is LoginLoadingState)
-            this.showLoader(context);
-          else
-            this.hideLoader(context);
-
-          if (state is LoginFailureState)
-            this.showErrorDialog(context, state.error);
-          else 
-            this.hideErrorDialog(context);
-
-        });
-        
-        if (state is LoginSuccessState) // TODO: Move to the next widget
-          this.onWidgetDidBuild(() {});
-
+        this.onWidgetDidBuild(() => this._handleState(state));
         return new Column(
           children: <Widget>[
             new Expanded(
@@ -135,5 +124,26 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
       )
     ],
   );
+
+  void _handleState(LoginState state) {
+    if (state is LoginLoadingState)
+      this.showLoader(context);
+    else
+      this.hideLoader(context);
+
+    if (state is LoginFailureState)
+      this.showErrorDialog(context, state.error);
+    else 
+      this.hideErrorDialog(context);
+
+    if (state is LoginSuccessState)
+      this._openNextWidget();
+  }
+
+  void _openNextWidget() {
+    Navigator.pushReplacement(this.context, new MaterialPageRoute(
+      builder: this.widget.nextWidgetBuilder,
+    ));
+  }
 
 }

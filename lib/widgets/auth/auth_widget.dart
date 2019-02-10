@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_bloc.dart';
+import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/widgets/auth/login_widget.dart';
 import 'package:pressy_client/widgets/auth/signup_widget.dart';
 
 class AuthWidget extends StatefulWidget {
 
   final AuthBloc authBloc;
+  final IMemberSession memberSession;
+  final WidgetBuilder nextWidgetBuilder;
 
-  AuthWidget({@required this.authBloc});
+  AuthWidget({
+    @required this.authBloc, @required this.nextWidgetBuilder, 
+    @required this.memberSession
+  }) : assert(authBloc != null), assert(memberSession != null);
 
   @override
   State<StatefulWidget> createState() => new _AuthWidgetState();
@@ -45,7 +51,7 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
               ),
               new Container(
                 padding: new EdgeInsets.only(bottom: 8, top: 8),
-                child: new Text("CONNEXON"),
+                child: new Text("CONNEXION"),
               )
             ],
           ),
@@ -53,8 +59,14 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
         body: new TabBarView(
           controller: this._tabController,
           children: <Widget>[
-            new SignUpWidget(),
-            new LoginWidget()
+            new SignUpWidget(
+              nextWidgetBuilder: this.widget.nextWidgetBuilder,
+              memberSession: this.widget.memberSession,
+            ),
+            new LoginWidget(
+              nextWidgetBuilder: this.widget.nextWidgetBuilder,
+              memberSession: this.widget.memberSession,
+            )
           ],
         ),
       ),

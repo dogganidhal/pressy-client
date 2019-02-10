@@ -5,9 +5,16 @@ import 'package:pressy_client/blocs/auth/sign_up/sign_up_bloc.dart';
 import 'package:pressy_client/blocs/auth/sign_up/sign_up_event.dart';
 import 'package:pressy_client/blocs/auth/sign_up/sign_up_state.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
+import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/data/session/member/member_session_impl.dart';
 
 class SignUpWidget extends StatefulWidget {
+
+  final IMemberSession memberSession;
+  final WidgetBuilder nextWidgetBuilder;
+
+  SignUpWidget({@required this.nextWidgetBuilder, @required this.memberSession}) : 
+    assert(memberSession != null);
 
   @override
   State<StatefulWidget> createState() => new _SignUpWidgetState();
@@ -24,7 +31,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
     this._signUpBloc = new SignUpBloc(
       authBloc: BlocProvider.of<AuthBloc>(this.context), 
       memberDataSource: DataSourceFactory.createMemberDataSource(), 
-      memberSession: new MemberSessionImpl()
+      memberSession: this.widget.memberSession
     );
   }
 

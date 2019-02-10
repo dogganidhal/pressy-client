@@ -36,7 +36,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       isValid &= Validators.nameValidator(event.lastName) == null;
       isValid &= Validators.emailValidator(event.email) == null;
       isValid &= Validators.phoneNumberValidator(event.phoneNumber) == null;
-      isValid &= Validators.passwordValidator(event.password) == null;
+      isValid &= Validators.newPasswordValidator(event.password) == null;
       isValid &= Validators.passwordConfirmationValidator(event.password, event.passwordConfirmation) == null;
 
       yield new SignUpInitialState(isValid: isValid);

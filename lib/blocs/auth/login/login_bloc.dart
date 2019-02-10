@@ -32,7 +32,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is LoginSubmitFormEvent) {
 
       bool isValid = Validators.emailValidator(event.email) == null;
-      isValid &= event.password != null && event.password.isNotEmpty;
+      isValid &= Validators.loginPasswordValidator(event.password) == null;
       yield new LoginInitialState(isValid: isValid);
 
     }

@@ -9,6 +9,9 @@ import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/session/member/member_session_impl.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/utils/validators/validators.dart';
+import 'package:pressy_client/widgets/common/mixins/lifecycle_mixin.dart';
+import 'package:pressy_client/widgets/common/mixins/loader_mixin.dart';
+import 'package:pressy_client/widgets/common/mixins/error_mixin.dart';
 
 class LoginWidget extends StatefulWidget {
 
@@ -17,7 +20,8 @@ class LoginWidget extends StatefulWidget {
   
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin, 
+  LoaderMixin, ErrorMixin {
 
   LoginBloc _loginBloc;
   TextEditingController _emailFieldController = new TextEditingController();
@@ -39,6 +43,24 @@ class _LoginWidgetState extends State<LoginWidget> {
     return new BlocBuilder<LoginEvent, LoginState>(
       bloc: this._loginBloc, 
       builder: (context, state) {
+
+        this.onWidgetDidBuild(() {
+
+          if (state is LoginLoadingState)
+            this.showLoader(context);
+          else
+            this.hideLoader(context);
+
+          if (state is LoginFailureState)
+            this.showErrorDialog(context, state.error);
+          else 
+            this.hideErrorDialog(context);
+
+        });
+        
+        if (state is LoginSuccessState) // TODO: Move to the next widget
+          this.onWidgetDidBuild(() {});
+
         return new Column(
           children: <Widget>[
             new Expanded(
@@ -56,7 +78,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
               ),
             ),
-            this._loginStickyButton
+            this._loginStickyButton(state is LoginInitialState && state.isValid)
           ],
         );
       },
@@ -81,12 +103,12 @@ class _LoginWidgetState extends State<LoginWidget> {
           labelText: "Mot de passe"
         ),
         obscureText: true,
-        validator: Validators.passwordValidator,
+        validator: Validators.loginPasswordValidator,
       ),
     ],
   );
 
-  Widget get _loginStickyButton => new Row(
+  Widget _loginStickyButton(bool isFormValid) => new Row(
     children: <Widget>[
       new Expanded(
         child: new Container(
@@ -94,14 +116,19 @@ class _LoginWidgetState extends State<LoginWidget> {
           margin: new EdgeInsets.all(12),
           decoration: new BoxDecoration(
             borderRadius: new BorderRadius.circular(8),
-            color: ColorPalette.orange
+            color: isFormValid ? ColorPalette.orange : ColorPalette.borderGray
           ),
           child: new ButtonTheme(
             height: double.infinity,
             child: new FlatButton(
               child: new Text("CONNEXION"),
               textColor: Colors.white,
-              onPressed: () => print("login"),
+              onPressed: isFormValid ? () => this._loginBloc.dispatch(
+                new LoginButtonPressedEvent(
+                  email: this._emailFieldController.text,
+                  password: this._passwordFieldController.text
+                )
+              ) : null,
             ),
           ),
         ),

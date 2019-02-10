@@ -6,8 +6,6 @@ import 'package:pressy_client/widgets/common/layouts/modal.dart';
 
 mixin ErrorMixin {
 
-  bool isErrorModalActive = false;
-
   Widget errorWidget(ApiError error) => new Modal(
       title: "Erreur",
       child: new Container(
@@ -30,18 +28,10 @@ mixin ErrorMixin {
     );
 
   void showErrorDialog(BuildContext context, ApiError error) {
-    this.isErrorModalActive = true;
     showDialog(
       context: context,
       builder: (context) => this.errorWidget(error)
     );
-  }
-
-  void hideErrorDialog(BuildContext context) {
-    if (this.isErrorModalActive) {
-      Navigator.of(context, rootNavigator: true).pop();
-      this.isErrorModalActive = false;
-    }
   }
 
 }

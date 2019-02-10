@@ -133,8 +133,6 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
 
     if (state is LoginFailureState)
       this.showErrorDialog(context, state.error);
-    else 
-      this.hideErrorDialog(context);
 
     if (state is LoginSuccessState)
       this._openNextWidget();

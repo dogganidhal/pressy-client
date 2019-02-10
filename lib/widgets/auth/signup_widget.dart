@@ -96,8 +96,6 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
 
     if (state is SignUpFailureState)
       this.showErrorDialog(context, state.error);
-    else 
-      this.hideErrorDialog(context);
 
     if (state is SignUpSuccessState)
       this._openNextWidget();

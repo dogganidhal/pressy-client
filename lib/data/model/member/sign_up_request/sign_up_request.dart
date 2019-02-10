@@ -8,6 +8,7 @@ class SignUpRequestModel {
 
   final String email;
   final String password;
+  @JsonKey(name: "phone")
   final String phoneNumber;
   final String firstName;
   final String lastName;

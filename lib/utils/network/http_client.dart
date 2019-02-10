@@ -1,12 +1,12 @@
 import 'package:http/http.dart';
 
-class IkriHttpClient extends BaseClient {
+class HttpClient extends BaseClient {
 
   final String userAgent;
   final String authHeader;
   final Client _inner = new Client();
 
-  IkriHttpClient({this.authHeader, this.userAgent});
+  HttpClient({this.authHeader, this.userAgent});
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {

@@ -2,14 +2,16 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:pressy_client/blocs/auth/auth_event.dart';
 import 'package:pressy_client/blocs/auth/auth_state.dart';
+import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/session/auth/auth_session.dart';
 
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final IAuthSession authSession;
+  final IAuthDataSource authDataSource;
 
-  AuthBloc({@required this.authSession});
+  AuthBloc({@required this.authSession, @required this.authDataSource});
   
   @override
   AuthState get initialState => new AuthUninitializedState();
@@ -21,13 +23,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       yield new AuthLoadingState();
 
+      await Future.delayed(new Duration(seconds: 5));
+
       final hasToken = await this.authSession.hasCredentials();
 
       if (hasToken) {
 
         final authCredentials = await this.authSession.getPersistedAuthCredentials();
-      
-        yield new AuthAuthenticated(authCredentials: authCredentials,);
+        yield new AuthAuthenticated(authCredentials: authCredentials);
+        this._renewAuthCredentials(authCredentials.refreshToken);
 
       } else
         yield new AuthUnauthenticatedState();
@@ -50,6 +54,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     }
 
+  }
+
+  void _renewAuthCredentials(String refreshToken) async {
+    var authCredentials = await this.authDataSource.refreshCredentials(refreshToken);
+    this.authSession.persistAuthCredentials(authCredentials);
   }
   
 }

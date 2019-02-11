@@ -15,7 +15,7 @@ mixin LoaderMixin {
 
   void hideLoader(BuildContext context) {
     if (this.isLoaderActive) {
-      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.of(context).pop();
       this.isLoaderActive = false;
     }
   }

@@ -50,25 +50,27 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
       bloc: this._loginBloc, 
       builder: (context, state) {
         this.onWidgetDidBuild(() => this._handleState(state));
-        return new Column(
-          children: <Widget>[
-            new Expanded(
-              child: new SingleChildScrollView(
-                child: new Container(
-                  padding: new EdgeInsets.all(16),
-                  child: new Form(
-                    child: this._loginForm,
-                    autovalidate: true,
-                    onChanged: () => this._loginBloc.dispatch(new LoginSubmitFormEvent(
-                      email: this._emailFieldController.text,
-                      password: this._passwordFieldController.text
-                    )),
-                  )
+        return new SafeArea(
+          child: new Column(
+            children: <Widget>[
+              new Expanded(
+                child: new SingleChildScrollView(
+                  child: new Container(
+                    padding: new EdgeInsets.all(16),
+                    child: new Form(
+                      child: this._loginForm,
+                      autovalidate: true,
+                      onChanged: () => this._loginBloc.dispatch(new LoginSubmitFormEvent(
+                        email: this._emailFieldController.text,
+                        password: this._passwordFieldController.text
+                      )),
+                    )
+                  ),
                 ),
               ),
-            ),
-            this._loginStickyButton(state is LoginInitialState && state.isValid)
-          ],
+              this._loginStickyButton(state is LoginInitialState && state.isValid)
+            ],
+          ),
         );
       },
     );
@@ -139,6 +141,7 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
   }
 
   void _openNextWidget() {
+    this.hideLoader(this.context);
     Navigator.pushReplacement(this.context, new MaterialPageRoute(
       builder: this.widget.nextWidgetBuilder,
     ));

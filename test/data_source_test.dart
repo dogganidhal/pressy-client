@@ -1,16 +1,16 @@
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/resources/resources.dart';
+import 'package:pressy_client/utils/network/base_client.dart';
 import 'package:pressy_client/utils/network/test_mock_client.dart';
 
 void main() {
 
   final injector = Injector.getInjector();
   
-  injector.map<BaseClient>((_) => new TestMockClient());
+  injector.map<IClient>((_) => new TestMockClient());
   injector.map<ApiEndpointProvider>((_) => new ApiEndpointProvider());
 
   group("Authentication data source test cases", () {

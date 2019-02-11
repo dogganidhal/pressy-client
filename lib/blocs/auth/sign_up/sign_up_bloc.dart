@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 import 'package:pressy_client/blocs/auth/auth_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_event.dart';
@@ -8,6 +10,7 @@ import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/model/errors/api_error.dart';
 import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
+import 'package:pressy_client/utils/network/base_client.dart';
 import 'package:pressy_client/utils/validators/validators.dart';
 
 
@@ -57,6 +60,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         this.authBloc.dispatch(new AuthLoggedInEvent(
           authCredentials: authCredentials,
         ));
+
+        Injector.getInjector().get<IClient>().authorizationHeader = "Bearer ${authCredentials.accessToken}";
         
         MemberProfile memberProfile = await this.memberDataSource.getMemberProfile();
         await this.memberSession.persistMemberProfile(memberProfile);

@@ -1,18 +1,19 @@
 import 'package:http/http.dart';
+import 'package:pressy_client/utils/network/base_client.dart';
 
-class HttpClient extends BaseClient {
+class HttpClient extends IClient {
 
-  final String userAgent;
-  final String authHeader;
+  @override
+  String authorizationHeader;
+
   final Client _inner = new Client();
 
-  HttpClient({this.authHeader, this.userAgent});
+  HttpClient({this.authorizationHeader});
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
     this._logRequest(request);
-    request.headers["user-agent"] = this.userAgent;
-    request.headers["authorization"] = this.authHeader;
+    request.headers["authorization"] = this.authorizationHeader;
     return this._inner.send(request);
   }
 

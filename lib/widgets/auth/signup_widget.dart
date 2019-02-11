@@ -51,28 +51,30 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
 
   @override
   Widget build(BuildContext context) {
-    return new BlocBuilder<SignUpEvent, SignUpState>(
-      bloc: this._signUpBloc, 
-      builder: (context, state) {
-        this.onWidgetDidBuild(() => this._handleState(state));
-        return new Column(
-          children: <Widget>[
-            new Expanded(
-              child: new SingleChildScrollView(
-                child: new Container(
-                  padding: new EdgeInsets.all(16),
-                  child: new Form(
-                    child: this._signUpForm,
-                    autovalidate: true,
-                    onChanged: this._signUpFormChanged
-                  )
+    return new SafeArea(
+      child: new BlocBuilder<SignUpEvent, SignUpState>(
+        bloc: this._signUpBloc, 
+        builder: (context, state) {
+          this.onWidgetDidBuild(() => this._handleState(state));
+          return new Column(
+            children: <Widget>[
+              new Expanded(
+                child: new SingleChildScrollView(
+                  child: new Container(
+                    padding: new EdgeInsets.all(16),
+                    child: new Form(
+                      child: this._signUpForm,
+                      autovalidate: true,
+                      onChanged: this._signUpFormChanged
+                    )
+                  ),
                 ),
               ),
-            ),
-            this._signUpStickyButton(state is SignUpInitialState && state.isValid)
-          ],
-        );
-      },
+              this._signUpStickyButton(state is SignUpInitialState && state.isValid)
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -102,6 +104,7 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
   }
 
   void _openNextWidget() {
+    this.hideLoader(context);
     Navigator.pushReplacement(this.context, new MaterialPageRoute(
       builder: this.widget.nextWidgetBuilder,
     ));

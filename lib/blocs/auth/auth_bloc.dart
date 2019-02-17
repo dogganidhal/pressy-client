@@ -3,15 +3,27 @@ import 'package:meta/meta.dart';
 import 'package:pressy_client/blocs/auth/auth_event.dart';
 import 'package:pressy_client/blocs/auth/auth_state.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
+import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/session/auth/auth_session.dart';
+import 'package:pressy_client/data/session/member/member_session.dart';
+import 'package:pressy_client/services/di/service_collection.dart';
 
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
-  final IAuthSession authSession;
-  final IAuthDataSource authDataSource;
+  final IServiceCollection services;
 
-  AuthBloc({@required this.authSession, @required this.authDataSource});
+  final IAuthSession _authSession;
+  final IAuthDataSource _authDataSource;
+  final IMemberSession _memberSession;
+  final IMemberDataSource _memberDataSource;
+
+  AuthBloc({@required this.services}) :
+      assert (services != null),
+      _authSession = services.getService<IAuthSession>(),
+      _authDataSource = services.getService<IAuthDataSource>(),
+      _memberSession = services.getService<IMemberSession>(),
+      _memberDataSource = services.getService<IMemberDataSource>();
   
   @override
   AuthState get initialState => new AuthUninitializedState();
@@ -25,11 +37,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       await Future.delayed(new Duration(seconds: 5));
 
-      final hasToken = await this.authSession.hasCredentials();
+      final hasToken = await this._authSession.hasCredentials();
 
       if (hasToken) {
 
-        final authCredentials = await this.authSession.getPersistedAuthCredentials();
+        final authCredentials = await this._authSession.getPersistedAuthCredentials();
         yield new AuthAuthenticated(authCredentials: authCredentials);
         this._renewAuthCredentials(authCredentials.refreshToken);
 
@@ -41,15 +53,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is AuthLoggedInEvent) {
 
       yield new AuthLoadingState();
-      await authSession.persistAuthCredentials(event.authCredentials);
-      yield new AuthAuthenticated(authCredentials: event.authCredentials,);
+      await _authSession.persistAuthCredentials(event.authCredentials);
+      yield new AuthAuthenticated(authCredentials: event.authCredentials);
+      MemberProfile memberProfile = await this._memberDataSource.getMemberProfile();
+      await this._memberSession.persistMemberProfile(memberProfile);
 
     }
 
     if (event is AuthLoggedOutEvent) {
 
       yield new AuthLoadingState();
-      await this.authSession.deleteAuthCredentials();
+      await this._authSession.deleteAuthCredentials();
+      await this._memberSession.deletePersistedMemberProfile();
       yield new AuthUnauthenticatedState();
 
     }
@@ -57,8 +72,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _renewAuthCredentials(String refreshToken) async {
-    var authCredentials = await this.authDataSource.refreshCredentials(refreshToken);
-    this.authSession.persistAuthCredentials(authCredentials);
+    var authCredentials = await this._authDataSource.refreshCredentials(refreshToken);
+    this._authSession.persistAuthCredentials(authCredentials);
   }
   
 }

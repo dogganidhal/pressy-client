@@ -7,6 +7,7 @@ import 'package:pressy_client/blocs/auth/sign_up/sign_up_event.dart';
 import 'package:pressy_client/blocs/auth/sign_up/sign_up_state.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
+import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/utils/validators/validators.dart';
 import 'package:pressy_client/widgets/common/mixins/lifecycle_mixin.dart';
@@ -15,10 +16,11 @@ import 'package:pressy_client/widgets/common/mixins/error_mixin.dart';
 
 class SignUpWidget extends StatefulWidget {
 
+  final AuthBloc authBloc;
   final IMemberSession memberSession;
-  final WidgetBuilder nextWidgetBuilder;
+  final VoidCallback onAuthCompleted;
 
-  SignUpWidget({@required this.nextWidgetBuilder, @required this.memberSession}) : 
+  SignUpWidget({@required this.onAuthCompleted, @required this.memberSession, @required this.authBloc}) :
     assert(memberSession != null);
 
   @override
@@ -43,8 +45,8 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
   void initState() {
     super.initState();
     this._signUpBloc = new SignUpBloc(
-      authBloc: BlocProvider.of<AuthBloc>(this.context), 
-      memberDataSource: DataSourceFactory.createMemberDataSource(), 
+      authBloc: this.widget.authBloc,
+      memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>(),
       memberSession: this.widget.memberSession
     );
   }
@@ -105,9 +107,7 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
 
   void _openNextWidget() {
     this.hideLoader(context);
-    Navigator.pushReplacement(this.context, new MaterialPageRoute(
-      builder: this.widget.nextWidgetBuilder,
-    ));
+    this.widget.onAuthCompleted();
   }
 
   Widget get _signUpForm => new Column(

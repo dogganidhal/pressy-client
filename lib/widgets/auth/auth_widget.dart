@@ -13,7 +13,7 @@ class AuthWidget extends StatefulWidget {
   final WidgetBuilder nextWidgetBuilder;
 
   AuthWidget({
-    @required this.authBloc, @required this.nextWidgetBuilder, 
+    @required this.authBloc, this.nextWidgetBuilder,
     @required this.memberSession
   }) : assert(authBloc != null), assert(memberSession != null);
 
@@ -55,16 +55,18 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
               )
             ],
           ),
-        ),
+        ),/**/
         body: new TabBarView(
           controller: this._tabController,
           children: <Widget>[
             new SignUpWidget(
-              nextWidgetBuilder: this.widget.nextWidgetBuilder,
+              authBloc: this.widget.authBloc,
+              onAuthCompleted: () => Navigator.pop(this.context),
               memberSession: this.widget.memberSession,
             ),
             new LoginWidget(
-              nextWidgetBuilder: this.widget.nextWidgetBuilder,
+              authBloc: this.widget.authBloc,
+              onAuthCompleted: () => Navigator.pop(this.context),
               memberSession: this.widget.memberSession,
             )
           ],

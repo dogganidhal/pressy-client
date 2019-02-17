@@ -1,4 +1,3 @@
-import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 import 'package:pressy_client/data/data_source/base/base_data_source.dart';
 import 'package:pressy_client/data/data_source/member/member_data_source.dart';
@@ -10,17 +9,22 @@ import 'package:pressy_client/data/model/member/profile/edit_member_profile/edit
 import 'package:pressy_client/data/model/member/profile/member_profile/member_profile.dart';
 import 'package:pressy_client/data/model/member/sign_up_request/sign_up_request.dart';
 import 'package:pressy_client/data/resources/provider/endpoint_provider.dart';
+import 'package:pressy_client/data/session/auth/auth_session.dart';
+import 'package:pressy_client/utils/network/base_client.dart';
 
 
 class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
 
   @override
-  final BaseClient client;
+  final IClient client;
 
   @override
   final ApiEndpointProvider apiEndpointProvider;
 
-  MemberDataSourceImpl({@required this.apiEndpointProvider, @required this.client});
+  @override
+  final IAuthSession authSession;
+
+  MemberDataSourceImpl({@required this.client, @required this.apiEndpointProvider, @required this.authSession});
   
   @override
   Future<AuthCredentials> signUp(SignUpRequestModel signUpRequest) {

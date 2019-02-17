@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
+import 'package:pressy_client/widgets/profile/profile_widget.dart';
 
 class HomeWidget extends StatefulWidget {
 
@@ -33,9 +34,7 @@ class _HomeWidgetState extends State<HomeWidget>
       new Center(
         child: new Icon(Icons.calendar_today),
       ),
-      new Center(
-        child: new Icon(Icons.person),
-      ),
+      new ProfileWidget(),
     ];
   }
 
@@ -45,7 +44,8 @@ class _HomeWidgetState extends State<HomeWidget>
 
   @override
   Widget build(BuildContext context) {
-    return super.build(context) ?? Scaffold(
+    super.build(context);
+    return new Scaffold(
       resizeToAvoidBottomPadding: false,
       body: this._widgets[this._currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -59,11 +59,11 @@ class _HomeWidgetState extends State<HomeWidget>
           ),
           BottomNavigationBarItem(
             icon: new Icon(Icons.calendar_today),
-            title: new Text('Vos commandes', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
+            title: new Text('Mes commandes', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
           ),
           BottomNavigationBarItem(
             icon: new Icon(Icons.person),
-            title: new Text('Votre profile', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12))
+            title: new Text('Mon profile', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12))
           ),
         ],
         onTap: this._onTap,

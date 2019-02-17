@@ -7,6 +7,7 @@ import 'package:pressy_client/blocs/auth/login/login_event.dart';
 import 'package:pressy_client/blocs/auth/login/login_state.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
+import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/utils/validators/validators.dart';
 import 'package:pressy_client/widgets/common/mixins/lifecycle_mixin.dart';
@@ -15,10 +16,11 @@ import 'package:pressy_client/widgets/common/mixins/error_mixin.dart';
 
 class LoginWidget extends StatefulWidget {
 
+  final AuthBloc authBloc;
   final IMemberSession memberSession;
-  final WidgetBuilder nextWidgetBuilder;
+  final VoidCallback onAuthCompleted;
 
-  LoginWidget({@required this.memberSession, @required this.nextWidgetBuilder}) :
+  LoginWidget({@required this.memberSession, @required this.onAuthCompleted, @required this.authBloc}) :
     assert(memberSession != null);
 
   @override
@@ -37,10 +39,9 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
   void initState() {
     super.initState();
     this._loginBloc = new LoginBloc(
-      authBloc: BlocProvider.of<AuthBloc>(this.context), 
-      authDataSource: DataSourceFactory.createAuthDataSource(), 
-      memberDataSource: DataSourceFactory.createMemberDataSource(), 
-      memberSession: this.widget.memberSession
+      authBloc: this.widget.authBloc,
+      authDataSource: ServiceProvider.of(this.context).getService<IAuthDataSource>(),
+      memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>(),
     );
   }
 
@@ -141,10 +142,8 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
   }
 
   void _openNextWidget() {
-    this.hideLoader(this.context);
-    Navigator.pushReplacement(this.context, new MaterialPageRoute(
-      builder: this.widget.nextWidgetBuilder,
-    ));
+    this.hideLoader(context);
+    this.widget.onAuthCompleted();
   }
 
 }

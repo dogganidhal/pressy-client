@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:meta/meta.dart';
 import 'package:pressy_client/blocs/auth/auth_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_event.dart';
@@ -59,12 +58,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         this.authBloc.dispatch(new AuthLoggedInEvent(
           authCredentials: authCredentials,
         ));
-
-        Injector.getInjector().get<IClient>().authorizationHeader = "Bearer ${authCredentials.accessToken}";
-        
-        MemberProfile memberProfile = await this.memberDataSource.getMemberProfile();
-        await this.memberSession.persistMemberProfile(memberProfile);
-
         yield new SignUpSuccessState();
 
       } on ApiError catch (error) {

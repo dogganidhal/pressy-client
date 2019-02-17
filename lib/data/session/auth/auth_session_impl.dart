@@ -5,6 +5,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthSessionImpl implements IAuthSession {
 
+  @override
+  AuthCredentials get credentials => this._credentials;
+
+  AuthCredentials _credentials;
+
   static const String _AUTH_CREDENTIALS_KEY = "@pressy/auth-credentials";
 
   @override
@@ -17,11 +22,13 @@ class AuthSessionImpl implements IAuthSession {
   Future<AuthCredentials> getPersistedAuthCredentials() async {
     var sharedPreferences = await SharedPreferences.getInstance();
     var authCredentialsString = sharedPreferences.getString(_AUTH_CREDENTIALS_KEY);
+    AuthCredentials credentials;
     if (authCredentialsString != null) {
       var map = json.decode(authCredentialsString);
-      return AuthCredentials.fromJson(map);
+      credentials = AuthCredentials.fromJson(map);
     }
-    return null;
+    this._credentials = credentials;
+    return credentials;
   }
 
   @override
@@ -32,6 +39,7 @@ class AuthSessionImpl implements IAuthSession {
 
   @override
   Future<void> persistAuthCredentials(AuthCredentials credentials) async {
+    this._credentials = credentials;
     var sharedPreferences = await SharedPreferences.getInstance();
     var authCredentialsString = json.encode(credentials.toJson());
     await sharedPreferences.setString(_AUTH_CREDENTIALS_KEY, authCredentialsString);

@@ -7,7 +7,6 @@ import 'package:pressy_client/blocs/auth/login/login_state.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/model/errors/api_error.dart';
 import 'package:pressy_client/data/model/model.dart';
-import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/utils/validators/validators.dart';
 
 
@@ -16,11 +15,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthBloc authBloc;
   final IMemberDataSource memberDataSource;
   final IAuthDataSource authDataSource;
-  final IMemberSession memberSession;
 
   LoginBloc({
-    @required this.authBloc, @required this.memberDataSource, 
-    @required this.memberSession, @required this.authDataSource
+    @required this.authBloc, @required this.memberDataSource, @required this.authDataSource
   });
   
   @override
@@ -49,10 +46,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         this.authBloc.dispatch(new AuthLoggedInEvent(
           authCredentials: authCredentials
         ));
-        
-        MemberProfile memberProfile = await this.memberDataSource.getMemberProfile();
-        await this.memberSession.persistMemberProfile(memberProfile);
-        
+
         yield new LoginSuccessState();
 
       } on ApiError catch (error) {

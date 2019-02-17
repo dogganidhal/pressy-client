@@ -18,7 +18,10 @@ class HttpClient extends IClient {
   }
 
   void _logRequest(BaseRequest request) async {
-    print(request.toString());
+    print(
+      '${request.method} ${request.url}\n'
+      'Headers: ${request.headers}'
+    );
   }
 
 }

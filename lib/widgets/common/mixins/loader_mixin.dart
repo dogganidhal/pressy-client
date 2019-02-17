@@ -3,21 +3,20 @@ import 'package:pressy_client/widgets/common/layouts/loader_widget.dart';
 
 mixin LoaderMixin {
 
-  bool isLoaderActive = false;
-
   void showLoader(BuildContext context) {
-    this.isLoaderActive = true;
-    showDialog(
-      context: context,
-      builder: (context) => new LoaderWidget()
-    );
+    Scaffold.of(context).showSnackBar(new SnackBar(
+      content: new Row(
+        children: <Widget>[
+          new CircularProgressIndicator(),
+          new Text("CHARGEMENT...")
+        ],
+      ),
+      duration: new Duration(minutes: 1)
+    ));
   }
 
   void hideLoader(BuildContext context) {
-    if (this.isLoaderActive) {
-      Navigator.of(context).pop();
-      this.isLoaderActive = false;
-    }
+    Scaffold.of(context).hideCurrentSnackBar();
   }
 
 }

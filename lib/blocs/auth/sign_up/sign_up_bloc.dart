@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
-import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 import 'package:pressy_client/blocs/auth/auth_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_event.dart';

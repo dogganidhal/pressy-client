@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/http.dart';
 import 'package:pressy_client/data/model/errors/api_error.dart';
 import 'package:pressy_client/data/resources/provider/endpoint_provider.dart';
 import 'package:pressy_client/data/session/auth/auth_session.dart';
@@ -13,6 +14,48 @@ abstract class DataSource {
   final IAuthSession authSession;
 
   DataSource({this.client, this.apiEndpointProvider, this.authSession});
+
+  Future<Entity> handleRequest<Entity>({
+    ApiEndpoint endpoint, Map<String, dynamic> body, JsonModelBuilder<Entity> responseConverter
+  }) async {
+
+    Response response;
+    String bodyJson = json.encode(body);
+
+    switch(endpoint.method) {
+      case "POST":
+        response = await this.client.post(
+          this.apiEndpointProvider.baseUrl + endpoint.path,
+          body: bodyJson, headers: this._prepareHeaders(endpoint)
+        );
+        break;
+      case "GET":
+        response = await this.client.get(
+          this.apiEndpointProvider.baseUrl + endpoint.path,
+          headers: this._prepareHeaders(endpoint)
+        );
+        break;
+      case "PATCH":
+        response = await this.client.patch(
+          this.apiEndpointProvider.baseUrl + endpoint.path,
+          body: bodyJson, headers: this._prepareHeaders(endpoint)
+        );
+        break;
+      default: // DELETE
+        response = await this.client.delete(
+          this.apiEndpointProvider.baseUrl + endpoint.path,
+          headers: this._prepareHeaders(endpoint)
+        );
+        break;
+    }
+
+    final map = json.decode(response.body);
+    if (response.statusCode >= 400) {
+      throw new ApiError.fromJson(map);
+    }
+    return Future.value(responseConverter != null ? responseConverter(map) : null);
+
+  }
 
   Future<TEntity> doGet<TEntity>({
     String url, JsonModelBuilder<TEntity> responseConverter, Map<String, dynamic> headers
@@ -68,9 +111,20 @@ abstract class DataSource {
 
   }
 
+  Map<String, String> _prepareHeaders(ApiEndpoint endpoint) {
+    var headers = {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    };
+    if (endpoint.needsAuthorization) {
+      headers["Authorization"] = "Bearer ${this.authSession.credentials?.accessToken}";
+    }
+    return headers;
+  }
+
   Map<String, dynamic> _injectHeaders(Map<String, dynamic> headers) {
     var injectableHeaders = {
-      "Authorization": this.authSession.credentials?.accessToken,
+      "Authorization": "${this.authSession.credentials?.tokenType} ${this.authSession.credentials?.accessToken}",
       "Accept": "application/json",
       "Content-Type": "application/json"
     };

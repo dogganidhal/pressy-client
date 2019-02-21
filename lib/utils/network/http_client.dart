@@ -1,26 +1,60 @@
+import 'dart:convert';
+
 import 'package:http/http.dart';
 import 'package:pressy_client/utils/network/base_client.dart';
 
 class HttpClient extends IClient {
 
-  @override
-  String authorizationHeader;
-
   final Client _inner = new Client();
 
-  HttpClient({this.authorizationHeader});
+  @override
+  Future<StreamedResponse> send(BaseRequest request) => this._inner.send(request);
 
   @override
-  Future<StreamedResponse> send(BaseRequest request) async {
-    this._logRequest(request);
-    request.headers["authorization"] = this.authorizationHeader;
-    return this._inner.send(request);
+  Future<Response> get(url, {Map<String, String> headers}) async {
+    this._logRequest(url: url, headers: headers, method: "GET");
+    final response = await this._inner.get(url, headers: headers);
+    this._logResponse(response);
+    return response;
   }
 
-  void _logRequest(BaseRequest request) async {
+  @override
+  Future<Response> post(url, {Map<String, String> headers, body, Encoding encoding}) async {
+    this._logRequest(url: url, headers: headers, method: "POST");
+    final response = await this._inner.post(url, headers: headers, body: body, encoding: encoding);
+    this._logResponse(response);
+    return response;
+  }
+
+  @override
+  Future<Response> patch(url, {Map<String, String> headers, body, Encoding encoding}) async {
+    this._logRequest(url: url, headers: headers, method: "PATCH");
+    final response = await this._inner.patch(url, headers: headers, body: body, encoding: encoding);
+    this._logResponse(response);
+    return response;
+  }
+  
+  @override
+  Future<Response> delete(url, {Map<String, String> headers}) async {
+    this._logRequest(url: url, headers: headers, method: "DELETE");
+    final response = await this._inner.delete(url, headers: headers);
+    this._logResponse(response);
+    return response;
+  }
+
+  void _logResponse(Response response) {
     print(
-      '${request.method} ${request.url}\n'
-      'Headers: ${request.headers}'
+      'RESPONSE : \n'
+      'Status code : ${response.statusCode}\n'
+      'Body : ${response.body}\n'
+    );
+  }
+
+  void _logRequest({String method, String url, Map<String, String> headers}) async {
+    print(
+      'REQUEST : \n'
+      '$method $url\n'
+      'Headers: $headers\n'
     );
   }
 

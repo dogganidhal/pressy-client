@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_event.dart';
 import 'package:pressy_client/blocs/auth/auth_state.dart';
+import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
@@ -51,7 +52,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   Iterable<Widget> _buildWidgets(AuthState state) sync* {
 
     if (state is AuthAuthenticated) {
-      yield this._profilePreviewWidget;
+      yield this._profilePreviewWidget(state.memberProfile);
     }
 
     yield this._pressyServiceWidget;
@@ -63,7 +64,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   }
 
-  Widget get _profilePreviewWidget => new Container();
+  Widget _profilePreviewWidget(MemberProfile memberProfile) => new Container(
+    child: new Column(
+      children: <Widget>[
+       new Text("Bonjour ${memberProfile.firstName}")
+      ],
+    ),
+  );
 
   Widget get _pressyServiceWidget => new Container();
 

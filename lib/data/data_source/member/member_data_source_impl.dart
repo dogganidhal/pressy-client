@@ -28,8 +28,8 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
   
   @override
   Future<AuthCredentials> signUp(SignUpRequestModel signUpRequest) {
-    return this.doPost(
-      url: "${this.apiEndpointProvider.baseUrl}${this.apiEndpointProvider.memberEndpoints.signUp}",
+    return this.handleRequest(
+      endpoint: this.apiEndpointProvider.memberEndpoints.signUp,
       body: signUpRequest?.toJson(),
       responseConverter: (json) => AuthCredentials.fromJson(json)
     );
@@ -37,38 +37,38 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
 
   @override
   Future<void> editMemberProfile(EditMemberProfileRequestModel request) {
-    return this.doPatch(
-      url: "${this.apiEndpointProvider.baseUrl}${this.apiEndpointProvider.memberEndpoints.editProfile}",
-      body: request?.toJson()
+    return this.handleRequest(
+      endpoint: this.apiEndpointProvider.memberEndpoints.editProfile,
+      body: request?.toJson(),
     );
   }
 
   @override
   Future<MemberProfile> getMemberProfile() {
-    return this.doGet(
-      url: "${this.apiEndpointProvider.baseUrl}${this.apiEndpointProvider.memberEndpoints.memberProfile}",
+    return this.handleRequest(
+      endpoint: this.apiEndpointProvider.memberEndpoints.memberProfile,
       responseConverter: (json) => MemberProfile.fromJson(json)
     );
   }
 
   @override
   Future<void> validateMemberEmail(String email) {
-    return this.doGet(
-      url: "${this.apiEndpointProvider.baseUrl}${this.apiEndpointProvider.memberEndpoints.validateEmail(email)}",
+    return this.handleRequest(
+      endpoint: this.apiEndpointProvider.memberEndpoints.validateEmail(email),
     );
   }
 
   @override
   Future<void> validateMemberPhone(String phone) {
-    return this.doGet(
-      url: "${this.apiEndpointProvider.baseUrl}${this.apiEndpointProvider.memberEndpoints.validatePhone(phone)}",
+    return this.handleRequest(
+      endpoint: this.apiEndpointProvider.memberEndpoints.validatePhone(phone),
     );
   }
 
   @override
   Future<MemberAddress> createMemberAddress(CreateMemberAddressDetails request) {
-    return this.doPost(
-      url: "${this.apiEndpointProvider.baseUrl}${this.apiEndpointProvider.addressEndpoints.createAddress}",
+    return this.handleRequest(
+      endpoint: this.apiEndpointProvider.addressEndpoints.createAddress,
       body: request?.toJson(),
       responseConverter: (json) => MemberAddress.fromJson(json)
     );
@@ -76,23 +76,23 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
 
   @override
   Future<void> deleteMemberAddress(int addressId) {
-     return this.doDelete(
-      url: "${this.apiEndpointProvider.baseUrl}${this.apiEndpointProvider.addressEndpoints.deleteAddress(addressId)}",
+    return this.handleRequest(
+      endpoint: this.apiEndpointProvider.addressEndpoints.deleteAddress(addressId),
     );
   }
 
   @override
   Future<void> editMemberAddress(EditMemberAddressRequestModel request) {
-    return this.doPatch(
-      url: "${this.apiEndpointProvider.baseUrl}${this.apiEndpointProvider.addressEndpoints.editAddress}",
-      body: request?.toJson()
+    return this.handleRequest(
+      endpoint: this.apiEndpointProvider.addressEndpoints.editAddress,
+      body: request?.toJson(),
     );
   }
 
   @override
   Future<List<MemberAddress>> getMemberAddresses() {
-    return this.doGet(
-      url: "${this.apiEndpointProvider.baseUrl}${this.apiEndpointProvider.addressEndpoints.createAddress}",
+    return this.handleRequest(
+      endpoint: this.apiEndpointProvider.memberEndpoints.signUp,
       responseConverter: (json) => json.map((addressJson) => MemberAddress.fromJson(addressJson))
     );
   }

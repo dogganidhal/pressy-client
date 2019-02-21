@@ -30,8 +30,10 @@ class AuthLoadingState extends AuthState {
 class AuthAuthenticated extends AuthState {
 
   final AuthCredentials authCredentials;
+  final MemberProfile memberProfile;
 
-  AuthAuthenticated({@required this.authCredentials}) : super([authCredentials]);
+  AuthAuthenticated({@required this.authCredentials, @required this.memberProfile}) :
+      super([authCredentials, memberProfile]);
 
   @override
   String toString() => "Authenticated : ${authCredentials.toJson()}";

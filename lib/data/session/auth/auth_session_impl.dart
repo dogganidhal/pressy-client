@@ -14,6 +14,7 @@ class AuthSessionImpl implements IAuthSession {
 
   @override
   Future<void> deleteAuthCredentials() async {
+    this._credentials = null;
     var sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.remove(_AUTH_CREDENTIALS_KEY);
   }

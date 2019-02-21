@@ -42,7 +42,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (hasToken) {
 
         final authCredentials = await this._authSession.getPersistedAuthCredentials();
-        yield new AuthAuthenticated(authCredentials: authCredentials);
+        final memberProfile = await this._memberSession.getPersistedMemberProfile();
+        yield new AuthAuthenticated(
+          authCredentials: authCredentials,
+          memberProfile: memberProfile
+        );
         this._renewAuthCredentials(authCredentials.refreshToken);
 
       } else
@@ -54,8 +58,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       yield new AuthLoadingState();
       await _authSession.persistAuthCredentials(event.authCredentials);
-      yield new AuthAuthenticated(authCredentials: event.authCredentials);
       MemberProfile memberProfile = await this._memberDataSource.getMemberProfile();
+      yield new AuthAuthenticated(
+        authCredentials: event.authCredentials,
+        memberProfile: memberProfile
+      );
       await this._memberSession.persistMemberProfile(memberProfile);
 
     }

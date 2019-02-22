@@ -18,7 +18,6 @@ class ProfileWidget extends StatefulWidget {
 
 }
 
-
 class _ProfileWidgetState extends State<ProfileWidget> {
 
   AuthBloc _authBloc;
@@ -32,6 +31,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: new AppBar(
         elevation: 2,
         backgroundColor: Colors.white,
@@ -41,8 +41,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       body: new BlocBuilder<AuthEvent, AuthState>(
         bloc: this._authBloc,
         builder: (context, authState) {
-          return new Column(
-            children: List.unmodifiable(this._buildWidgets(authState)),
+          final widgets = List.unmodifiable(this._buildWidgets(authState));
+          return new ListView.separated(
+            itemCount: widgets.length,
+            itemBuilder: (context, index) => widgets[index],
+            padding: new EdgeInsets.only(top: 12, bottom: 12),
+            separatorBuilder: (context, index) => new Container(height: 12),
           );
         }
       ),
@@ -65,14 +69,173 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   }
 
   Widget _profilePreviewWidget(MemberProfile memberProfile) => new Container(
-    child: new Column(
-      children: <Widget>[
-       new Text("Bonjour ${memberProfile.firstName}")
-      ],
+    color: Colors.white,
+    child: new ListView.separated(
+      shrinkWrap: true,
+      itemCount: 4,
+      separatorBuilder: (context, index) => index != 0 ? new Divider(height: 1) : new Container(),
+      itemBuilder: (context, index) {
+        switch (index) {
+          case 0:
+            return new Container(
+              padding: new EdgeInsets.all(12),
+                child: new Text(
+                  "Bonjour ${memberProfile.firstName}",
+                  style: new TextStyle(
+                    fontSize: 16
+                  ),
+                ),
+              );
+            case 1: 
+              return new Container(
+                padding: new EdgeInsets.only(bottom: 12, top: 12),
+                child: new ButtonTheme(
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  child: new FlatButton(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    child: new Row(
+                      children: <Widget>[
+                        new Icon(Icons.person),
+                        new SizedBox(width: 12),
+                        new Expanded(
+                          child: new Text("Mon profil"),
+                        ),
+                        new Icon(Icons.chevron_right)
+                      ],
+                    ),
+                    onPressed: () => print("Mon profil"),
+                  ),
+                ),
+              );
+            case 2: 
+              return new Container(
+                padding: new EdgeInsets.only(bottom: 12, top: 12),
+                child: new ButtonTheme(
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  child: new FlatButton(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    child: new Row(
+                      children: <Widget>[
+                        new Icon(Icons.credit_card),
+                        new SizedBox(width: 12),
+                        new Expanded(
+                          child: new Text("Mes moyens de paiement"),
+                        ),
+                        new Icon(Icons.chevron_right)
+                      ],
+                    ),
+                    onPressed: () => print("Mes moyens de paiement"),
+                  ),
+                ),
+              );
+            case 3: 
+              return new Container(
+                padding: new EdgeInsets.only(bottom: 12, top: 12),
+                child: new ButtonTheme(
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  child: new FlatButton(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    child: new Row(
+                      children: <Widget>[
+                        new Icon(Icons.location_city),
+                        new SizedBox(width: 12),
+                        new Expanded(
+                          child: new Text("Mes adresses"),
+                        ),
+                        new Icon(Icons.chevron_right)
+                      ],
+                    ),
+                    onPressed: () => print("Mes adresses"),
+                  ),
+                ),
+              );
+          default:
+        }
+      },
     ),
   );
 
-  Widget get _pressyServiceWidget => new Container();
+  Widget get _pressyServiceWidget => new Container(
+    color: Colors.white,
+    child: new ListView.separated(
+      shrinkWrap: true,
+      itemCount: 3,
+      separatorBuilder: (context, index) => new Divider(height: 1),
+      itemBuilder: (context, index) {
+        switch(index) {
+          case 0:
+            return new Container(
+              padding: new EdgeInsets.only(bottom: 12, top: 12),
+              child: new ButtonTheme(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                child: new FlatButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  child: new Row(
+                    children: <Widget>[
+                      new Icon(Icons.info),
+                      new SizedBox(width: 12),
+                      new Expanded(
+                        child: new Text("Comment ça marche ?"),
+                      ),
+                      new Icon(Icons.chevron_right)
+                    ],
+                  ),
+                  onPressed: () => print("Comment ça marche"),
+                ),
+              ),
+            );
+          case 1:
+            return new Container(
+              padding: new EdgeInsets.only(bottom: 12, top: 12),
+              child: new ButtonTheme(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                child: new FlatButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  child: new Row(
+                    children: <Widget>[
+                      new Icon(Icons.mail),
+                      new SizedBox(width: 12),
+                      new Expanded(
+                        child: new Text("Nous contacter"),
+                      ),
+                      new Icon(Icons.chevron_right)
+                    ],
+                  ),
+                  onPressed: () => print("Nous contacter"),
+                ),
+              ),
+            );
+          case 2:
+            return new Container(
+              padding: new EdgeInsets.only(bottom: 12, top: 12),
+              child: new ButtonTheme(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                child: new FlatButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  child: new Row(
+                    children: <Widget>[
+                      new Icon(Icons.lock),
+                      new SizedBox(width: 12),
+                      new Expanded(
+                        child: new Text("Conditions générales d'utilisation"),
+                      ),
+                      new Icon(Icons.chevron_right)
+                    ],
+                  ),
+                  onPressed: () => print("Conditions générales d'utilisation"),
+                ),
+              ),
+            );
+        }
+      }
+    )
+  );
 
   Widget get _loginButton => new Container(
     height: 48,

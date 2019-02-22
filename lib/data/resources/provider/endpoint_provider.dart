@@ -7,7 +7,7 @@ class ApiEndpointProvider {
   final String baseUrl;
 
   ApiEndpointProvider(
-    {this.baseUrl: "https://29f2dbee.ngrok.io/v1"}
+    {this.baseUrl: "https://pressy-mobile-api-dev.herokuapp.com/v1"}
   );
 
   final _ApiAuthEndpoints authEndpoints = new _ApiAuthEndpoints();

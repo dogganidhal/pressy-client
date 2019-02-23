@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pressy_client/widgets/common/layouts/loader_widget.dart';
 
 mixin LoaderMixin {
 
-  void showLoader(BuildContext context) {
+  void showLoaderSnackBar(BuildContext context) {
     Scaffold.of(context).showSnackBar(new SnackBar(
       content: new Row(
         children: <Widget>[
           new CircularProgressIndicator(),
+          new SizedBox(width: 12),
           new Text("CHARGEMENT...")
         ],
       ),
@@ -15,7 +15,7 @@ mixin LoaderMixin {
     ));
   }
 
-  void hideLoader(BuildContext context) {
+  void hideLoaderSnackBar(BuildContext context) {
     Scaffold.of(context).hideCurrentSnackBar();
   }
 

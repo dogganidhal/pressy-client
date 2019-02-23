@@ -14,7 +14,7 @@ class Application extends StatelessWidget with AppThemeMixin {
   final AuthBloc authBloc;
   final IServiceCollection services;
 
-  HomeWidget _homeWidget;
+  final HomeWidget _homeWidget = new HomeWidget();
 
   Application({@required this.services}) :
       assert(services != null),
@@ -41,9 +41,6 @@ class Application extends StatelessWidget with AppThemeMixin {
                     child: new CircularProgressIndicator(),
                   ),
                 );
-              }
-              if (this._homeWidget == null) {
-                this._homeWidget = new HomeWidget();
               }
               return this._homeWidget;
             },

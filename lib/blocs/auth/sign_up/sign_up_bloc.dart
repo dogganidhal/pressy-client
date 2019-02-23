@@ -8,7 +8,6 @@ import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/model/errors/api_error.dart';
 import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
-import 'package:pressy_client/utils/network/base_client.dart';
 import 'package:pressy_client/utils/validators/validators.dart';
 
 

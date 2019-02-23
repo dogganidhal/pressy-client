@@ -5,9 +5,6 @@ import 'package:pressy_client/utils/network/base_client.dart';
 
 class FlutterMockClient extends HttpTesting.MockClient implements IClient {
 
-  @override
-  String authorizationHeader;
-
   final int delayInMilliSeconds;
 
   FlutterMockClient({this.delayInMilliSeconds = 3000}) : super((Request request) async {

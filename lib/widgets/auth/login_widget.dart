@@ -130,9 +130,9 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
 
   void _handleState(LoginState state) {
     if (state is LoginLoadingState)
-      this.showLoader(context);
+      this.showLoaderSnackBar(context);
     else
-      this.hideLoader(context);
+      this.hideLoaderSnackBar(context);
 
     if (state is LoginFailureState)
       this.showErrorDialog(context, state.error);
@@ -142,7 +142,7 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
   }
 
   void _openNextWidget() {
-    this.hideLoader(context);
+    this.hideLoaderSnackBar(context);
     this.widget.onAuthCompleted();
   }
 

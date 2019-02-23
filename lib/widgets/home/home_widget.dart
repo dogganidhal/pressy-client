@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
-import 'package:pressy_client/widgets/profile/profile_widget.dart';
+import 'package:pressy_client/widgets/settings/settings_widget.dart';
 
 class HomeWidget extends StatefulWidget {
 
@@ -34,7 +34,7 @@ class _HomeWidgetState extends State<HomeWidget>
       new Center(
         child: new Icon(Icons.calendar_today),
       ),
-      new ProfileWidget(),
+      new SettingsWidget(),
     ];
   }
 
@@ -62,8 +62,8 @@ class _HomeWidgetState extends State<HomeWidget>
             title: new Text('Mes commandes', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.person),
-            title: new Text('Mon profile', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12))
+            icon: new Icon(Icons.settings),
+            title: new Text('Paramètres', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12))
           ),
         ],
         onTap: this._onTap,

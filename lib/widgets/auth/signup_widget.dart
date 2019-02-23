@@ -94,9 +94,9 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
 
   void _handleState(SignUpState state) {
     if (state is SignUpLoadingState)
-      this.showLoader(context);
+      this.showLoaderSnackBar(context);
     else
-      this.hideLoader(context);
+      this.hideLoaderSnackBar(context);
 
     if (state is SignUpFailureState)
       this.showErrorDialog(context, state.error);
@@ -106,7 +106,7 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
   }
 
   void _openNextWidget() {
-    this.hideLoader(context);
+    this.hideLoaderSnackBar(context);
     this.widget.onAuthCompleted();
   }
 

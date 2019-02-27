@@ -16,6 +16,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       appBar: new AppBar(
         title: new Text("Mon Profil"),
         backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 2,
       ),
     );
   }

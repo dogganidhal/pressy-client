@@ -9,6 +9,8 @@ class ContactWidget extends StatelessWidget {
       appBar: new AppBar(
         title: new Text("Nous contacter"),
         backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 2,
       ),
       body: new SingleChildScrollView(
         padding: new EdgeInsets.all(12),

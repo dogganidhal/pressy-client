@@ -16,6 +16,7 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
       appBar: new AppBar(
         title: new Text("Mes moyens de paiment"),
         backgroundColor: Colors.white,
+        centerTitle: true,
       ),
     );
   }

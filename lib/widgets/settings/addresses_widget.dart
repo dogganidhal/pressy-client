@@ -16,6 +16,8 @@ class _AddressesWidgetState extends State<AddressesWidget> {
       appBar: new AppBar(
         title: new Text("Mes adresses"),
         backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 2,
       ),
     );
   }

@@ -9,6 +9,8 @@ class FaqWidget extends StatelessWidget {
       appBar: new AppBar(
         title: new Text("Comment ça marche"),
         backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 2,
       ),
       body: new SingleChildScrollView(
         padding: new EdgeInsets.all(12),

@@ -5,6 +5,7 @@ import 'package:pressy_client/blocs/auth/auth_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_event.dart';
 import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
+import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/widgets/settings/addresses_widget.dart';
 import 'package:pressy_client/widgets/settings/contact_widget.dart';
@@ -252,8 +253,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   );
 
   void _launchProfileWidget() {
+    final services = ServiceProvider.of(this.context);
     Navigator.push(this.context, new MaterialPageRoute(
-        builder: (_) => new ProfileWidget()
+      builder: (_) => new ServiceProvider(
+        child: new MemberInfoWidget(),
+        services: services
+      )
     ));
   }
 

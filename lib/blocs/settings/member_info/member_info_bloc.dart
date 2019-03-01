@@ -70,6 +70,8 @@ class MemberInfoBloc extends Bloc<MemberInfoEvent, MemberInfoState> {
       );
       await this.memberDataSource.editMemberProfile(editMemberProfileRequest);
       yield new MemberInfoEditingSuccessfulState();
+      final updatedMemberProfile = await this.memberDataSource.getMemberProfile();
+      await this.memberSession.persistMemberProfile(updatedMemberProfile);
 
     }
 

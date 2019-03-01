@@ -21,35 +21,36 @@ abstract class DataSource {
 
     Response response;
     String bodyJson = json.encode(body);
+    Map<String, String> headers = this._prepareHeaders(endpoint);
 
     switch(endpoint.method) {
       case "POST":
         response = await this.client.post(
           this.apiEndpointProvider.baseUrl + endpoint.path,
-          body: bodyJson, headers: this._prepareHeaders(endpoint)
+          body: bodyJson, headers: headers
         );
         break;
       case "GET":
         response = await this.client.get(
           this.apiEndpointProvider.baseUrl + endpoint.path,
-          headers: this._prepareHeaders(endpoint)
+          headers: headers
         );
         break;
       case "PATCH":
         response = await this.client.patch(
           this.apiEndpointProvider.baseUrl + endpoint.path,
-          body: bodyJson, headers: this._prepareHeaders(endpoint)
+          body: bodyJson, headers: headers
         );
         break;
       default: // DELETE
         response = await this.client.delete(
           this.apiEndpointProvider.baseUrl + endpoint.path,
-          headers: this._prepareHeaders(endpoint)
+          headers: headers
         );
         break;
     }
 
-    final map = json.decode(response.body);
+    final map = response.contentLength > 0 ? json.decode(response.body) : null;
     if (response.statusCode >= 400) {
       throw new ApiError.fromJson(map);
     }

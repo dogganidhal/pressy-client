@@ -3,11 +3,10 @@ import 'package:meta/meta.dart';
 
 
 @immutable
-abstract class AddressState extends Equatable {
-  AddressState([List props]) : super(props);
-}
+class AddressState extends Equatable {
 
-@immutable
-class AddressLoadingState extends Equatable {
+  final bool isLoading;
+
+  AddressState({this.isLoading = false}) : super([isLoading]);
 
 }

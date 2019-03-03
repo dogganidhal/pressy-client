@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pressy_client/utils/style/app_theme.dart';
 
 
 class ResetPasswordWidget extends StatefulWidget {
@@ -14,6 +15,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        iconTheme: new IconThemeData(color: ColorPalette.orange),
         title: new Text("Nouveau mot de passe"),
         backgroundColor: Colors.white,
         centerTitle: true,

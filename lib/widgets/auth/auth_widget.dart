@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_bloc.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
+import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/widgets/auth/login_widget.dart';
 import 'package:pressy_client/widgets/auth/signup_widget.dart';
 
@@ -38,6 +39,7 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
       bloc: this.widget.authBloc,
       child: new Scaffold(
         appBar: new AppBar(
+          iconTheme: new IconThemeData(color: ColorPalette.orange),
           elevation: 1,
           backgroundColor: Colors.white,
           title: new Text("Authentification"),

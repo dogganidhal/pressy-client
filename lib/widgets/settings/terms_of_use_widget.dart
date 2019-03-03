@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pressy_client/utils/style/app_theme.dart';
 
 
 class TermsOfUseWidget extends StatelessWidget {
@@ -7,6 +8,7 @@ class TermsOfUseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        iconTheme: new IconThemeData(color: ColorPalette.orange),
         title: new Text("CGU"),
         backgroundColor: Colors.white,
         centerTitle: true,

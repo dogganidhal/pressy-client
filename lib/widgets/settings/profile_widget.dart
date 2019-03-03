@@ -52,6 +52,7 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
         this._handleState(state);
         return new Scaffold(
           appBar: new AppBar(
+            iconTheme: new IconThemeData(color: ColorPalette.orange),
             title: new Text("Mon Profil"),
             backgroundColor: Colors.white,
             centerTitle: true,
@@ -176,7 +177,7 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
     if (state is MemberInfoUneditableState) {
       return new FlatButton.icon(
         onPressed: () => this._memberInfoBloc.dispatch(new MemberInfoBeginEditingEvent()),
-        icon: new Icon(Icons.edit), 
+        icon: new Icon(Icons.edit, color: ColorPalette.orange),
         label: new Container()
       );
     } else if (state is MemberInfoEditableState) {

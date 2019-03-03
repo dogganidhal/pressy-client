@@ -42,6 +42,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     return new Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: new AppBar(
+        iconTheme: new IconThemeData(color: ColorPalette.orange),
         elevation: 1,
         backgroundColor: Colors.white,
         title: new Text("Paramètres"),

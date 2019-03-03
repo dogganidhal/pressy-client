@@ -9,6 +9,11 @@ abstract class AddAddressEvent extends Equatable {
 }
 
 @immutable
+class UseDeviceLocationEvent extends AddAddressEvent {
+  UseDeviceLocationEvent() : super([]);
+}
+
+@immutable
 class SubmitAddressQueryEvent extends AddAddressEvent {
 
   final String query;

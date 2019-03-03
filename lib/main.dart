@@ -9,6 +9,8 @@ import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/data/session/member/member_session_impl.dart';
 import 'package:pressy_client/services/di/service_collection.dart';
 import 'package:pressy_client/services/di/service_collection_impl.dart';
+import 'package:pressy_client/services/providers/location/flutter_user_location_provider.dart';
+import 'package:pressy_client/services/providers/location/user_location_provider.dart';
 import 'package:pressy_client/utils/network/base_client.dart';
 import 'package:pressy_client/utils/network/http_client.dart';
 import 'package:pressy_client/widgets/app/app.dart';
@@ -19,10 +21,11 @@ IServiceCollection configureServices() {
   
   final services = new ServiceCollectionImpl();
 
+  services.addSingleton<IAuthSession>((_) => new AuthSessionImpl());
+  services.addSingleton<IMemberSession>((_) => new MemberSessionImpl());
   services.addScoped<IClient>((_) => new HttpClient());
   services.addScoped<ApiEndpointProvider>((_) => new ApiEndpointProvider());
-  services.addSingleton<IMemberSession>((_) => new MemberSessionImpl());
-  services.addSingleton<IAuthSession>((_) => new AuthSessionImpl());
+  services.addScoped<IUserLocationProvider>((_) => new FlutterUserLocationProvider());
   services.addScoped<IMemberDataSource>((services) => new MemberDataSourceImpl(
     apiEndpointProvider: services.getService<ApiEndpointProvider>(),
     client: services.getService<IClient>(),

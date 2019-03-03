@@ -8,11 +8,11 @@ import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/widgets/settings/address/addresses_widget.dart';
-import 'package:pressy_client/widgets/settings/contact_widget.dart';
-import 'package:pressy_client/widgets/settings/faq_widget.dart';
-import 'package:pressy_client/widgets/settings/payment_methods_widget.dart';
-import 'package:pressy_client/widgets/settings/profile_widget.dart';
-import 'package:pressy_client/widgets/settings/terms_of_use_widget.dart';
+import 'package:pressy_client/widgets/settings/contact/contact_widget.dart';
+import 'package:pressy_client/widgets/settings/faq/faq_widget.dart';
+import 'package:pressy_client/widgets/settings/payment/payment_methods_widget.dart';
+import 'package:pressy_client/widgets/settings/profile/profile_widget.dart';
+import 'package:pressy_client/widgets/settings/terms_of_use/terms_of_use_widget.dart';
 
 
 class SettingsWidget extends StatefulWidget {

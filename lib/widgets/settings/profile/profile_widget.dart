@@ -10,7 +10,7 @@ import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/utils/validators/validators.dart';
 import 'package:pressy_client/widgets/common/mixins/loader_mixin.dart';
 import 'package:pressy_client/widgets/common/mixins/lifecycle_mixin.dart';
-import 'package:pressy_client/widgets/settings/reset_password_widget.dart';
+import 'package:pressy_client/widgets/settings/profile/reset_password_widget.dart';
 
 
 class MemberInfoWidget extends StatefulWidget {

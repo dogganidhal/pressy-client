@@ -23,9 +23,10 @@ dependencies:
   dio: ^2.0.14
   shared_preferences: ^0.5.1+1
   flutter_simple_dependency_injection: any
-  flutter_slidable: "^0.4.9"
-  flutter_google_places: "^0.2.0"
-  uuid: "^2.0.0"
+  flutter_slidable: ^0.4.9
+  flutter_google_places: ^0.2.0
+  uuid: ^2.0.0
+  location: ^1.4.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

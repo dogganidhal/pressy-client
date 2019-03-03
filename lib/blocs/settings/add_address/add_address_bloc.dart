@@ -3,9 +3,11 @@ import 'package:meta/meta.dart';
 import 'package:pressy_client/blocs/settings/add_address/add_address_event.dart';
 import 'package:pressy_client/blocs/settings/add_address/add_address_state.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:google_maps_webservice/geocoding.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
+import 'package:pressy_client/services/providers/location/user_location_provider.dart';
 import 'package:pressy_client/utils/errors/address/address_not_covered.dart';
 import 'package:pressy_client/utils/errors/address/place_not_address.dart';
 import 'package:pressy_client/utils/errors/base_error.dart';
@@ -17,12 +19,17 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   final IMemberSession memberSession;
   final IMemberDataSource memberDataSource;
+  final IUserLocationProvider userLocationProvider;
 
   static const _kGooglePlacesApiKey = "AIzaSyAfTv8yb7lNverE7jxCk2ZQgMQQRVodIvI";
   final _googlePlacesAutocomplete = new GoogleMapsPlaces(apiKey: _kGooglePlacesApiKey, httpClient: new HttpClient());
+  final _googlePlacesGeoCoder = new GoogleMapsGeocoding(apiKey: _kGooglePlacesApiKey, httpClient: new HttpClient());
   String _sessionToken;
 
-  AddAddressBloc({@required this.memberDataSource, @required this.memberSession});
+  AddAddressBloc({
+    @required this.memberDataSource, @required this.memberSession,
+    @required this.userLocationProvider
+  });
 
   @override
   AddAddressState get initialState => new AddAddressInputState(predictions: []);
@@ -30,7 +37,20 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   @override
   Stream<AddAddressState> mapEventToState(AddAddressState currentState, AddAddressEvent event) async* {
 
-    if (event is SubmitAddressQueryEvent) {
+    if (event is UseDeviceLocationEvent && currentState is AddAddressInputState) {
+
+      yield new AddAddressInputState(predictions: currentState.predictions, isLoading: true);
+      final coordinates = await this.userLocationProvider.getUserLocation();
+      final result = await this._googlePlacesGeoCoder
+        .searchByLocation(new Location(coordinates.latitude, coordinates.longitude));
+      final place = result.results.first;
+      final prediction = new Prediction(
+        place.formattedAddress, null, [], place.placeId, null, [], [], null);
+      yield new AddAddressExtraInfoState(confirmedPrediction: prediction);
+
+    }
+
+    if (event is SubmitAddressQueryEvent && currentState is AddAddressInputState) {
       if (this._sessionToken == null)
         _sessionToken = Uuid().v4();
       final predictions = await this._googlePlacesAutocomplete.autocomplete(

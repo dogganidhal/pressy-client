@@ -10,7 +10,7 @@ class FaqWidget extends StatelessWidget {
         title: new Text("Comment ça marche"),
         backgroundColor: Colors.white,
         centerTitle: true,
-        elevation: 2,
+        elevation: 1,
       ),
       body: new SingleChildScrollView(
         padding: new EdgeInsets.all(12),

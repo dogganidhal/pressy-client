@@ -10,7 +10,7 @@ class TermsOfUseWidget extends StatelessWidget {
         title: new Text("CGU"),
         backgroundColor: Colors.white,
         centerTitle: true,
-        elevation: 2,
+        elevation: 1,
       ),
       body: new SingleChildScrollView(
         padding: new EdgeInsets.all(12),

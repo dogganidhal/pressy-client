@@ -12,10 +12,6 @@ import 'package:pressy_client/widgets/settings/address/add_address_widget.dart';
 
 class AddressesWidget extends StatefulWidget {
 
-  final List<MemberAddress> addresses;
-
-  AddressesWidget({@required this.addresses});
-
   @override
   State<StatefulWidget> createState() => new _AddressesWidgetState();
 
@@ -24,6 +20,10 @@ class AddressesWidget extends StatefulWidget {
 class _AddressesWidgetState extends State<AddressesWidget> {
 
   AddressBloc _addressBloc;
+  List<MemberAddress> get _addresses => ServiceProvider
+    .of(this.context)
+    .getService<IMemberSession>()
+    .connectedMemberProfile.addresses;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _AddressesWidgetState extends State<AddressesWidget> {
           title: new Text("Mes adresses"),
           backgroundColor: Colors.white,
           centerTitle: true,
-          elevation: 2,
+          elevation: 1,
           actions: <Widget>[
             new FlatButton.icon(
               onPressed: this._launchAddAddressWidget,
@@ -65,9 +65,9 @@ class _AddressesWidgetState extends State<AddressesWidget> {
             new Expanded(
               child: new ListView.separated(
                 padding: new EdgeInsets.only(top: 12, bottom: 12),
-                itemBuilder: (context, index) => this._addressRow(this.widget.addresses[index]),
+                itemBuilder: (context, index) => this._addressRow(this._addresses[index]),
                 separatorBuilder: (context, index) => new Divider(height: 1),
-                itemCount: this.widget.addresses.length
+                itemCount: this._addresses.length
               )
             )
           ],

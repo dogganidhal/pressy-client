@@ -55,7 +55,7 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
             title: new Text("Mon Profil"),
             backgroundColor: Colors.white,
             centerTitle: true,
-            elevation: 2,
+            elevation: 1,
             actions: <Widget>[
               this._actionButton(state)
             ],

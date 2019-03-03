@@ -15,7 +15,7 @@ class RoundCloseButton extends StatelessWidget {
     return new Container(
       child: new DecoratedBox(
         child: new MaterialButton(
-          elevation: 2,
+          elevation: 1,
           padding: EdgeInsets.all(0),
           splashColor: Colors.transparent,
           onPressed: this.onPressed,

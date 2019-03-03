@@ -42,7 +42,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     return new Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: new AppBar(
-        elevation: 2,
+        elevation: 1,
         backgroundColor: Colors.white,
         title: new Text("Paramètres"),
         centerTitle: true,
@@ -272,9 +272,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     final services = ServiceProvider.of(this.context);
     Navigator.push(this.context, new MaterialPageRoute(
       builder: (_) => new ServiceProvider(
-        child: new AddressesWidget(
-          addresses: this.widget.memberSession.connectedMemberProfile.addresses,
-        ),
+        child: new AddressesWidget(),
         services: services)
     ));
   }

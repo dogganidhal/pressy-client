@@ -38,7 +38,7 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
       bloc: this.widget.authBloc,
       child: new Scaffold(
         appBar: new AppBar(
-          elevation: 2,
+          elevation: 1,
           backgroundColor: Colors.white,
           title: new Text("Authentification"),
           centerTitle: true,

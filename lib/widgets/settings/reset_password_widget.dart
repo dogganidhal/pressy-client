@@ -17,7 +17,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
         title: new Text("Nouveau mot de passe"),
         backgroundColor: Colors.white,
         centerTitle: true,
-        elevation: 2,
+        elevation: 1,
       ),
     );
   }

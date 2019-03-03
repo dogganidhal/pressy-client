@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pressy_client/data/session/member/member_session.dart';
+import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/widgets/settings/settings_widget.dart';
 import 'package:pressy_client/widgets/commande/commandes_widget.dart';
@@ -23,17 +25,28 @@ class _HomeWidgetState extends State<HomeWidget>
 
   int _currentIndex;
   List<Widget> _widgets;
+  IMemberSession _memberSession;
 
   @override
   void initState() {
     super.initState();
+    this._memberSession = ServiceProvider.of(this.context).getService<IMemberSession>();
     this._currentIndex = this.widget.initialSelectedTab;
     this._widgets = [
       new Center(
         child: new Icon(Icons.search),
       ),
+<<<<<<< HEAD
       new CommandeWidget(),
       new SettingsWidget(),
+=======
+      new Center(
+        child: new Icon(Icons.calendar_today),
+      ),
+      new SettingsWidget(
+        memberSession: this._memberSession,
+      ),
+>>>>>>> develop
     ];
   }
 

@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 
 
-class PaymentMethodsWidget extends StatefulWidget {
+class ResetPasswordWidget extends StatefulWidget {
 
   @override
-  State<StatefulWidget> createState() => new _PaymentMethodsWidgetState();
+  State<StatefulWidget> createState() => new _ResetPasswordWidgetState();
 
 }
 
-class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
+class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        elevation: 1,
         iconTheme: new IconThemeData(color: ColorPalette.orange),
-        title: new Text("Mes moyens de paiment"),
+        title: new Text("Nouveau mot de passe"),
         backgroundColor: Colors.white,
         centerTitle: true,
+        elevation: 1,
       ),
     );
   }

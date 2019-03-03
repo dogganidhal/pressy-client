@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pressy_client/utils/style/app_theme.dart';
 
 
 class FaqWidget extends StatelessWidget {
@@ -7,8 +8,11 @@ class FaqWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        iconTheme: new IconThemeData(color: ColorPalette.orange),
         title: new Text("Comment ça marche"),
         backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 1,
       ),
       body: new SingleChildScrollView(
         padding: new EdgeInsets.all(12),

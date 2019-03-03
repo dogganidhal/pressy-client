@@ -20,7 +20,7 @@ class HttpClient extends IClient {
 
   @override
   Future<Response> post(url, {Map<String, String> headers, body, Encoding encoding}) async {
-    this._logRequest(url: url, headers: headers, method: "POST");
+    this._logRequest(url: url, headers: headers, method: "POST", body: body);
     final response = await this._inner.post(url, headers: headers, body: body, encoding: encoding);
     this._logResponse(response);
     return response;
@@ -28,7 +28,7 @@ class HttpClient extends IClient {
 
   @override
   Future<Response> patch(url, {Map<String, String> headers, body, Encoding encoding}) async {
-    this._logRequest(url: url, headers: headers, method: "PATCH");
+    this._logRequest(url: url, headers: headers, method: "PATCH", body: body);
     final response = await this._inner.patch(url, headers: headers, body: body, encoding: encoding);
     this._logResponse(response);
     return response;
@@ -44,18 +44,21 @@ class HttpClient extends IClient {
 
   void _logResponse(Response response) {
     print(
-      'RESPONSE : \n'
-      'Status code : ${response.statusCode}\n'
-      'Body : ${response.body}\n'
+      'Http Response : {\n'
+      '  Status code : ${response.statusCode},\n'
+      '  Body : ${response.body}\n'
     );
   }
 
-  void _logRequest({String method, String url, Map<String, String> headers}) async {
-    print(
-      'REQUEST : \n'
-      '$method $url\n'
+  void _logRequest({String method, String url, Map<String, String> headers, dynamic body}) async {
+    final stringBuffer = new StringBuffer();
+    stringBuffer.write(
+      'Http Request : $method $url\n'
       'Headers: $headers\n'
     );
+    if (body != null)
+      stringBuffer.write('Body: $body');
+    print(stringBuffer.toString());
   }
 
 }

@@ -10,7 +10,7 @@ description: Pressy Client Mobile App.
 version: 0.0.1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -19,9 +19,18 @@ dependencies:
   flutter_bloc: ^0.6.3
   equatable: ^0.1.10
   json_serializable: ^2.0.2
+<<<<<<< HEAD
   http: ^0.12.0
   shared_preferences: ^0.4.3
+=======
+  http: ^0.11.3
+  dio: ^2.0.14
+  shared_preferences: ^0.5.1+1
+>>>>>>> develop
   flutter_simple_dependency_injection: any
+  flutter_slidable: "^0.4.9"
+  flutter_google_places: "^0.2.0"
+  uuid: "^2.0.0"
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

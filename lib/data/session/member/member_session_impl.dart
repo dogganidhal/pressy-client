@@ -9,8 +9,14 @@ class MemberSessionImpl implements IMemberSession {
   static const String _MEMBER_PROFILE_KEY = "@pressy/member-profile";
   static const String _DID_PASS_ONBOARDING_KEY = "@pressy/did-pass-onboarding";
   
+  MemberProfile _connectedMemberProfile;
+  
+  @override
+  MemberProfile get connectedMemberProfile => this._connectedMemberProfile;
+  
   @override
   Future<void> deletePersistedMemberProfile() async {
+    this._connectedMemberProfile = null;
     var sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.remove(_MEMBER_PROFILE_KEY);
   }
@@ -26,8 +32,10 @@ class MemberSessionImpl implements IMemberSession {
     var sharedPreferences = await SharedPreferences.getInstance();
     var memberProfileString = sharedPreferences.getString(_MEMBER_PROFILE_KEY);
     if (memberProfileString != null) {
-      var map = json.decode(memberProfileString);
-      return MemberProfile.fromJson(map);
+      final map = json.decode(memberProfileString);
+      final memberProfile = MemberProfile.fromJson(map); 
+      this._connectedMemberProfile = memberProfile;
+      return memberProfile;
     }
     return null;
   }
@@ -39,9 +47,10 @@ class MemberSessionImpl implements IMemberSession {
   }
 
   @override
-  Future<void> persistMemberProfile(MemberProfile member) async {
+  Future<void> persistMemberProfile(MemberProfile memberProfile) async {
+    this._connectedMemberProfile = memberProfile;
     var sharedPreferences = await SharedPreferences.getInstance();
-    var memberProfileString = json.encode(member.toJson());
+    var memberProfileString = json.encode(memberProfile.toJson());
     await sharedPreferences.setString(_MEMBER_PROFILE_KEY, memberProfileString);
   }
 

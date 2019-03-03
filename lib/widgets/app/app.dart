@@ -4,17 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_bloc.dart';
 import 'package:pressy_client/blocs/auth/auth_event.dart';
 import 'package:pressy_client/blocs/auth/auth_state.dart';
+import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_collection.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
+import 'package:pressy_client/widgets/auth/auth_widget.dart';
 import 'package:pressy_client/widgets/home/home_widget.dart';
 
 class Application extends StatelessWidget with AppThemeMixin {
 
   final AuthBloc authBloc;
   final IServiceCollection services;
-
-  final HomeWidget _homeWidget = new HomeWidget();
 
   Application({@required this.services}) :
       assert(services != null),
@@ -42,7 +42,10 @@ class Application extends StatelessWidget with AppThemeMixin {
                   ),
                 );
               }
-              return this._homeWidget;
+              return state is AuthAuthenticated ? new HomeWidget() : new AuthWidget(
+                authBloc: this.authBloc,
+                memberSession: this.services.getService<IMemberSession>(),
+              );
             },
 
           ),

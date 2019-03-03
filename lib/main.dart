@@ -29,9 +29,9 @@ IServiceCollection configureServices() {
     authSession: services.getService<IAuthSession>()
   ));
   services.addScoped<IAuthDataSource>((services) => new AuthDataSourceImpl(
-      apiEndpointProvider: services.getService<ApiEndpointProvider>(),
-      client: services.getService<IClient>(),
-      authSession: services.getService<IAuthSession>()
+    apiEndpointProvider: services.getService<ApiEndpointProvider>(),
+    client: services.getService<IClient>(),
+    authSession: services.getService<IAuthSession>()
   ));
 
   return services;

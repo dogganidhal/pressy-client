@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
 
-class AddressesWidget extends StatefulWidget {
+class ResetPasswordWidget extends StatefulWidget {
 
   @override
-  State<StatefulWidget> createState() => new _AddressesWidgetState();
+  State<StatefulWidget> createState() => new _ResetPasswordWidgetState();
 
 }
 
-class _AddressesWidgetState extends State<AddressesWidget> {
+class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Mes adresses"),
+        title: new Text("Nouveau mot de passe"),
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 2,

@@ -7,7 +7,7 @@ import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
-import 'package:pressy_client/widgets/settings/addresses_widget.dart';
+import 'package:pressy_client/widgets/settings/address/addresses_widget.dart';
 import 'package:pressy_client/widgets/settings/contact_widget.dart';
 import 'package:pressy_client/widgets/settings/faq_widget.dart';
 import 'package:pressy_client/widgets/settings/payment_methods_widget.dart';
@@ -269,8 +269,13 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   }
 
   void _launchAddressesWidget() {
+    final services = ServiceProvider.of(this.context);
     Navigator.push(this.context, new MaterialPageRoute(
-        builder: (_) => new AddressesWidget()
+      builder: (_) => new ServiceProvider(
+        child: new AddressesWidget(
+          addresses: this.widget.memberSession.connectedMemberProfile.addresses,
+        ),
+        services: services)
     ));
   }
 

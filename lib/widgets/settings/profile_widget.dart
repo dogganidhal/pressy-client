@@ -6,9 +6,11 @@ import 'package:pressy_client/blocs/settings/member_info/member_info_state.dart'
 import 'package:pressy_client/data/data_source/member/member_data_source.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
+import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/utils/validators/validators.dart';
 import 'package:pressy_client/widgets/common/mixins/loader_mixin.dart';
 import 'package:pressy_client/widgets/common/mixins/lifecycle_mixin.dart';
+import 'package:pressy_client/widgets/settings/reset_password_widget.dart';
 
 
 class MemberInfoWidget extends StatefulWidget {
@@ -61,13 +63,18 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
           body: new Container(
             key: this._scaffoldKey,
             child: new SingleChildScrollView(
-              child: new Container(
-                padding: new EdgeInsets.all(16),
-                child: new Form(
-                  child: this._signUpForm(state is MemberInfoEditableState),
-                  autovalidate: true,
-                  onChanged: this._memberInfoFormChanged
-                )
+              child: new Column(
+                children: <Widget>[
+                  new Container(
+                      padding: new EdgeInsets.all(16),
+                      child: new Form(
+                          child: this._signUpForm(state is MemberInfoEditableState),
+                          autovalidate: true,
+                          onChanged: this._memberInfoFormChanged
+                      )
+                  ),
+                  this._resetPasswordWidget(state)
+                ],
               ),
             ),
           ),
@@ -83,6 +90,23 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
       this._phoneField(editable),
     ],
   );
+
+  Widget _resetPasswordWidget(MemberInfoState state) => state is MemberInfoUneditableState ?
+    new FlatButton(
+      onPressed: () => Navigator.push(
+        context,
+        new MaterialPageRoute(
+          builder: (context) => new ResetPasswordWidget()
+        )
+      ),
+      child: new Text(
+        "Réinitialiser mon mot de passe",
+        style: new TextStyle(
+          color: ColorPalette.orange,
+          fontWeight: FontWeight.w600
+        ),
+      )
+    ) : new Container();
 
   Widget _nameFieldRow(bool editable) => new Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,

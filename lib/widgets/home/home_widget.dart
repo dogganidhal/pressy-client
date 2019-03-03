@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/widgets/settings/settings_widget.dart';
+import 'package:pressy_client/widgets/commande/commandes_widget.dart';
 
 class HomeWidget extends StatefulWidget {
 
@@ -31,9 +32,7 @@ class _HomeWidgetState extends State<HomeWidget>
       new Center(
         child: new Icon(Icons.search),
       ),
-      new Center(
-        child: new Icon(Icons.calendar_today),
-      ),
+      new CommandeWidget(),
       new SettingsWidget(),
     ];
   }

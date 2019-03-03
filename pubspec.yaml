@@ -20,7 +20,7 @@ dependencies:
   equatable: ^0.1.10
   json_serializable: ^2.0.2
   http: ^0.12.0
-  shared_preferences: ^0.5.1+1
+  shared_preferences: ^0.4.3
   flutter_simple_dependency_injection: any
 
   # The following adds the Cupertino Icons font to your application.

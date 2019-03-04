@@ -34,9 +34,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is AuthAppStartedEvent) {
 
       yield new AuthLoadingState();
-
-      await Future.delayed(new Duration(seconds: 5));
-
       final hasToken = await this._authSession.hasCredentials();
 
       if (hasToken) {
@@ -47,7 +44,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           authCredentials: authCredentials,
           memberProfile: memberProfile
         );
-        this._renewAuthCredentials(authCredentials.refreshToken);
+        this._refreshSession(authCredentials.refreshToken);
 
       } else
         yield new AuthUnauthenticatedState();
@@ -78,9 +75,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   }
 
-  void _renewAuthCredentials(String refreshToken) async {
-    var authCredentials = await this._authDataSource.refreshCredentials(refreshToken);
+  void _refreshSession(String refreshToken) async {
+    final authCredentials = await this._authDataSource.refreshCredentials(refreshToken);
     this._authSession.persistAuthCredentials(authCredentials);
+    final memberProfile = await this._memberDataSource.getMemberProfile();
+    this._memberSession.persistMemberProfile(memberProfile);
   }
-  
+
 }

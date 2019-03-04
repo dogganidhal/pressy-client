@@ -99,7 +99,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Mon profil"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchProfileWidget,
@@ -121,7 +121,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Mes moyens de paiement"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchPaymentAccountsWidget,
@@ -143,7 +143,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Mes adresses"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchAddressesWidget,
@@ -174,7 +174,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Comment ça marche ?"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchFaqWidget,
@@ -196,7 +196,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Nous contacter"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchContactWidget,
@@ -218,7 +218,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Conditions générales d'utilisation"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchTermsOfUseWidget,

@@ -56,20 +56,22 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
-      body: new BlocBuilder<AddAddressEvent, AddAddressState>(
-        key: this._scaffoldKey,
-        bloc: this._addAddressBloc,
-        builder: (context, state) {
-          this._handleState(state);
-          Widget widget;
-          if (state is AddAddressInputState)
-            widget = this._addressInputWidget(state);
-          else if (state is AddAddressExtraInfoState)
-            widget = this._addressExtraInfoWidget(state);
-          else
-            widget = new Container();
-          return widget;
-        },
+      body: new SafeArea(
+        child: new BlocBuilder<AddAddressEvent, AddAddressState>(
+          key: this._scaffoldKey,
+          bloc: this._addAddressBloc,
+          builder: (context, state) {
+            this._handleState(state);
+            Widget widget;
+            if (state is AddAddressInputState)
+              widget = this._addressInputWidget(state);
+            else if (state is AddAddressExtraInfoState)
+              widget = this._addressExtraInfoWidget(state);
+            else
+              widget = new Container();
+            return widget;
+          },
+        )
       ),
     );
   }

@@ -20,6 +20,11 @@ MemberProfile _$MemberProfileFromJson(Map<String, dynamic> json) {
           ?.map((e) => e == null
               ? null
               : MemberAddress.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      paymentAccounts: (json['paymentAccounts'] as List)
+          ?.map((e) => e == null
+              ? null
+              : PaymentAccount.fromJson(e as Map<String, dynamic>))
           ?.toList());
 }
 
@@ -31,5 +36,6 @@ Map<String, dynamic> _$MemberProfileToJson(MemberProfile instance) =>
       'email': instance.email,
       'phone': instance.phone,
       'created': instance.created?.toIso8601String(),
-      'addresses': instance.addresses
+      'addresses': instance.addresses,
+      'paymentAccounts': instance.paymentAccounts
     };

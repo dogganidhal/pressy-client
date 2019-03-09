@@ -123,9 +123,10 @@ class _AddressesWidgetState extends State<AddressesWidget>
             bloc: this._addressBloc,
             child: new AddAddressWidget()
           ),
-        services: services
+          services: services
         )
-      ));
+      )
+    );
   }
 
   void _handleState(AddressState state) {

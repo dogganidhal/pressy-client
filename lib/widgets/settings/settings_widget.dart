@@ -264,8 +264,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   }
 
   void _launchPaymentAccountsWidget() {
+    final services = ServiceProvider.of(this.context);
     Navigator.push(this.context, new MaterialPageRoute(
-        builder: (_) => new PaymentMethodsWidget()
+      builder: (_) => new ServiceProvider(
+        child: new PaymentMethodsWidget(),
+        services: services
+      )
     ));
   }
 

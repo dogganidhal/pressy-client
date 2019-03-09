@@ -45,4 +45,22 @@ abstract class Validators {
   static String passwordConfirmationValidator(String password, String passwordConfirmation) => 
     password == passwordConfirmation ? null : "Les mots de passes ne sont pas identiques";
 
+  static String creditCardValidator(String cardNumber) {
+    RegExp regExp = new RegExp("^[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}\$");
+    return regExp.hasMatch(cardNumber) ? null : "Numéro de carte invalide";
+  }
+
+  static String expiryDateValidator(String expiryDate) {
+    final dateComponents = expiryDate.split("/");
+    if (dateComponents.length != 2)
+      return "Date de fin invalide";
+    if (DateTime.now().year - 2000 > int.parse(dateComponents[1]))
+      return "Carte expirée";
+    if (DateTime.now().month > int.parse(dateComponents[0]))
+      return "Carte expirée";
+    return null;
+  }
+
+  static String cvcValidator(String cvc) => cvc != null && cvc.length == 3 ? null : "le cvc doit comprendre 3 chiffres";
+
 }

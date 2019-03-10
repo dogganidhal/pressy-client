@@ -8,6 +8,7 @@ import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
+import 'package:pressy_client/services/providers/location/user_location_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/widgets/common/mixins/loader_mixin.dart';
 import 'package:pressy_client/widgets/common/mixins/error_mixin.dart';
@@ -35,7 +36,8 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
     super.initState();
     this._addAddressBloc = new AddAddressBloc(
       memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>(),
-      memberSession: ServiceProvider.of(this.context).getService<IMemberSession>()
+      memberSession: ServiceProvider.of(this.context).getService<IMemberSession>(),
+      userLocationProvider: ServiceProvider.of(this.context).getService<IUserLocationProvider>()
     );
     this._addressController.addListener(() {
       final query = this._addressController.text;
@@ -54,20 +56,22 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
-      body: new BlocBuilder<AddAddressEvent, AddAddressState>(
-        key: this._scaffoldKey,
-        bloc: this._addAddressBloc,
-        builder: (context, state) {
-          this._handleState(state);
-          Widget widget;
-          if (state is AddAddressInputState)
-            widget = this._addressInputWidget(state);
-          else if (state is AddAddressExtraInfoState)
-            widget = this._addressExtraInfoWidget(state);
-          else
-            widget = new Container();
-          return widget;
-        },
+      body: new SafeArea(
+        child: new BlocBuilder<AddAddressEvent, AddAddressState>(
+          key: this._scaffoldKey,
+          bloc: this._addAddressBloc,
+          builder: (context, state) {
+            this._handleState(state);
+            Widget widget;
+            if (state is AddAddressInputState)
+              widget = this._addressInputWidget(state);
+            else if (state is AddAddressExtraInfoState)
+              widget = this._addressExtraInfoWidget(state);
+            else
+              widget = new Container();
+            return widget;
+          },
+        )
       ),
     );
   }
@@ -167,7 +171,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
                 ),
                 new GestureDetector(
                   child: new Icon(Icons.location_on, color: ColorPalette.orange),
-                  onTap: () => print("set to user location"),
+                  onTap: () => this._addAddressBloc.dispatch(new UseDeviceLocationEvent()),
                 )
               ],
             ),

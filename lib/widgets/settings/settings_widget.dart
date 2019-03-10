@@ -8,11 +8,11 @@ import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/widgets/settings/address/addresses_widget.dart';
-import 'package:pressy_client/widgets/settings/contact_widget.dart';
-import 'package:pressy_client/widgets/settings/faq_widget.dart';
-import 'package:pressy_client/widgets/settings/payment_methods_widget.dart';
-import 'package:pressy_client/widgets/settings/profile_widget.dart';
-import 'package:pressy_client/widgets/settings/terms_of_use_widget.dart';
+import 'package:pressy_client/widgets/settings/contact/contact_widget.dart';
+import 'package:pressy_client/widgets/settings/faq/faq_widget.dart';
+import 'package:pressy_client/widgets/settings/payment/payment_methods_widget.dart';
+import 'package:pressy_client/widgets/settings/profile/profile_widget.dart';
+import 'package:pressy_client/widgets/settings/terms_of_use/terms_of_use_widget.dart';
 
 
 class SettingsWidget extends StatefulWidget {
@@ -99,7 +99,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Mon profil"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchProfileWidget,
@@ -121,7 +121,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Mes moyens de paiement"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchPaymentAccountsWidget,
@@ -143,7 +143,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Mes adresses"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchAddressesWidget,
@@ -174,7 +174,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Comment ça marche ?"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchFaqWidget,
@@ -196,7 +196,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Nous contacter"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchContactWidget,
@@ -218,7 +218,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   new Expanded(
                     child: new Text("Conditions générales d'utilisation"),
                   ),
-                  new Icon(Icons.chevron_right)
+                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchTermsOfUseWidget,
@@ -264,8 +264,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   }
 
   void _launchPaymentAccountsWidget() {
+    final services = ServiceProvider.of(this.context);
     Navigator.push(this.context, new MaterialPageRoute(
-        builder: (_) => new PaymentMethodsWidget()
+      builder: (_) => new ServiceProvider(
+        child: new PaymentMethodsWidget(),
+        services: services
+      )
     ));
   }
 

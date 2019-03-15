@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 
-class FutureWidget extends StatelessWidget {
+class PrecedentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {

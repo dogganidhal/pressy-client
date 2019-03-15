@@ -54,25 +54,6 @@ class _CommandeWidgetState extends State<CommandeWidget> with SingleTickerProvid
                   ),
                 ),
               ),
-              /*new Container(
-                padding: new EdgeInsets.only(bottom: 8, top: 8),
-                child: new ButtonTheme(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  child: new FlatButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    child: new Text("FUTURE",
-                      maxLines: 1,
-                      style: new TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: ColorPalette.orange
-                      ),
-                    ),
-                    onPressed: this._futureWidget,
-                  ),
-                ),
-              )*/
               new Container(
                 padding: new EdgeInsets.only(bottom: 8, top: 8),
                 child: new Text("A VENIR",

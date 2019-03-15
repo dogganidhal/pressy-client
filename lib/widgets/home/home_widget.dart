@@ -36,17 +36,10 @@ class _HomeWidgetState extends State<HomeWidget>
       new Center(
         child: new Icon(Icons.search),
       ),
-<<<<<<< HEAD
       new CommandeWidget(),
-      new SettingsWidget(),
-=======
-      new Center(
-        child: new Icon(Icons.calendar_today),
-      ),
       new SettingsWidget(
         memberSession: this._memberSession,
       ),
->>>>>>> develop
     ];
   }
 

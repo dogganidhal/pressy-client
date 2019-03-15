@@ -41,7 +41,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
           controller: this._tabController,
           tabs: <Widget>[
             GestureDetector(
-              onTap: () {this._currentIndex = 1;},
+              onTap: () {this._currentIndex = 3;},
               child: new Container(
                 padding: new EdgeInsets.only(bottom: 8, top: 8),
                 child: new Text("PRECEDENTES",
@@ -69,7 +69,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
               ),
             ),
             GestureDetector(
-                onTap: () {this._currentIndex = 3;},
+                onTap: () {this._currentIndex = 1;},
                 child: new Container(
                   padding: new EdgeInsets.only(bottom: 8, top: 8),
                   child: new Text("A VENIR",

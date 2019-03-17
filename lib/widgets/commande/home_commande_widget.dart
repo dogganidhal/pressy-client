@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
-/*import 'package:pressy_client/widgets/commande/future_widget.dart';
-import 'package:pressy_client/widgets/commande/encours_widget.dart';
-import 'package:pressy_client/widgets/commande/precedent_widget.dart';*/
 
 class HomeCommandeWidget extends StatefulWidget {
+
   @override
   _HomeCommandeWidgetState createState() => _HomeCommandeWidgetState();
 
@@ -13,7 +11,6 @@ class HomeCommandeWidget extends StatefulWidget {
 class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTickerProviderStateMixin{
 
   TabController _tabController;
-  int _currentIndex;
 
   @override
   void initState() {
@@ -21,17 +18,24 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
     this._tabController = new TabController(length: 3, vsync: this);
   }
 
-  List<Widget> _buildWidgets() => [
-    this._future,
-    this._encours,
-    this._precedent,
-  ];
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
-      body: this._buildWidgets()[this._currentIndex],
+      body: new TabBarView(
+          controller: this._tabController,
+          children: [
+            this._precedent,
+            new ConstrainedBox(
+                constraints: BoxConstraints.expand(),
+                child: this._encours
+            ),
+            new ConstrainedBox(
+                constraints: BoxConstraints.expand(),
+                child: this._future
+            ),
+          ]
+      ),
       appBar: new AppBar(
         elevation: 3,
         backgroundColor: Colors.white,
@@ -40,54 +44,46 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
         bottom: new TabBar(
           controller: this._tabController,
           tabs: <Widget>[
-            GestureDetector(
-              onTap: () {this._currentIndex = 2;},
-              child: new Container(
+              new Container(
                 padding: new EdgeInsets.only(bottom: 8, top: 8),
                 child: new Text("PRECEDENTES",
                   maxLines: 1,
                   style: new TextStyle(
-                      fontSize: 5,
+                      fontSize: 15,
                       fontWeight: FontWeight.w600,
                       color: ColorPalette.orange
                   ),
                 ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {this._currentIndex = 1;},
-              child: new Container(
+              new Container(
                 padding: new EdgeInsets.only(bottom: 8, top: 8),
                 child: new Text("EN COURS",
                   maxLines: 1,
                   style: new TextStyle(
-                      fontSize: 5,
+                      fontSize: 15,
                       fontWeight: FontWeight.w600,
                       color: ColorPalette.orange
                   ),
                 ),
               ),
-            ),
-            GestureDetector(
-                onTap: () {this._currentIndex = 0;},
-                child: new Container(
+              new Container(
                   padding: new EdgeInsets.only(bottom: 8, top: 8),
                   child: new Text("A VENIR",
                     maxLines: 1,
                     style: new TextStyle(
-                        fontSize: 5,
+                        fontSize: 15,
                         fontWeight: FontWeight.w600,
                         color: ColorPalette.orange
                     ),
                   ),
                 )
-            )
           ],
         ),
       ),
     );
   }
-  Widget get _future =>  new Center(
+
+  Widget get _precedent =>  new Center(
       child: new Container(
         child: Center(
           child: new Column(
@@ -108,7 +104,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
   );
 
   Widget get _encours => new Center(
-      child: new Container(
+      child : new Container(
         child: Center(
           child: new Column(
               children: <Widget>[
@@ -128,7 +124,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
   );
 
 
-  Widget get _precedent =>  new ListView(
+  Widget get _future =>  new ListView(
     children: <Widget>[
       new Container(
         margin: const EdgeInsets.all(10.0),
@@ -149,6 +145,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                       fontWeight: FontWeight.bold
                   )
               ),
+              new Divider(height: 5),
               new Row(
                   children : <Widget>[
                     new Text('Collecte prévue : ',
@@ -165,6 +162,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     ),
                   ]
               ),
+              new Divider(height: 5),
               new Row(
                   children : <Widget>[
                     new Text('Livraison prévue : ',
@@ -181,6 +179,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     ),
                   ]
               ),
+              new Divider(height: 5),
               new Row(
                   children : <Widget>[
                     new Text('Adresse : ',
@@ -197,13 +196,13 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     ),
                   ]
               ),
-              new Divider(height: 1),
+              new Divider(height: 5),
               new Container(
                 margin: const EdgeInsets.all(10.0),
-                child: new Text("CHANGER L'ADRESSE DE LIVRAISON",
+                child: new Text("CHANGER L'ADRESSE DE COLLECTE/LIVRAISON",
                   maxLines: 1,
                   style: new TextStyle(
-                      fontSize: 16,
+                      fontSize: 13,
                       fontWeight: FontWeight.w600,
                       color: ColorPalette.orange
                   ),
@@ -231,6 +230,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                       fontWeight: FontWeight.bold
                   )
               ),
+              new Divider(height: 5),
               new Row(
                   children : <Widget>[
                     new Text('Collecte prévue : ',
@@ -247,6 +247,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     ),
                   ]
               ),
+              new Divider(height: 5),
               new Row(
                   children : <Widget>[
                     new Text('Livraison prévue : ',
@@ -263,6 +264,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     ),
                   ]
               ),
+              new Divider(height: 5),
               new Row(
                   children : <Widget>[
                     new Text('Adresse : ',
@@ -279,13 +281,13 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     ),
                   ]
               ),
-              new Divider(height: 1),
+              new Divider(height: 5),
               new Container(
                 margin: const EdgeInsets.all(10.0),
-                child: new Text("CHANGER L'ADRESSE DE LIVRAISON",
+                child: new Text("CHANGER L'ADRESSE DE COLLECTE/LIVRAISON",
                   maxLines: 1,
                   style: new TextStyle(
-                      fontSize: 16,
+                      fontSize: 13,
                       fontWeight: FontWeight.w600,
                       color: ColorPalette.orange
                   ),

@@ -24,7 +24,7 @@ class AuthDataSourceImpl extends DataSource implements IAuthDataSource {
   @override
   Future<AuthCredentials> login(LoginRequestModel loginRequest) {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.authEndpoints.login,
+      endpoint: this.apiEndpointProvider.auth.login,
       body: loginRequest?.toJson(),
       responseConverter: (json) => AuthCredentials.fromJson(json)
     );
@@ -33,7 +33,7 @@ class AuthDataSourceImpl extends DataSource implements IAuthDataSource {
   @override
   Future<AuthCredentials> refreshCredentials(String refreshToken) {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.authEndpoints.refreshCredentials,
+      endpoint: this.apiEndpointProvider.auth.refreshCredentials,
       body: { "refreshToken": refreshToken },
       responseConverter: (json) => AuthCredentials.fromJson(json)
     );

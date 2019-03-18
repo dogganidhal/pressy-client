@@ -7,6 +7,7 @@ import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/session/auth/auth_session.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_collection.dart';
+import 'package:pressy_client/data/model/errors/api_error.dart';
 
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -76,10 +77,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _refreshSession(String refreshToken) async {
-    final authCredentials = await this._authDataSource.refreshCredentials(refreshToken);
-    this._authSession.persistAuthCredentials(authCredentials);
-    final memberProfile = await this._memberDataSource.getMemberProfile();
-    this._memberSession.persistMemberProfile(memberProfile);
+    try {
+      final authCredentials = await this._authDataSource.refreshCredentials(refreshToken);
+      this._authSession.persistAuthCredentials(authCredentials);
+      final memberProfile = await this._memberDataSource.getMemberProfile();
+      this._memberSession.persistMemberProfile(memberProfile);
+    } on ApiError catch (_) {
+      // TODO: Handle This Error!
+    }
   }
 
 }

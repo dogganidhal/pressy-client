@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pressy_client/data/data_source/auth/auth_data_source_impl.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/data_source/member/member_data_source_impl.dart';
+import 'package:pressy_client/data/data_source/order/order_data_Srouce_impl.dart';
+import 'package:pressy_client/data/data_source/order/order_data_source.dart';
 import 'package:pressy_client/data/resources/resources.dart';
 import 'package:pressy_client/data/session/auth/auth_session.dart';
 import 'package:pressy_client/data/session/auth/auth_session_impl.dart';
@@ -35,6 +37,10 @@ IServiceCollection configureServices() {
     apiEndpointProvider: services.getService<ApiEndpointProvider>(),
     client: services.getService<IClient>(),
     authSession: services.getService<IAuthSession>()
+  ));
+  services.addScoped<IOrderDataSource>((services) => new OrderDataSourceImpl(
+    apiEndpointProvider: services.getService<ApiEndpointProvider>(),
+    client: services.getService<IClient>(),
   ));
 
   return services;

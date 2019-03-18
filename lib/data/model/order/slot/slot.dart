@@ -2,6 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'slot.g.dart';
 
+enum SlotType {
+  STANDARD, VIP
+}
+
 @JsonSerializable()
 class Slot {
 
@@ -13,5 +17,7 @@ class Slot {
 
   factory Slot.fromJson(Map<String, dynamic> json) => _$SlotFromJson(json);
   Map<String, dynamic> toJson() => _$SlotToJson(this);
+
+  SlotType get slotType => this.type == "vip" ? SlotType.VIP : SlotType.STANDARD;
 
 }

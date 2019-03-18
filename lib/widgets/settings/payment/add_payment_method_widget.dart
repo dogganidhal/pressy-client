@@ -175,7 +175,7 @@ class _AddPaymentMethodWidgetState extends State<AddPaymentMethodWidget>
           child: new ButtonTheme(
             height: double.infinity,
             child: new FlatButton(
-              child: new Text("S'INSCRIRE"),
+              child: new Text("CONFIRMER"),
               textColor: Colors.white,
               onPressed: isFormValid ? () => print(this._cardNumberController.text.split(' ').join()) : null,
             ),

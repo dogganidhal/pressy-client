@@ -10,9 +10,10 @@ class ApiEndpointProvider {
     {this.baseUrl: "https://pressy-mobile-api-dev.herokuapp.com/v1"}
   );
 
-  final _ApiAuthEndpoints authEndpoints = new _ApiAuthEndpoints();
-  final _ApiMemberEndpoints memberEndpoints = new _ApiMemberEndpoints();
-  final _ApiAddressEndpoints addressEndpoints = new _ApiAddressEndpoints();
+  final _ApiAuthEndpoints auth = new _ApiAuthEndpoints();
+  final _ApiMemberEndpoints members = new _ApiMemberEndpoints();
+  final _ApiAddressEndpoints addresses = new _ApiAddressEndpoints();
+  final _ApiOrderEndpoints orders = new _ApiOrderEndpoints();
 
 }
 
@@ -49,5 +50,14 @@ class _ApiAddressEndpoints {
   final ApiEndpoint editAddress = new ApiEndpoint(path: "/address", method: "PATCH", needsAuthorization: true);
   final ApiEndpoint createAddress = new ApiEndpoint(path: "/address", method: "POST", needsAuthorization: true);
   ApiEndpoint deleteAddress(int addressId) => new ApiEndpoint(path: "/address/$addressId", method: "DELETE", needsAuthorization: true);
+
+}
+
+class _ApiOrderEndpoints {
+
+  final ApiEndpoint getAvailableSlots = new ApiEndpoint(path: "/order/slots", method: "GET");
+  final ApiEndpoint getArticles = new ApiEndpoint(path: "/order/articles", method: "GET");
+  final ApiEndpoint getOrders = new ApiEndpoint(path: "/order", method: "GET", needsAuthorization: true);
+  final ApiEndpoint submitOrder = new ApiEndpoint(path: "/order", method: "POST", needsAuthorization: true);
 
 }

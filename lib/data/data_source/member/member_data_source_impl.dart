@@ -29,7 +29,7 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
   @override
   Future<AuthCredentials> signUp(SignUpRequestModel signUpRequest) {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.memberEndpoints.signUp,
+      endpoint: this.apiEndpointProvider.members.signUp,
       body: signUpRequest?.toJson(),
       responseConverter: (json) => AuthCredentials.fromJson(json)
     );
@@ -38,7 +38,7 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
   @override
   Future<void> editMemberProfile(EditMemberProfileRequestModel request) {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.memberEndpoints.editProfile,
+      endpoint: this.apiEndpointProvider.members.editProfile,
       body: request?.toJson(),
     );
   }
@@ -46,7 +46,7 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
   @override
   Future<MemberProfile> getMemberProfile() {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.memberEndpoints.memberProfile,
+      endpoint: this.apiEndpointProvider.members.memberProfile,
       responseConverter: (json) => MemberProfile.fromJson(json)
     );
   }
@@ -54,21 +54,21 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
   @override
   Future<void> validateMemberEmail(String email) {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.memberEndpoints.validateEmail(email),
+      endpoint: this.apiEndpointProvider.members.validateEmail(email),
     );
   }
 
   @override
   Future<void> validateMemberPhone(String phone) {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.memberEndpoints.validatePhone(phone),
+      endpoint: this.apiEndpointProvider.members.validatePhone(phone),
     );
   }
 
   @override
   Future<MemberAddress> createMemberAddress(CreateMemberAddressDetails request) {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.addressEndpoints.createAddress,
+      endpoint: this.apiEndpointProvider.addresses.createAddress,
       body: request?.toJson(),
       responseConverter: (json) => MemberAddress.fromJson(json)
     );
@@ -77,14 +77,14 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
   @override
   Future<void> deleteMemberAddress(int addressId) {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.addressEndpoints.deleteAddress(addressId),
+      endpoint: this.apiEndpointProvider.addresses.deleteAddress(addressId),
     );
   }
 
   @override
   Future<void> editMemberAddress(EditMemberAddressRequestModel request) {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.addressEndpoints.editAddress,
+      endpoint: this.apiEndpointProvider.addresses.editAddress,
       body: request?.toJson(),
     );
   }
@@ -92,7 +92,7 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
   @override
   Future<List<MemberAddress>> getMemberAddresses() {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.memberEndpoints.signUp,
+      endpoint: this.apiEndpointProvider.members.signUp,
       responseConverter: (json) => json.map((addressJson) => MemberAddress.fromJson(addressJson))
     );
   }

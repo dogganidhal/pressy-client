@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
+import 'package:pressy_client/widgets/order/order_widget.dart';
 import 'package:pressy_client/widgets/settings/settings_widget.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -32,9 +33,7 @@ class _HomeWidgetState extends State<HomeWidget>
     this._memberSession = ServiceProvider.of(this.context).getService<IMemberSession>();
     this._currentIndex = this.widget.initialSelectedTab;
     this._widgets = [
-      new Center(
-        child: new Icon(Icons.search),
-      ),
+      new OrderWidget(),
       new Center(
         child: new Icon(Icons.calendar_today),
       ),
@@ -60,7 +59,7 @@ class _HomeWidgetState extends State<HomeWidget>
         currentIndex: this._currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(Icons.search),
+            icon: new Icon(Icons.shopping_cart),
             title: new Text('Commander', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
           ),
           BottomNavigationBarItem(

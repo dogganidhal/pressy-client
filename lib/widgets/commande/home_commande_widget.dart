@@ -83,11 +83,12 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
       new Container(
         margin: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: Colors.grey,
-            width: 1.0,
-          ),
+            color: Colors.white,
+            border: Border.all(
+              color: ColorPalette.borderGray,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.circular(10.0)
         ),
         child: new Column(
             children : <Widget>[
@@ -122,8 +123,9 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     children : <Widget>[
                       new Text('Nombre d articles : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
                           )
                       ),
                       new Text('24 articles',
@@ -141,8 +143,9 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     children : <Widget>[
                       new Text('Créneau de collecte : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
                           )
                       ),
                       new Text('ven 08 avr, 18h15',
@@ -160,8 +163,9 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     children : <Widget>[
                       new Text('Créneau de livraison : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
                           )
                       ),
                       new Text('ven 08 avr, 18h15',
@@ -179,8 +183,9 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     children : <Widget>[
                       new Text('Adresse : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
                           )
                       ),
                       new Text('142 rue montmartre, 75002, Paris',
@@ -192,7 +197,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     ]
                 ),
               ),
-              new Divider(height: 1),
+              new Divider(height: 1,indent: 10.0),
               new Container(
                 margin: const EdgeInsets.all(10.0),
                 child: new Text("VOIR MA FACTURE",
@@ -210,11 +215,12 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
       new Container(
         margin: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: Colors.grey,
-            width: 1.0,
-          ),
+            color: Colors.white,
+            border: Border.all(
+              color: ColorPalette.borderGray,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.circular(10.0)
         ),
         child: new Column(
             children : <Widget>[
@@ -249,8 +255,9 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     children : <Widget>[
                       new Text('Poids total : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
                           )
                       ),
                       new Text('5.75kg',
@@ -268,8 +275,9 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     children : <Widget>[
                       new Text('Créneau de collecte : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
                           )
                       ),
                       new Text('ven 08 avr, 18h15',
@@ -287,8 +295,9 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     children : <Widget>[
                       new Text('Créneau de livraison : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
                           )
                       ),
                       new Text('ven 08 avr, 18h15',
@@ -306,8 +315,9 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     children : <Widget>[
                       new Text('Adresse : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
                           )
                       ),
                       new Text('142 rue montmartre, 75002, Paris',
@@ -319,7 +329,7 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     ]
                 ),
               ),
-              new Divider(height: 1),
+              new Divider(height: 1,indent: 10.0),
               new Container(
                 margin: const EdgeInsets.all(10.0),
                 child: new Text("VOIR MA FACTURE",
@@ -370,37 +380,38 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
       new Container(
         margin: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: Colors.grey,
-            width: 1.0,
-          ),
+            color: Colors.white,
+            border: Border.all(
+              color: ColorPalette.borderGray,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.circular(10.0)
         ),
         child: new Column(
             children : <Widget>[
               new Container(
-                margin: const EdgeInsets.only(left: 10.0,bottom: 10.0,top: 10.0),
-                child: new Row(
-                  children : <Widget>[
-                    new Text('Pressing - VIP',
-                      textAlign: TextAlign.left,
-                      style: new TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold
-                      )
-                    ),
-                  ]
-                )
-             ),
+                  margin: const EdgeInsets.only(left: 10.0,bottom: 10.0,top: 10.0),
+                  child: new Row(
+                      children : <Widget>[
+                        new Text('Pressing - VIP',
+                            textAlign: TextAlign.left,
+                            style: new TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
+                      ]
+                  )
+              ),
               new Container(
                 margin: const EdgeInsets.only(left: 10.0,bottom: 10.0),
                 child: new Row(
                     children : <Widget>[
                       new Text('Collecte prévue : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold
                           )
                       ),
@@ -419,8 +430,8 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     children : <Widget>[
                       new Text('Livraison prévue : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold
                           )
                       ),
@@ -439,8 +450,8 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     children : <Widget>[
                       new Text('Adresse : ',
                           style: new TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                              color: Colors.grey,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold
                           )
                       ),
@@ -453,17 +464,39 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     ]
                 ),
               ),
-              new Divider(height: 1),
+              new Divider(height: 1,indent: 10.0),
               new Container(
-                margin: const EdgeInsets.all(10.0),
-                child: new Text("CHANGER L'ADRESSE ",
-                  maxLines: 1,
-                  style: new TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: ColorPalette.orange
-                  ),
-                ),
+                  child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new GestureDetector(
+                          child: new Container(
+                            margin: const EdgeInsets.only(left: 20.0,top:10.0,bottom: 10.0),
+                            child: new Text("CHANGER L'ADRESSE ",
+                              maxLines: 1,
+                              style: new TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: ColorPalette.orange
+                              ),
+                            ),
+                          ),
+                        ),
+                        new GestureDetector(
+                          child: new Container(
+                            margin: const EdgeInsets.only(left: 60.0),
+                            child: new Text("ANNULER ",
+                              maxLines: 1,
+                              style: new TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: ColorPalette.orange
+                              ),
+                            ),
+                          ),
+                        )
+                      ]
+                  )
               )
             ]
         ),
@@ -472,6 +505,10 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
         margin: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           color: Colors.white,
+          border: Border.all(
+            color: ColorPalette.borderGray,
+            width: 1.0,
+          ),
           borderRadius: BorderRadius.circular(10.0)
         ),
         child: new Column(
@@ -551,46 +588,44 @@ class _HomeCommandeWidgetState extends State<HomeCommandeWidget> with SingleTick
                     ]
                 ),
               ),
-              new Divider(height: 1),
+              new Divider(height: 1,indent: 10.0),
               new Container(
-                  /*decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 1.0,
-                      )
-                  ),*/
                   child: new Row(
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(left: 20.0,top:10.0,bottom: 10.0),
-                        child: new Text("CHANGER L'ADRESSE ",
-                          maxLines: 1,
-                          style: new TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: ColorPalette.orange
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new GestureDetector(
+                          child: new Container(
+                            margin: const EdgeInsets.only(left: 20.0,top:10.0,bottom: 10.0),
+                            child: new Text("CHANGER L'ADRESSE ",
+                              maxLines: 1,
+                              style: new TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: ColorPalette.orange
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      new SizedBox(width: 10),
-                      new Container(
-                        margin: const EdgeInsets.only(left: 40.0),
-                        child: new Text("ANNULER ",
-                          maxLines: 1,
-                          style: new TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: ColorPalette.orange
+                         new GestureDetector(
+                          child: new Container(
+                            margin: const EdgeInsets.only(left: 60.0),
+                            child: new Text("ANNULER ",
+                              maxLines: 1,
+                              style: new TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: ColorPalette.orange
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ]
+                         )
+                      ]
                 )
               )
             ]
         ),
       ),
+
     ],
   );
 

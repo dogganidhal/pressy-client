@@ -9,9 +9,13 @@ import 'package:intl/intl.dart';
 class SlotWidget extends StatefulWidget {
 
   final String title;
+  final bool isLoading;
   final List<Slot> slots;
 
-  SlotWidget({Key key, @required this.title, @required this.slots}) : super(key: key);
+  SlotWidget({
+    Key key, @required this.title,
+    this.slots = const [], this.isLoading = true
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _SlotWidgetState();
@@ -81,21 +85,36 @@ class _SlotWidgetState extends State<SlotWidget> {
     );
   }
 
-  Widget get _slotListWidget => new Container(
-    child: new ListWheelScrollView.useDelegate(
-      itemExtent: Theme.of(context).textTheme.display2.fontSize,
-      childDelegate: new ListWheelChildBuilderDelegate(
-        childCount: 10,
-        builder: (context, index) => new Text(
-          this._dateFormat.format(DateTime.now()),
-          style: new TextStyle(color: ColorPalette.textGray, fontSize: 16, fontWeight: FontWeight.w600),
-        ),
+  Widget get _loadingWidget => new Container(
+    child: new Center(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new CircularProgressIndicator(),
+          new SizedBox(height: 8),
+          new Text("Chargement des créneaux")
+        ],
       ),
-      onSelectedItemChanged: (index) => print("Selected $index"),
-      useMagnifier: true,
-      renderChildrenOutsideViewport: true,
-      clipToSize: false,
     ),
   );
+
+  Widget get _slotListWidget => this.widget.isLoading ?
+    this._loadingWidget :
+    new Container(
+      child: new ListWheelScrollView.useDelegate(
+        itemExtent: Theme.of(context).textTheme.display2.fontSize,
+        childDelegate: new ListWheelChildBuilderDelegate(
+          childCount: this.widget.slots?.length,
+          builder: (context, index) => new Text(
+            this._dateFormat.format(this.widget.slots[index].startDate),
+            style: new TextStyle(color: ColorPalette.textGray, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+        ),
+        onSelectedItemChanged: (index) => print("Selected $index"),
+        useMagnifier: true,
+        renderChildrenOutsideViewport: true,
+        clipToSize: false,
+      ),
+    );
 
 }

@@ -22,7 +22,10 @@ class OrderDataSourceImpl extends DataSource implements IOrderDataSource {
   Future<List<Article>> getArticles() {
     return this.handleRequest(
       endpoint: this.apiEndpointProvider.orders.getArticles,
-      responseConverter: (json) => json.map((article) => Article.fromJson(article))
+      responseConverter: (json) => json
+        .map((article) => Article.fromJson(article))
+        .toList()
+        .cast<Article>()
     );
   }
 
@@ -30,7 +33,10 @@ class OrderDataSourceImpl extends DataSource implements IOrderDataSource {
   Future<List<Slot>> getAvailableSlots() {
     return this.handleRequest(
       endpoint: this.apiEndpointProvider.orders.getAvailableSlots,
-      responseConverter: (json) => json.map((slot) => Slot.fromJson(slot))
+      responseConverter: (json) => json
+        .map((slot) => Slot.fromJson(slot))
+        .toList()
+        .cast<Slot>()
     );
   }
 
@@ -38,7 +44,10 @@ class OrderDataSourceImpl extends DataSource implements IOrderDataSource {
   Future<List<Order>> getMemberOrders() {
     return this.handleRequest(
       endpoint: this.apiEndpointProvider.orders.getOrders,
-      responseConverter: (json) => json.map((order) => Order.fromJson(order))
+      responseConverter: (json) => json
+        .map((order) => Order.fromJson(order))
+        .toList()
+        .cast<Order>()
     );
   }
 

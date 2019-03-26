@@ -10,27 +10,34 @@ class OrderState extends Equatable {
   final OrderSlotState deliverySlotState;
   final OrderAddressState addressState;
   final OrderPaymentAccountState paymentAccountState;
+  final int step;
 
   OrderState({
     @required this.orderRequestBuilder,
     this.pickupSlotState,
     this.deliverySlotState,
     this.paymentAccountState,
-    this.addressState
-  }) : super([orderRequestBuilder, pickupSlotState, deliverySlotState, paymentAccountState, addressState]);
+    this.addressState,
+    this.step = 0
+  }) : super([
+    orderRequestBuilder, pickupSlotState, deliverySlotState,
+    paymentAccountState, addressState, step
+  ]);
 
   OrderState copyWith({
     OrderRequestBuilder orderRequestBuilder,
     OrderSlotState pickupSlotState,
     OrderSlotState deliverySlotState,
     OrderAddressState addressState,
-    OrderPaymentAccountState paymentAccountState
+    OrderPaymentAccountState paymentAccountState,
+    int step
   }) => new OrderState(
     orderRequestBuilder: orderRequestBuilder ?? this.orderRequestBuilder,
     pickupSlotState: pickupSlotState ?? this.pickupSlotState,
     deliverySlotState: deliverySlotState ?? this.deliverySlotState,
     paymentAccountState: paymentAccountState ?? this.paymentAccountState,
-    addressState: addressState ?? this.addressState
+    addressState: addressState ?? this.addressState,
+    step: step ?? this.step
   );
   
 }

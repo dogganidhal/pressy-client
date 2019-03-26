@@ -30,13 +30,24 @@ class OrderDataSourceImpl extends DataSource implements IOrderDataSource {
   }
 
   @override
-  Future<List<Slot>> getAvailableSlots() {
+  Future<List<Slot>> getPickupSlots() {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.orders.getAvailableSlots,
+      endpoint: this.apiEndpointProvider.orders.getPickupSlots,
       responseConverter: (json) => json
         .map((slot) => Slot.fromJson(slot))
         .toList()
         .cast<Slot>()
+    );
+  }
+
+  @override
+  Future<List<Slot>> getDeliverySlots(Slot pickupSlot) {
+    return this.handleRequest(
+        endpoint: this.apiEndpointProvider.orders.getDeliverySlots(pickupSlot.id),
+        responseConverter: (json) => json
+          .map((slot) => Slot.fromJson(slot))
+          .toList()
+          .cast<Slot>()
     );
   }
 

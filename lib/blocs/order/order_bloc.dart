@@ -39,21 +39,27 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     }
 
     if (event is GoToNextStepEvent) {
-      yield currentState.copyWith(step: currentState.step + 1);
+      var state = currentState.copyWith(step: currentState.step + 1);
+      yield state;
+      switch(state.step) {
+        case 1:
+          state = state.copyWith(
+            deliverySlotState: new OrderSlotLoadingState()
+          );
+          yield state;
+          final deliverySlots = await this.orderDataSource.getDeliverySlots(state.orderRequestBuilder.pickupSlot);
+          yield state.copyWith(
+            deliverySlotState: new OrderSlotReadyState(
+              slots: deliverySlots
+            )
+          );
+          break;
+        default: break;
+      }
     }
 
     if (event is SelectPickupSlotEvent) {
       currentState.orderRequestBuilder.setPickupSlot(event.pickupSlot);
-      var state = currentState.copyWith(
-          deliverySlotState: new OrderSlotLoadingState()
-      );
-      yield state;
-      final deliverySlots = await this.orderDataSource.getDeliverySlots(event.pickupSlot);
-      yield state.copyWith(
-        deliverySlotState: new OrderSlotReadyState(
-          slots: deliverySlots
-        )
-      );
     }
 
     if (event is SelectDeliverySlotEvent) {

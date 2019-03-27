@@ -69,7 +69,11 @@ class _OrderWidgetState extends State<OrderWidget> {
                 state: this._stepState(1),
                 title: new SizedBox(width: 0),
                 content: new SlotWidget(
-                  title: "Créneau de livraison", 
+                  title: "Créneau de livraison",
+                  isLoading: state.deliverySlotState is OrderSlotLoadingState,
+                  slots: state.deliverySlotState is OrderSlotReadyState ?
+                    (state.deliverySlotState as OrderSlotReadyState).slots :
+                    [],
                   onSlotSelected: (slot) => this._orderBloc.dispatch(new SelectDeliverySlotEvent(slot)),
                   onSlotConfirmed: () => this._orderBloc.dispatch(new GoToNextStepEvent()),
                 )

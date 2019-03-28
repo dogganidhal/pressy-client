@@ -47,6 +47,7 @@ class _OrderWidgetState extends State<OrderWidget> {
         bloc: this._orderBloc,
         builder: (context, state) {
           return new Stepper(
+            physics: new ClampingScrollPhysics(),
             currentStep: state.step,
             type: StepperType.horizontal,
             steps: [

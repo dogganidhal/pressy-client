@@ -57,6 +57,9 @@ class _OrderWidgetState extends State<OrderWidget> {
                 content: new SlotWidget(
                   title: "Créneau de collecte",
                   isLoading: state.pickupSlotState is OrderSlotLoadingState,
+                  canMoveForward: state.pickupSlotState is OrderSlotReadyState ?
+                    (state.pickupSlotState as OrderSlotReadyState).canMoveForward :
+                    false,
                   slots: state.pickupSlotState is OrderSlotReadyState ?
                     (state.pickupSlotState as OrderSlotReadyState).slots :
                     [],
@@ -71,6 +74,9 @@ class _OrderWidgetState extends State<OrderWidget> {
                 content: new SlotWidget(
                   title: "Créneau de livraison",
                   isLoading: state.deliverySlotState is OrderSlotLoadingState,
+                  canMoveForward: state.deliverySlotState is OrderSlotReadyState ?
+                    (state.deliverySlotState as OrderSlotReadyState).canMoveForward :
+                    false,
                   slots: state.deliverySlotState is OrderSlotReadyState ?
                     (state.deliverySlotState as OrderSlotReadyState).slots :
                     [],
@@ -82,7 +88,11 @@ class _OrderWidgetState extends State<OrderWidget> {
                 isActive: state.step >= 2,
                 state: this._stepState(2),
                 title: new SizedBox(width: 0),
-                content: new EstimateOrderStepWidget()
+                content: new EstimateOrderStepWidget(
+                  articles: state.articleState is ArticlesReadyState ?
+                    (state.articleState as ArticlesReadyState).articles :
+                    [],
+                )
               ),
               new Step(
                 isActive: state.step >= 3,

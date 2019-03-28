@@ -16,11 +16,13 @@ class SlotWidget extends StatefulWidget {
   final List<Slot> slots;
   final SlotSelectedCallback onSlotSelected;
   final VoidCallback onSlotConfirmed;
+  final bool canMoveForward;
 
   SlotWidget({
     Key key, @required this.title,
     @required this.onSlotSelected,
     @required this.onSlotConfirmed,
+    this.canMoveForward = false,
     this.slots = const [], this.isLoading = true
   }) : super(key: key);
 
@@ -35,12 +37,12 @@ class _SlotWidgetState extends State<SlotWidget> {
   int _selectedTab = 0;
   
   List<Slot> get _standardSlots => this.widget.slots
-      .where((slot) => slot.slotType == SlotType.STANDARD)
-      .toList();
+    .where((slot) => slot.slotType == SlotType.STANDARD)
+    .toList();
 
   List<Slot> get _vipSlots => this.widget.slots
-      .where((slot) => slot.slotType == SlotType.VIP)
-      .toList();
+    .where((slot) => slot.slotType == SlotType.VIP)
+    .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +98,7 @@ class _SlotWidgetState extends State<SlotWidget> {
           child: this._slotListWidget,
         ),
         new SizedBox(height: 48),
-        this._nextButton
+        this._nextButton(this.widget.canMoveForward)
       ],
     );
   }
@@ -118,6 +120,7 @@ class _SlotWidgetState extends State<SlotWidget> {
     this._loadingWidget :
     new Container(
       child: new CupertinoPicker(
+        useMagnifier: true,
         backgroundColor: Colors.transparent,
         itemExtent: Theme.of(context).textTheme.display2.fontSize,
         onSelectedItemChanged: (index) {
@@ -136,21 +139,21 @@ class _SlotWidgetState extends State<SlotWidget> {
       ),
     );
 
-  Widget get _nextButton => new Row(
+  Widget _nextButton(bool enabled) => new Row(
     children: <Widget>[
       new Expanded(
         child: new Container(
           height: 40,
           decoration: new BoxDecoration(
               borderRadius: new BorderRadius.circular(8),
-              color: ColorPalette.orange
+              color: enabled ? ColorPalette.orange : ColorPalette.lightGray
           ),
           child: new ButtonTheme(
             height: double.infinity,
             child: new FlatButton(
               child: new Text("SUIVANT"),
               textColor: Colors.white,
-              onPressed: this.widget.onSlotConfirmed
+              onPressed: enabled ? this.widget.onSlotConfirmed : null
             ),
           ),
         ),

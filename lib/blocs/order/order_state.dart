@@ -8,6 +8,7 @@ class OrderState extends Equatable {
   final OrderRequestBuilder orderRequestBuilder;
   final OrderSlotState pickupSlotState;
   final OrderSlotState deliverySlotState;
+  final ArticleState articleState;
   final OrderAddressState addressState;
   final OrderPaymentAccountState paymentAccountState;
   final int step;
@@ -16,18 +17,20 @@ class OrderState extends Equatable {
     @required this.orderRequestBuilder,
     this.pickupSlotState,
     this.deliverySlotState,
+    this.articleState,
     this.paymentAccountState,
     this.addressState,
     this.step = 0
   }) : super([
     orderRequestBuilder, pickupSlotState, deliverySlotState,
-    paymentAccountState, addressState, step
+    paymentAccountState, addressState, step, articleState
   ]);
 
   OrderState copyWith({
     OrderRequestBuilder orderRequestBuilder,
     OrderSlotState pickupSlotState,
     OrderSlotState deliverySlotState,
+    ArticleState articleState,
     OrderAddressState addressState,
     OrderPaymentAccountState paymentAccountState,
     int step
@@ -35,11 +38,16 @@ class OrderState extends Equatable {
     orderRequestBuilder: orderRequestBuilder ?? this.orderRequestBuilder,
     pickupSlotState: pickupSlotState ?? this.pickupSlotState,
     deliverySlotState: deliverySlotState ?? this.deliverySlotState,
+    articleState: articleState ?? this.articleState,
     paymentAccountState: paymentAccountState ?? this.paymentAccountState,
     addressState: addressState ?? this.addressState,
     step: step ?? this.step
   );
   
+}
+
+abstract class ArticleState extends Equatable {
+  ArticleState([List props]) : super(props);
 }
 
 abstract class OrderAddressState extends Equatable {
@@ -60,6 +68,8 @@ class OrderPaymentAccountLoadingState extends OrderPaymentAccountState { }
 
 class OrderSlotLoadingState extends OrderSlotState { }
 
+class ArticlesLoadingState extends ArticleState { }
+
 class OrderPaymentAccountReadyState extends OrderPaymentAccountState {
   
   final List<PaymentAccount> paymentAccounts;
@@ -77,9 +87,18 @@ class OrderAddressReadyState extends OrderAddressState {
 }
 
 class OrderSlotReadyState extends OrderSlotState {
-  
+
+  final bool canMoveForward;
   final List<Slot> slots;
 
-  OrderSlotReadyState({this.slots}) : super([slots]);
+  OrderSlotReadyState({this.slots, this.canMoveForward}) : super([slots, canMoveForward]);
+
+}
+
+class ArticlesReadyState extends ArticleState{
+
+  final List<Article> articles;
+
+  ArticlesReadyState({this.articles}) : super([articles]);
 
 }

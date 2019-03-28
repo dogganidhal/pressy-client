@@ -30,11 +30,15 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     if (event is FetchOrderDataEvent) {
 
       List<Slot> pickupSlots = await this.orderDataSource.getPickupSlots();
-      List<Article> allArticles = await this.orderDataSource.getArticles();
 
       yield currentState.copyWith(
-        pickupSlotState: new OrderSlotReadyState(slots: pickupSlots)
+        pickupSlotState: new OrderSlotReadyState(
+          slots: pickupSlots,
+          canMoveForward: pickupSlots.isNotEmpty
+        )
       );
+      if (pickupSlots.isNotEmpty)
+        currentState.orderRequestBuilder.setPickupSlot(pickupSlots[0]);
 
     }
 
@@ -50,10 +54,23 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           final deliverySlots = await this.orderDataSource.getDeliverySlots(state.orderRequestBuilder.pickupSlot);
           yield state.copyWith(
             deliverySlotState: new OrderSlotReadyState(
-              slots: deliverySlots
+              slots: deliverySlots,
+              canMoveForward: deliverySlots.isNotEmpty
             )
           );
+          if (deliverySlots.isNotEmpty)
+            currentState.orderRequestBuilder.setPickupSlot(deliverySlots[0]);
           break;
+        case 2:
+            state = state.copyWith(
+              articleState: new ArticlesLoadingState()
+            );
+            yield state;
+            final articles = await this.orderDataSource.getArticles();
+            yield state.copyWith(
+              articleState: new ArticlesReadyState(articles: articles)
+            );
+            break;
         default: break;
       }
     }

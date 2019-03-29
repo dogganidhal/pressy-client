@@ -7,5 +7,6 @@ abstract class IOrderDataSource {
   Future<List<Article>> getArticles();
   Future<List<Order>> getMemberOrders();
   Future submitOrder(OrderRequestModel request);
+  Future<Article> getWeightedArticle();
 
 }

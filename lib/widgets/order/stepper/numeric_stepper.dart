@@ -28,7 +28,7 @@ class _NumericStepperState extends State<NumericStepper> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           new Container(
-            width: 40, height: 32,
+            width: 32, height: 32,
             color: ColorPalette.orange,
             child: new Center(
               child: new ButtonTheme(
@@ -41,14 +41,14 @@ class _NumericStepperState extends State<NumericStepper> {
             ),
           ),
           new Container(
-            width: 40, height: 32,
+            width: 32, height: 32,
             color: Colors.transparent,
             child: new Center(
               child: new Text("${this._value}")
             ),
           ),
           new Container(
-            width: 40, height: 32,
+            width: 32, height: 32,
             color: ColorPalette.orange,
             child: new Center(
               child: new ButtonTheme(

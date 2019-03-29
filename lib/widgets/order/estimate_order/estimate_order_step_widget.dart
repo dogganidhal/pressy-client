@@ -9,11 +9,14 @@ import 'package:pressy_client/widgets/order/stepper/numeric_stepper.dart';
 
 class EstimateOrderStepWidget extends StatefulWidget {
 
+  final Article weightedArticle;
   final List<Article> articles;
   final VoidCallback onFinish;
 
-  EstimateOrderStepWidget({Key key, this.articles = const [], @required this.onFinish}) :
-    super(key: key);
+  EstimateOrderStepWidget({
+    Key key, this.articles = const [],
+    @required this.onFinish, @required this.weightedArticle
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _EstimateOrderStepWidgetState();
@@ -44,29 +47,58 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
             },
             onValueChanged: (index) => this.setState(() => this._selectedIndex = index)
           ),
-          new SizedBox(height: 18),
-          new Text(
-            "Veuillez sélectionner vos articles, vous serez facturé à la carte."
-            "Le montant est indicatif et risque de changer.",
-            style: new TextStyle(color: ColorPalette.darkGray),
-          ),
-          new SizedBox(height: 18),
-          new StaggeredGridView.countBuilder(
-            shrinkWrap: true,
-            itemCount: this.widget.articles.length,
-            crossAxisCount: 2,
-            itemBuilder: (context, index) => this._buildArticleWidget(this.widget.articles[index]),
-            staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            physics: new NeverScrollableScrollPhysics(),
-          ),
-          new SizedBox(height: 12),
-          this._priceAndPassButtonWidget
+          this._selectedIndex == 0 ? this._laundryWidget : this._weightedServiceWidget
         ],
       ),
     );
   }
+
+  Widget get _weightedServiceWidget => new Column(
+    children: <Widget>[
+      new SizedBox(height: 18),
+      new Text(
+        "Prix par sac de 5kg",
+        style: new TextStyle(color: ColorPalette.darkGray),
+      ),
+      new SizedBox(height: 18),
+      new StaggeredGridView.countBuilder(
+        shrinkWrap: true,
+        itemCount: 1,
+        crossAxisCount: 1,
+        itemBuilder: (context, index) => this._buildArticleWidget(this.widget.weightedArticle),
+        staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        physics: new NeverScrollableScrollPhysics(),
+      ),
+      new SizedBox(height: 12),
+      this._priceAndPassButtonWidget
+    ],
+  );
+
+  Widget get _laundryWidget => new Column(
+    children: <Widget>[
+      new SizedBox(height: 18),
+      new Text(
+        "Veuillez sélectionner vos articles, vous serez facturé à la carte."
+            "Le montant est indicatif et risque de changer.",
+        style: new TextStyle(color: ColorPalette.darkGray),
+      ),
+      new SizedBox(height: 18),
+      new StaggeredGridView.countBuilder(
+        shrinkWrap: true,
+        itemCount: this.widget.articles.length,
+        crossAxisCount: 2,
+        itemBuilder: (context, index) => this._buildArticleWidget(this.widget.articles[index]),
+        staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        physics: new NeverScrollableScrollPhysics(),
+      ),
+      new SizedBox(height: 12),
+      this._priceAndPassButtonWidget
+    ],
+  );
 
   Widget get _priceAndPassButtonWidget => new Container(
     padding: new EdgeInsets.only(top: 12),

@@ -97,8 +97,10 @@ class OrderSlotReadyState extends OrderSlotState {
 
 class ArticlesReadyState extends ArticleState{
 
+  final Article weightedArticle;
   final List<Article> articles;
 
-  ArticlesReadyState({this.articles}) : super([articles]);
+  ArticlesReadyState({this.weightedArticle, this.articles}) :
+    super([articles, weightedArticle]);
 
 }

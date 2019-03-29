@@ -93,7 +93,10 @@ class _OrderWidgetState extends State<OrderWidget> {
                   articles: state.articleState is ArticlesReadyState ?
                     (state.articleState as ArticlesReadyState).articles :
                     [],
-                  onFinish: () => this._orderBloc.dispatch(new GoToNextStepEvent()),
+                weightedArticle: state.articleState is ArticlesReadyState ?
+                  (state.articleState as ArticlesReadyState).weightedArticle:
+                  null,
+                  onFinish: () => this._orderBloc.dispatch(new GoToNextStepEvent())
                 )
               ),
               new Step(

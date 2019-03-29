@@ -58,6 +58,7 @@ class _ApiOrderEndpoints {
   final ApiEndpoint getPickupSlots = new ApiEndpoint(path: "/order/pickup-slots", method: "GET");
   ApiEndpoint getDeliverySlots(int pickupSlotId) => new ApiEndpoint(path: "/order/delivery-slots/$pickupSlotId", method: "GET");
   final ApiEndpoint getArticles = new ApiEndpoint(path: "/order/articles", method: "GET");
+  final ApiEndpoint getWeightedArticle = new ApiEndpoint(path: "/order/weighted-article", method: "GET");
   final ApiEndpoint getOrders = new ApiEndpoint(path: "/order", method: "GET", needsAuthorization: true);
   final ApiEndpoint submitOrder = new ApiEndpoint(path: "/order", method: "POST", needsAuthorization: true);
 

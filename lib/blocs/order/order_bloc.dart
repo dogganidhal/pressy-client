@@ -67,8 +67,12 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
             );
             yield state;
             final articles = await this.orderDataSource.getArticles();
+            final weightedArticle = await this.orderDataSource.getWeightedArticle();
             yield state.copyWith(
-              articleState: new ArticlesReadyState(articles: articles)
+              articleState: new ArticlesReadyState(
+                articles: articles,
+                weightedArticle: weightedArticle
+              )
             );
             break;
         default: break;

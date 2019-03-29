@@ -10,8 +10,10 @@ import 'package:pressy_client/widgets/order/stepper/numeric_stepper.dart';
 class EstimateOrderStepWidget extends StatefulWidget {
 
   final List<Article> articles;
+  final VoidCallback onFinish;
 
-  EstimateOrderStepWidget({Key key, this.articles = const []}) : super(key: key);
+  EstimateOrderStepWidget({Key key, this.articles = const [], @required this.onFinish}) :
+    super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _EstimateOrderStepWidgetState();
@@ -21,8 +23,8 @@ class EstimateOrderStepWidget extends StatefulWidget {
 class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
 
   int _selectedIndex = 0;
-  Map<int, int> _cart = {};
-  double _totalPrice;
+  Map<Article, int> _cart = {};
+  double _totalPrice = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,12 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
             onValueChanged: (index) => this.setState(() => this._selectedIndex = index)
           ),
           new SizedBox(height: 18),
+          new Text(
+            "Veuillez sélectionner vos articles, vous serez facturé à la carte."
+            "Le montant est indicatif et risque de changer.",
+            style: new TextStyle(color: ColorPalette.darkGray),
+          ),
+          new SizedBox(height: 18),
           new StaggeredGridView.countBuilder(
             shrinkWrap: true,
             itemCount: this.widget.articles.length,
@@ -51,33 +59,44 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
             staggeredTileBuilder: (index) => StaggeredTile.fit(1),
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
+            physics: new NeverScrollableScrollPhysics(),
           ),
           new SizedBox(height: 12),
-          new Container(
-            padding: new EdgeInsets.only(top: 12),
-            decoration: new BoxDecoration(
-              border: new Border(
-                top: new BorderSide(color: ColorPalette.borderGray, width: 1)
-              )
-            ),
-            child: new Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                new Text("Total :", style: new TextStyle(
-                  color: ColorPalette.darkGray,
-                  fontSize: 14
-                )),
-                new Text("${this._totalPrice}€", style: new TextStyle(
-                  color: ColorPalette.textBlack,
-                  fontWeight: FontWeight.bold
-                )),
-              ],
-            ),
-          )
+          this._priceAndPassButtonWidget
         ],
       ),
     );
   }
+
+  Widget get _priceAndPassButtonWidget => new Container(
+    padding: new EdgeInsets.only(top: 12),
+    decoration: new BoxDecoration(
+        border: new Border(
+            top: new BorderSide(color: ColorPalette.borderGray, width: 1)
+        )
+    ),
+    child: new Row(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        new Text("Total :", style: new TextStyle(
+            color: ColorPalette.darkGray,
+            fontSize: 14
+        )),
+        new Text("${this._totalPrice.toStringAsFixed(2)} €", style: new TextStyle(
+            color: ColorPalette.textBlack,
+            fontWeight: FontWeight.bold
+        )),
+        new Expanded(child: new Container()),
+        new FlatButton(
+          onPressed: this.widget.onFinish,
+          child: new Text(
+            "SUIVANT",
+            style: new TextStyle(color: ColorPalette.orange)
+          )
+        ),
+      ],
+    ),
+  );
 
   Widget _buildArticleWidget(Article article) => new Container(
     padding: new EdgeInsets.all(12),
@@ -97,23 +116,23 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
         new SizedBox(height: 12),
         new NumericStepper(
           onValueChanged: (value) {
-
-            this._cart[article.id] = value;
-            this._cart.removeWhere((_, count) => count == 0);
-
-            var priceAccumulator = 0.0;
-            this._cart.forEach((id, count) {
-              final article = this.widget.articles.singleWhere((a) => a.id == id);
-              priceAccumulator = article.laundryPrice * count;
-            });
-
+            this._cart[article] = value;
             this.setState(() {
-              this._totalPrice = priceAccumulator;
+              this._totalPrice = this._calculateTotalPrice();
             });
           },
         )
       ],
     ),
   );
+
+  double _calculateTotalPrice() {
+    double priceAccumulator = 0.0;
+    this._cart
+      .forEach((article, count) {
+        priceAccumulator += article.laundryPrice * count;
+      });
+    return priceAccumulator;
+  }
 
 }

@@ -47,7 +47,7 @@ class _OrderWidgetState extends State<OrderWidget> {
         bloc: this._orderBloc,
         builder: (context, state) {
           return new Stepper(
-            physics: new ClampingScrollPhysics(),
+            physics: new FixedExtentScrollPhysics(),
             currentStep: state.step,
             type: StepperType.horizontal,
             steps: [
@@ -93,6 +93,7 @@ class _OrderWidgetState extends State<OrderWidget> {
                   articles: state.articleState is ArticlesReadyState ?
                     (state.articleState as ArticlesReadyState).articles :
                     [],
+                  onFinish: () => this._orderBloc.dispatch(new GoToNextStepEvent()),
                 )
               ),
               new Step(

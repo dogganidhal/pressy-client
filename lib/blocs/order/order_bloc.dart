@@ -6,6 +6,7 @@ import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/data_source/order/order_data_source.dart';
 import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/model/order/order_builder/order_builder.dart';
+import 'package:pressy_client/utils/errors/base_error.dart';
 
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
@@ -37,8 +38,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           canMoveForward: pickupSlots.isNotEmpty
         )
       );
-      if (pickupSlots.isNotEmpty)
-        currentState.orderRequestBuilder.setPickupSlot(pickupSlots[0]);
 
     }
 
@@ -58,8 +57,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
               canMoveForward: deliverySlots.isNotEmpty
             )
           );
-          if (deliverySlots.isNotEmpty)
-            currentState.orderRequestBuilder.setPickupSlot(deliverySlots[0]);
           break;
         case 2:
             state = state.copyWith(
@@ -103,6 +100,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       }
     }
 
+    if (event is SelectOrderTypeEvent) {
+      currentState.orderRequestBuilder.setOrderType(event.orderType);
+      currentState.orderRequestBuilder.setEstimatedPrice(event.estimatedPrice);
+    }
+
     if (event is SelectPickupSlotEvent) {
       currentState.orderRequestBuilder.setPickupSlot(event.pickupSlot);
     }
@@ -117,6 +119,23 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     if (event is SelectPaymentAccountEvent) {
       currentState.orderRequestBuilder.setPaymentAccount(event.paymentAccount);
+    }
+
+    if (event is ConfirmOrderEvent) {
+      var state = currentState.copyWith(isLoading: true);
+      yield state;
+      final orderRequest = state.orderRequestBuilder.build();
+      try {
+        await this.orderDataSource.submitOrder(orderRequest);
+        yield state.copyWith(success: true);
+      } on AppError catch (error) {
+        state = state.copyWith(
+          isLoading: false,
+          error: error
+        );
+      } catch(exception) {
+        print(exception);
+      }
     }
 
   }

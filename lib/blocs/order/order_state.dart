@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:pressy_client/data/model/model.dart';
 import 'package:pressy_client/data/model/order/order_builder/order_builder.dart';
+import 'package:pressy_client/utils/errors/base_error.dart';
 
 class OrderState extends Equatable {
   
@@ -12,6 +13,9 @@ class OrderState extends Equatable {
   final OrderAddressState addressState;
   final OrderPaymentAccountState paymentAccountState;
   final int step;
+  final bool isLoading;
+  final bool success;
+  final AppError error;
 
   OrderState({
     @required this.orderRequestBuilder,
@@ -20,10 +24,13 @@ class OrderState extends Equatable {
     this.articleState,
     this.paymentAccountState,
     this.addressState,
-    this.step = 0
+    this.step = 0,
+    this.isLoading = false,
+    this.success = false,
+    this.error
   }) : super([
-    orderRequestBuilder, pickupSlotState, deliverySlotState,
-    paymentAccountState, addressState, step, articleState
+    orderRequestBuilder, pickupSlotState, deliverySlotState, error,
+    paymentAccountState, addressState, step, articleState, isLoading, success
   ]);
 
   OrderState copyWith({
@@ -33,7 +40,10 @@ class OrderState extends Equatable {
     ArticleState articleState,
     OrderAddressState addressState,
     OrderPaymentAccountState paymentAccountState,
-    int step
+    int step,
+    bool isLoading,
+    bool success,
+    AppError error
   }) => new OrderState(
     orderRequestBuilder: orderRequestBuilder ?? this.orderRequestBuilder,
     pickupSlotState: pickupSlotState ?? this.pickupSlotState,
@@ -41,7 +51,10 @@ class OrderState extends Equatable {
     articleState: articleState ?? this.articleState,
     paymentAccountState: paymentAccountState ?? this.paymentAccountState,
     addressState: addressState ?? this.addressState,
-    step: step ?? this.step
+    step: step ?? this.step,
+    isLoading: isLoading ?? this.isLoading,
+    success: success ?? this.success,
+    error: error ?? this.error
   );
   
 }

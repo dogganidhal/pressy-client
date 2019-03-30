@@ -5,11 +5,15 @@ import 'package:pressy_client/data/model/order/slot/slot.dart';
 
 part 'order.g.dart';
 
+enum OrderType {
+  PRESSING, WEIGHT
+}
+
 @JsonSerializable()
 class Order {
 
   final int id;
-  final int type;
+  final OrderType type;
   final Slot pickupSlot;
   final Slot deliverySlot;
   final List<OrderItem> items;

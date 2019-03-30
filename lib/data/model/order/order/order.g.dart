@@ -9,7 +9,7 @@ part of 'order.dart';
 Order _$OrderFromJson(Map<String, dynamic> json) {
   return Order(
       id: json['id'] as int,
-      type: json['type'] as int,
+      type: json['type'] as OrderType,
       pickupSlot: json['pickupSlot'] == null
           ? null
           : Slot.fromJson(json['pickupSlot'] as Map<String, dynamic>),

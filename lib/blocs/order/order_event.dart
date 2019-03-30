@@ -5,10 +5,11 @@ abstract class OrderEvent extends Equatable {
   OrderEvent([List props]) : super (props);
 }
 
-
 class FetchOrderDataEvent extends OrderEvent { }
 
 class GoToNextStepEvent extends OrderEvent { }
+
+class ConfirmOrderEvent extends OrderEvent { }
 
 class SelectPickupSlotEvent extends OrderEvent {
   
@@ -31,6 +32,15 @@ class SelectAddressEvent extends OrderEvent {
   final MemberAddress address;
 
   SelectAddressEvent(this.address) : super([address]);
+
+}
+
+class SelectOrderTypeEvent extends OrderEvent {
+
+  final OrderType orderType;
+  final double estimatedPrice;
+
+  SelectOrderTypeEvent(this.orderType, this.estimatedPrice);
 
 }
 

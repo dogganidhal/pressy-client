@@ -5,6 +5,7 @@ import 'package:pressy_client/data/model/order/order/order.dart';
 import 'package:pressy_client/data/model/order/order_request/order_request.dart';
 import 'package:pressy_client/data/model/order/slot/slot.dart';
 import 'package:pressy_client/data/resources/provider/endpoint_provider.dart';
+import 'package:pressy_client/data/session/auth/auth_session.dart';
 import 'package:pressy_client/utils/network/base_client.dart';
 
 
@@ -16,7 +17,10 @@ class OrderDataSourceImpl extends DataSource implements IOrderDataSource {
   @override
   final ApiEndpointProvider apiEndpointProvider;
 
-  OrderDataSourceImpl({this.client, this.apiEndpointProvider});
+  @override
+  final IAuthSession authSession;
+
+  OrderDataSourceImpl({this.client, this.apiEndpointProvider, this.authSession});
 
   @override
   Future<List<Article>> getArticles() {

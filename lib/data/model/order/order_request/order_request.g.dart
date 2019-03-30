@@ -11,7 +11,7 @@ OrderRequestModel _$OrderRequestModelFromJson(Map<String, dynamic> json) {
       pickupSlotId: json['pickupSlotId'] as int,
       deliverySlotId: json['deliverySlotId'] as int,
       addressId: json['addressId'] as int,
-      type: json['type'] as int);
+      type: json['type'] as String);
 }
 
 Map<String, dynamic> _$OrderRequestModelToJson(OrderRequestModel instance) =>

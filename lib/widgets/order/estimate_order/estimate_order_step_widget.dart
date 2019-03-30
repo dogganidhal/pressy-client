@@ -6,12 +6,13 @@ import 'package:pressy_client/widgets/order/base_step_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pressy_client/widgets/order/stepper/numeric_stepper.dart';
 
+typedef void OnEstimateOrderFinished(OrderType orderType, double estimatedPrice);
 
 class EstimateOrderStepWidget extends StatefulWidget {
 
   final Article weightedArticle;
   final List<Article> articles;
-  final VoidCallback onFinish;
+  final OnEstimateOrderFinished onFinish;
 
   EstimateOrderStepWidget({
     Key key, this.articles = const [],
@@ -120,7 +121,10 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
         )),
         new Expanded(child: new Container()),
         new FlatButton(
-          onPressed: this.widget.onFinish,
+          onPressed: () => this.widget.onFinish(
+            this._selectedIndex == 0 ? OrderType.PRESSING : OrderType.WEIGHT,
+            this._calculateTotalPrice()
+          ),
           child: new Text(
             "SUIVANT",
             style: new TextStyle(color: ColorPalette.orange)

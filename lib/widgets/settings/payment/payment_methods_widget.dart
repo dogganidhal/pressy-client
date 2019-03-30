@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pressy_client/data/model/payment/payment_acount/payment_account.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
@@ -21,7 +20,8 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
   List<PaymentAccount> get _paymentAccounts => ServiceProvider
     .of(this.context)
     .getService<IMemberSession>()
-    .connectedMemberProfile.paymentAccounts;
+    .connectedMemberProfile
+    .paymentAccounts;
 
   @override
   Widget build(BuildContext context) => new Scaffold(
@@ -102,10 +102,6 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
         )
       )
     );
-  }
-
-  void _handleState(state) {
-    
   }
 
   String _formatCardAlias(String cardAlias) {

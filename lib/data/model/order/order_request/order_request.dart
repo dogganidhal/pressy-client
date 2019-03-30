@@ -8,7 +8,7 @@ class OrderRequestModel {
   final int pickupSlotId;
   final int deliverySlotId;
   final int addressId;
-  final int type;
+  final String type;
 
   OrderRequestModel({this.pickupSlotId, this.deliverySlotId, this.addressId, this.type});
 

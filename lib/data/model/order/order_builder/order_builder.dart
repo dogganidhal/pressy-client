@@ -14,9 +14,12 @@ class OrderRequestBuilder {
 
   PaymentAccount _paymentAccount;
   PaymentAccount get paymentAccount => this._paymentAccount;
+  
+  OrderType _orderType;
+  OrderType get orderType => this._orderType;
 
-  int _type;
-  int get type => this._type;
+  double _estimatedPrice;
+  double get estimatedPrice => this._estimatedPrice;
 
   OrderRequestBuilder setPickupSlot(Slot slot) {
     this._pickupSlot = slot;
@@ -37,9 +40,14 @@ class OrderRequestBuilder {
     this._paymentAccount = paymentAccount;
     return this;
   }
+  
+  OrderRequestBuilder setOrderType(OrderType orderType) {
+    this._orderType = orderType;
+    return this;
+  }
 
-  OrderRequestBuilder setOrderType(int type) {
-    this._type = type;
+  OrderRequestBuilder setEstimatedPrice(double price) {
+    this._estimatedPrice = price;
     return this;
   }
 
@@ -48,7 +56,7 @@ class OrderRequestBuilder {
       pickupSlotId: this._pickupSlot.id,
       deliverySlotId: this._deliverySlot.id,
       addressId: this._address.id,
-      type: this._type
+      type: this._orderType.index.toString()
     );
   }
 

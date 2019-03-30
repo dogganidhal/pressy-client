@@ -41,6 +41,7 @@ IServiceCollection configureServices() {
   services.addScoped<IOrderDataSource>((services) => new OrderDataSourceImpl(
     apiEndpointProvider: services.getService<ApiEndpointProvider>(),
     client: services.getService<IClient>(),
+    authSession: services.getService<IAuthSession>()
   ));
 
   return services;

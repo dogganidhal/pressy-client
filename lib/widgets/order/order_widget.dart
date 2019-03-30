@@ -8,20 +8,29 @@ import 'package:pressy_client/data/data_source/order/order_data_source.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/widgets/order/address/address_step_widget.dart';
+import 'package:pressy_client/widgets/order/confirmation/order_confirmation.dart';
 import 'package:pressy_client/widgets/order/estimate_order/estimate_order_step_widget.dart';
 import 'package:pressy_client/widgets/order/payment_method/payment_method_step_widget.dart';
 import 'package:pressy_client/widgets/order/slot/slot_step_widget.dart';
+import 'package:pressy_client/widgets/common/mixins/loader_mixin.dart';
+import 'package:pressy_client/widgets/common/mixins/error_mixin.dart';
+import 'package:pressy_client/widgets/common/mixins/lifecycle_mixin.dart';
 
 class OrderWidget extends StatefulWidget {
+  final VoidCallback onOrderSuccessful;
+
+  const OrderWidget({Key key, this.onOrderSuccessful}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _OrderWidgetState();
 
 }
 
-class _OrderWidgetState extends State<OrderWidget> {
+class _OrderWidgetState extends State<OrderWidget> 
+  with ErrorMixin, LoaderMixin, WidgetLifeCycleMixin {
 
   OrderBloc _orderBloc;
+  GlobalKey _scaffoldKey = new GlobalKey();
 
   @override
   void initState() {
@@ -44,8 +53,10 @@ class _OrderWidgetState extends State<OrderWidget> {
         centerTitle: true,
       ),
       body: new BlocBuilder<OrderEvent, OrderState>(
+        key: this._scaffoldKey,
         bloc: this._orderBloc,
         builder: (context, state) {
+          this._handleState(state);
           return new Stepper(
             physics: new FixedExtentScrollPhysics(),
             currentStep: state.step,
@@ -53,7 +64,7 @@ class _OrderWidgetState extends State<OrderWidget> {
             steps: [
               new Step(
                 isActive: state.step >= 0,
-                state: this._stepState(0),
+                state: this._stepState(state, 0),
                 title: new SizedBox(width: 0),
                 content: new SlotWidget(
                   title: "Créneau de collecte",
@@ -70,7 +81,7 @@ class _OrderWidgetState extends State<OrderWidget> {
               ),
               new Step(
                 isActive: state.step >= 1,
-                state: this._stepState(1),
+                state: this._stepState(state, 1),
                 title: new SizedBox(width: 0),
                 content: new SlotWidget(
                   title: "Créneau de livraison",
@@ -87,21 +98,25 @@ class _OrderWidgetState extends State<OrderWidget> {
               ),
               new Step(
                 isActive: state.step >= 2,
-                state: this._stepState(2),
+                state: this._stepState(state, 2),
                 title: new SizedBox(width: 0),
                 content: new EstimateOrderStepWidget(
                   articles: state.articleState is ArticlesReadyState ?
                     (state.articleState as ArticlesReadyState).articles :
                     [],
-                weightedArticle: state.articleState is ArticlesReadyState ?
-                  (state.articleState as ArticlesReadyState).weightedArticle:
-                  null,
-                  onFinish: () => this._orderBloc.dispatch(new GoToNextStepEvent())
+                  weightedArticle: state.articleState is ArticlesReadyState ?
+                    (state.articleState as ArticlesReadyState).weightedArticle:
+                    null,
+                  onFinish: (orderType, estimatedPrice) {
+                    this._orderBloc.dispatch(new SelectOrderTypeEvent(orderType, estimatedPrice));
+                    this._orderBloc.dispatch(new GoToNextStepEvent());
+                  }
+
                 )
               ),
               new Step(
                 isActive: state.step >= 3,
-                state: this._stepState(3),
+                state: this._stepState(state, 3),
                 title: new SizedBox(width: 0),
                 content: new AddressStepWidget(
                   isLoading: state.addressState is OrderAddressLoadingState,
@@ -114,7 +129,7 @@ class _OrderWidgetState extends State<OrderWidget> {
               ),
               new Step(
                 isActive: state.step >= 4,
-                state: this._stepState(4),
+                state: this._stepState(state, 4),
                 title: new SizedBox(width: 0),
                 content: new PaymentAccountStepWidget(
                   isLoading: state.paymentAccountState is OrderPaymentAccountLoadingState,
@@ -127,14 +142,12 @@ class _OrderWidgetState extends State<OrderWidget> {
                 )
               ),
               new Step(
-                  isActive: state.step >= 5,
-                state: this._stepState(5),
+                isActive: state.step >= 5,
+                state: this._stepState(state, 5),
                 title: new SizedBox(width: 0),
-                content: new Container(
-                  padding: new EdgeInsets.all(64),
-                  child: new Center(
-                    child: new Icon(Icons.adjust),
-                  ),
+                content: new OrderConfirmationWidget(
+                  orderRequest: state.orderRequestBuilder,
+                  onOrderConfirmed: () => this._orderBloc.dispatch(new ConfirmOrderEvent()),
                 )
               )
             ],
@@ -159,10 +172,26 @@ class _OrderWidgetState extends State<OrderWidget> {
 //    this.setState(() => this._currentStep--);
   }
   
-  StepState _stepState(int stepIndex) {
-//    if (this._currentStep > stepIndex)
-//      return StepState.complete;
+  StepState _stepState(OrderState state, int stepIndex) {
+    if (state.step > stepIndex)
+      return StepState.complete;
     return StepState.indexed;
+  }
+
+  void _handleState(OrderState state) {
+    if (state.success) {
+      this.onWidgetDidBuild(this.widget.onOrderSuccessful);
+    }
+    
+    if (state.isLoading) {
+      this.onWidgetDidBuild(() => this.showLoaderSnackBar(this._scaffoldKey.currentContext));
+    } else {
+      this.onWidgetDidBuild(() => this.hideLoaderSnackBar(this._scaffoldKey.currentContext));
+    }
+    
+    if (state.error != null) {
+      this.onWidgetDidBuild(() => this.showErrorDialog(this._scaffoldKey.currentContext, state.error));
+    }
   }
 
 }

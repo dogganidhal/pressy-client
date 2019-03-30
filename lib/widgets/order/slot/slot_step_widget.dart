@@ -44,8 +44,16 @@ class _SlotWidgetState extends State<SlotWidget> {
     .where((slot) => slot.slotType == SlotType.VIP)
     .toList();
 
+  Slot _selectedSlot;
+  void _setSelectedSlot(Slot slot) {
+    this.widget.onSlotSelected(slot);
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (!this.widget.isLoading && this._selectedSlot == null && this.widget.slots.isNotEmpty) {
+      this._setSelectedSlot(this.widget.slots[0]);
+    }
     return new BaseStepWidget(
       title: this.widget.title,
       child: new Column(
@@ -124,9 +132,7 @@ class _SlotWidgetState extends State<SlotWidget> {
         backgroundColor: Colors.transparent,
         itemExtent: Theme.of(context).textTheme.display2.fontSize,
         onSelectedItemChanged: (index) {
-          this.widget.onSlotSelected(
-            this._selectedTab == 0 ? this._standardSlots[index] : this._vipSlots[index]
-          );
+          this._setSelectedSlot(this._selectedTab == 0 ? this._standardSlots[index] : this._vipSlots[index]);
         },
         children: (this._selectedTab == 0 ? this._standardSlots : this._vipSlots)
           .map((slot) => new Container(

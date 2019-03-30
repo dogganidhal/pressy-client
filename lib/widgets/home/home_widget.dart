@@ -33,7 +33,9 @@ class _HomeWidgetState extends State<HomeWidget>
     this._memberSession = ServiceProvider.of(this.context).getService<IMemberSession>();
     this._currentIndex = this.widget.initialSelectedTab;
     this._widgets = [
-      new OrderWidget(),
+      new OrderWidget(
+        onOrderSuccessful: () => this.setState(() => this._currentIndex = 1),
+      ),
       new Center(
         child: new Icon(Icons.calendar_today),
       ),

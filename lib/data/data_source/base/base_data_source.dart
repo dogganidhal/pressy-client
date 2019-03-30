@@ -50,11 +50,15 @@ abstract class DataSource {
         break;
     }
 
-    final map = response.contentLength > 0 ? json.decode(response.body) : null;
-    if (response.statusCode >= 400) {
-      throw new ApiError.fromJson(map);
+    if (responseConverter != null) {
+      final map = response.contentLength > 0 ? json.decode(response.body) : null;
+      if (response.statusCode >= 400) {
+        throw new ApiError.fromJson(map);
+      }
+      return Future.value(responseConverter(map));
     }
-    return Future.value(responseConverter != null ? responseConverter(map) : null);
+
+    return Future.value();
 
   }
 

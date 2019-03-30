@@ -14,7 +14,7 @@ class SelectPickupSlotEvent extends OrderEvent {
   
   final Slot pickupSlot;
 
-  SelectPickupSlotEvent(this.pickupSlot);
+  SelectPickupSlotEvent(this.pickupSlot) : super([pickupSlot]);
   
 }
 
@@ -22,6 +22,22 @@ class SelectDeliverySlotEvent extends OrderEvent {
 
   final Slot deliverySlot;
 
-  SelectDeliverySlotEvent(this.deliverySlot);
+  SelectDeliverySlotEvent(this.deliverySlot) : super([deliverySlot]);
+
+}
+
+class SelectAddressEvent extends OrderEvent {
+
+  final MemberAddress address;
+
+  SelectAddressEvent(this.address) : super([address]);
+
+}
+
+class SelectPaymentAccountEvent extends OrderEvent {
+
+  final PaymentAccount paymentAccount;
+
+  SelectPaymentAccountEvent(this.paymentAccount) : super([paymentAccount]);
 
 }

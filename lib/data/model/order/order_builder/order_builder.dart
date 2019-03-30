@@ -28,12 +28,12 @@ class OrderRequestBuilder {
     return this;
   }
 
-  OrderRequestBuilder setAddressSlot(MemberAddress address) {
+  OrderRequestBuilder setAddress(MemberAddress address) {
     this._address = address;
     return this;
   }
 
-  OrderRequestBuilder setPaymentAccountSlot(PaymentAccount paymentAccount) {
+  OrderRequestBuilder setPaymentAccount(PaymentAccount paymentAccount) {
     this._paymentAccount = paymentAccount;
     return this;
   }

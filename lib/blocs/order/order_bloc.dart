@@ -75,6 +75,30 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
               )
             );
             break;
+        case 3:
+          state = state.copyWith(
+            addressState: new OrderAddressLoadingState()
+          );
+          yield state;
+          final addresses = await this.memberDataSource.getMemberAddresses();
+          yield state.copyWith(
+            addressState: new OrderAddressReadyState(
+              addresses: addresses
+            )
+          );
+          break;
+        case 4:
+          state = state.copyWith(
+            paymentAccountState: new OrderPaymentAccountLoadingState()
+          );
+          yield state;
+          final memberProfile = await this.memberDataSource.getMemberProfile();
+          yield state.copyWith(
+            paymentAccountState: new OrderPaymentAccountReadyState(
+              paymentAccounts: memberProfile.paymentAccounts
+            )
+          );
+          break;
         default: break;
       }
     }
@@ -85,6 +109,14 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     if (event is SelectDeliverySlotEvent) {
       currentState.orderRequestBuilder.setDeliverySlot(event.deliverySlot);
+    }
+
+    if (event is SelectAddressEvent) {
+      currentState.orderRequestBuilder.setAddress(event.address);
+    }
+
+    if (event is SelectPaymentAccountEvent) {
+      currentState.orderRequestBuilder.setPaymentAccount(event.paymentAccount);
     }
 
   }

@@ -92,8 +92,11 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
   @override
   Future<List<MemberAddress>> getMemberAddresses() {
     return this.handleRequest(
-      endpoint: this.apiEndpointProvider.members.signUp,
-      responseConverter: (json) => json.map((addressJson) => MemberAddress.fromJson(addressJson))
+      endpoint: this.apiEndpointProvider.addresses.memberAddresses,
+      responseConverter: (json) => json
+        .map((addressJson) => MemberAddress.fromJson(addressJson))
+        .toList()
+        .cast<MemberAddress>()
     );
   }
 

@@ -103,13 +103,28 @@ class _OrderWidgetState extends State<OrderWidget> {
                 isActive: state.step >= 3,
                 state: this._stepState(3),
                 title: new SizedBox(width: 0),
-                content: new AddressStepWidget()
+                content: new AddressStepWidget(
+                  isLoading: state.addressState is OrderAddressLoadingState,
+                  addresses: state.addressState is OrderAddressReadyState ?
+                    (state.addressState as OrderAddressReadyState).addresses :
+                    [],
+                  onAddressSelected: (address) => this._orderBloc.dispatch(new SelectAddressEvent(address)),
+                  onAddressConfirmed: () => this._orderBloc.dispatch(new GoToNextStepEvent()),
+                )
               ),
               new Step(
                 isActive: state.step >= 4,
                 state: this._stepState(4),
                 title: new SizedBox(width: 0),
-                content: new PaymentMethodStepWidget()
+                content: new PaymentAccountStepWidget(
+                  isLoading: state.paymentAccountState is OrderPaymentAccountLoadingState,
+                  paymentAccounts: state.paymentAccountState is OrderPaymentAccountReadyState ?
+                    (state.paymentAccountState as OrderPaymentAccountReadyState).paymentAccounts :
+                    [],
+                  onPaymentAccountSelected: (account) =>
+                    this._orderBloc.dispatch(new SelectPaymentAccountEvent(account)),
+                  onPaymentAccountConfirmed: () => this._orderBloc.dispatch(new GoToNextStepEvent()),
+                )
               ),
               new Step(
                   isActive: state.step >= 5,

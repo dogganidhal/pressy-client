@@ -17,13 +17,17 @@ class SlotWidget extends StatefulWidget {
   final SlotSelectedCallback onSlotSelected;
   final VoidCallback onSlotConfirmed;
   final bool canMoveForward;
+  final bool displaySlotTypeInfo;
+  final SlotType slotType;
 
   SlotWidget({
     Key key, @required this.title,
     @required this.onSlotSelected,
     @required this.onSlotConfirmed,
     this.canMoveForward = false,
-    this.slots = const [], this.isLoading = true
+    this.slots = const [], this.isLoading = true,
+    this.displaySlotTypeInfo = true,
+    this.slotType
   }) : super(key: key);
 
   @override
@@ -50,6 +54,14 @@ class _SlotWidgetState extends State<SlotWidget> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    if (this.widget.slotType != null) {
+      this._selectedTab = this.widget.slotType == SlotType.STANDARD ? 0 : 1;
+    } 
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (!this.widget.isLoading && this._selectedSlot == null && this.widget.slots.isNotEmpty) {
       this._setSelectedSlot(this.widget.slots[0]);
@@ -58,56 +70,64 @@ class _SlotWidgetState extends State<SlotWidget> {
       title: this.widget.title,
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          new CupertinoSegmentedControl<int>(
-            borderColor: ColorPalette.orange,
-            selectedColor: ColorPalette.orange,
-            unselectedColor: Colors.white,
-            groupValue: this._selectedTab,
-            children: {
-              0: new Text("Standard"),
-              1: new Text("VIP")
-            },
-            onValueChanged: (index) => this.setState(() => this._selectedTab = index)
-          ),
-          new SizedBox(height: 24),
-          this._slotInformationWidget(this._selectedTab == 0 ? SlotType.STANDARD : SlotType.VIP)
-        ],
+        children: this._buildWidgets().toList(),
       ),
     );
   }
 
+  Iterable<Widget> _buildWidgets() sync* {
+    if (this.widget.displaySlotTypeInfo) {
+      yield new CupertinoSegmentedControl<int>(
+        borderColor: ColorPalette.orange,
+        selectedColor: ColorPalette.orange,
+        unselectedColor: Colors.white,
+        groupValue: this._selectedTab,
+        children: {
+          0: new Text("Standard"),
+          1: new Text("VIP")
+        },
+        onValueChanged: (index) => this.setState(() => this._selectedTab = index)
+      );
+      yield new SizedBox(height: 24);
+    }
+    yield this._slotInformationWidget(this._selectedTab == 0 ? SlotType.STANDARD : SlotType.VIP);
+  }
+
+  Iterable<Widget> _buildSlotInfoWidgets(SlotType slotType) sync* {
+    if (this.widget.displaySlotTypeInfo) {
+      yield new Row(
+        children: <Widget>[
+          new Text("• Créneau de : ", style: new TextStyle(color: ColorPalette.textGray)),
+          new Text("30 minutes", style: new TextStyle(fontWeight: FontWeight.w600)),
+        ],
+      );
+      yield new SizedBox(height: 8);
+      yield new Row(
+        children: <Widget>[
+          new Text("• Frais de service : ", style: new TextStyle(color: ColorPalette.textGray)),
+          new Text(slotType == SlotType.STANDARD ? "GRATUIT" : "3.99€", style: new TextStyle(fontWeight: FontWeight.w600)),
+        ],
+      );
+      yield new SizedBox(height: 8);
+      yield new Row(
+        children: <Widget>[
+          new Text("• Frais de service : ", style: new TextStyle(color: ColorPalette.textGray)),
+          new Text(slotType == SlotType.STANDARD ? "48h" : "24h", style: new TextStyle(fontWeight: FontWeight.w600)),
+        ],
+      );
+      yield new SizedBox(height: 48);
+    }
+    yield new SizedBox(
+      height: 124,
+      child: this._slotListWidget,
+    );
+    yield new SizedBox(height: 48);
+    yield this._nextButton(this.widget.canMoveForward);
+  }
+
   Widget _slotInformationWidget(SlotType slotType) {
     return new Column(
-      children: <Widget>[
-        new Row(
-          children: <Widget>[
-            new Text("• Créneau de : ", style: new TextStyle(color: ColorPalette.textGray)),
-            new Text("30 minutes", style: new TextStyle(fontWeight: FontWeight.w600)),
-          ],
-        ),
-        new SizedBox(height: 8),
-        new Row(
-          children: <Widget>[
-            new Text("• Frais de service : ", style: new TextStyle(color: ColorPalette.textGray)),
-            new Text(slotType == SlotType.STANDARD ? "GRATUIT" : "3.99€", style: new TextStyle(fontWeight: FontWeight.w600)),
-          ],
-        ),
-        new SizedBox(height: 8),
-        new Row(
-          children: <Widget>[
-            new Text("• Frais de service : ", style: new TextStyle(color: ColorPalette.textGray)),
-            new Text(slotType == SlotType.STANDARD ? "48h" : "24h", style: new TextStyle(fontWeight: FontWeight.w600)),
-          ],
-        ),
-        new SizedBox(height: 48),
-        new SizedBox(
-          height: 124,
-          child: this._slotListWidget,
-        ),
-        new SizedBox(height: 48),
-        this._nextButton(this.widget.canMoveForward)
-      ],
+      children: this._buildSlotInfoWidgets(slotType).toList()
     );
   }
 

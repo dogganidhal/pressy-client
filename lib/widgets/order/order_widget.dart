@@ -85,6 +85,8 @@ class _OrderWidgetState extends State<OrderWidget>
                 title: new SizedBox(width: 0),
                 content: new SlotWidget(
                   title: "Créneau de livraison",
+                  displaySlotTypeInfo: false,
+                  slotType: state.orderRequestBuilder.pickupSlot?.slotType,
                   isLoading: state.deliverySlotState is OrderSlotLoadingState,
                   canMoveForward: state.deliverySlotState is OrderSlotReadyState ?
                     (state.deliverySlotState as OrderSlotReadyState).canMoveForward :

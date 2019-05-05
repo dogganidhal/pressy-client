@@ -91,7 +91,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           yield state;
           final memberProfile = await this.memberDataSource.getMemberProfile();
           yield state.copyWith(
-            paymentAccountState: new OrderPaymentAccountReadyState(
+            paymentAccountState: OrderPaymentAccountReadyState(
               paymentAccounts: memberProfile.paymentAccounts
             )
           );
@@ -110,7 +110,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     }
 
     if (event is SelectDeliverySlotEvent) {
-      currentState.orderRequestBuilder.setDeliverySlot(event.deliverySlot);
+      currentState.orderRequestBuilder.setDeliverySlot(Slot(
+        id: event.deliverySlot.id,
+        startDate: event.deliverySlot.startDate,
+        type: currentState.orderRequestBuilder.pickupSlot.type
+      ));
     }
 
     if (event is SelectAddressEvent) {

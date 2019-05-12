@@ -7,7 +7,7 @@ class ApiEndpointProvider {
   final String baseUrl;
 
   ApiEndpointProvider(
-    {this.baseUrl: "http://localhost:3000/v1"}
+    {this.baseUrl: "http://pressy-mobile-api-dev.herokuapp.com/v1"}
   );
 
   final _ApiAuthEndpoints auth = new _ApiAuthEndpoints();

@@ -7,13 +7,14 @@ class ApiEndpointProvider {
   final String baseUrl;
 
   ApiEndpointProvider(
-    {this.baseUrl: "https://pressy-mobile-api-dev.herokuapp.com/v1"}
+    {this.baseUrl: "http://localhost:3000/v1"}
   );
 
   final _ApiAuthEndpoints auth = new _ApiAuthEndpoints();
   final _ApiMemberEndpoints members = new _ApiMemberEndpoints();
   final _ApiAddressEndpoints addresses = new _ApiAddressEndpoints();
   final _ApiOrderEndpoints orders = new _ApiOrderEndpoints();
+  final _ApiPaymentEndpoints payments = _ApiPaymentEndpoints();
 
 }
 
@@ -61,5 +62,13 @@ class _ApiOrderEndpoints {
   final ApiEndpoint getWeightedArticle = new ApiEndpoint(path: "/order/weighted-article", method: "GET");
   final ApiEndpoint getOrders = new ApiEndpoint(path: "/order", method: "GET", needsAuthorization: true);
   final ApiEndpoint submitOrder = new ApiEndpoint(path: "/order", method: "POST", needsAuthorization: true);
+
+}
+
+class _ApiPaymentEndpoints {
+
+  final ApiEndpoint getPaymentAccounts = ApiEndpoint(path: "/payment", method: "GET", needsAuthorization: true);
+  final ApiEndpoint addPaymentAccount = ApiEndpoint(path: "/payment", method: "POST", needsAuthorization: true);
+  final ApiEndpoint deletePaymentAccounts = ApiEndpoint(path: "/payment", method: "DELETE", needsAuthorization: true);
 
 }

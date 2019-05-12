@@ -3,6 +3,8 @@ import 'package:meta/meta.dart';
 import 'package:pressy_client/blocs/settings/add_payment_acount/add_payment_account_event.dart';
 import 'package:pressy_client/blocs/settings/add_payment_acount/add_payment_account_state.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
+import 'package:pressy_client/data/data_source/payment/payment_data_source.dart';
+import 'package:pressy_client/data/model/payment/create_credit_card/create_credit_card_request.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/utils/validators/validators.dart';
 
@@ -10,9 +12,10 @@ class AddPaymentAccountBloc extends Bloc<AddPaymentAccountEvent, AddPaymentAccou
 
   final IMemberSession memberSession;
   final IMemberDataSource memberDataSource;
+  final IPaymentDataSource paymentDataSource;
 
   AddPaymentAccountBloc({
-    @required this.memberDataSource, @required this.memberSession,
+    @required this.memberDataSource, @required this.memberSession, @required this.paymentDataSource
   });
 
   @override
@@ -30,6 +33,21 @@ class AddPaymentAccountBloc extends Bloc<AddPaymentAccountEvent, AddPaymentAccou
 
       yield new AddPaymentAccountInputState(isInputValid: isValid);
 
+    }
+
+    if (event is ConfirmCreditCardEvent) {
+      final cardExpiryComponents = event.expiryDateString.split("/");
+      assert(cardExpiryComponents.length == 2);
+      final request = CreateCreditCardRequestModel(
+        cardExpiryMonth: cardExpiryComponents[0],
+        cardExpiryYear: "20${cardExpiryComponents[1]}",
+        cardNumber: event.creditCardNumber.split(" ").join(""),
+        cardHolderName: event.creditCardHolderName,
+        cvc: event.cvc
+      );
+      final cardToken = await this.paymentDataSource.tokenizeCreditCard(request);
+      final paymentAccount = await this.memberDataSource.addPaymentAccount(cardToken);
+      print(paymentAccount);
     }
 
   }

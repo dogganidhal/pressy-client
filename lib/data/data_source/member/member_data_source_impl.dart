@@ -8,6 +8,8 @@ import 'package:pressy_client/data/model/member/address/member_address/member_ad
 import 'package:pressy_client/data/model/member/profile/edit_member_profile/edit_member_profile_request.dart';
 import 'package:pressy_client/data/model/member/profile/member_profile/member_profile.dart';
 import 'package:pressy_client/data/model/member/sign_up_request/sign_up_request.dart';
+import 'package:pressy_client/data/model/payment/credit_card_token/credit_card_token.dart';
+import 'package:pressy_client/data/model/payment/payment_acount/payment_account.dart';
 import 'package:pressy_client/data/resources/provider/endpoint_provider.dart';
 import 'package:pressy_client/data/session/auth/auth_session.dart';
 import 'package:pressy_client/utils/network/base_client.dart';
@@ -97,6 +99,15 @@ class MemberDataSourceImpl extends DataSource implements IMemberDataSource {
         .map((addressJson) => MemberAddress.fromJson(addressJson))
         .toList()
         .cast<MemberAddress>()
+    );
+  }
+
+  @override
+  Future<PaymentAccount> addPaymentAccount(CreditCardTokenModel token) {
+    return this.handleRequest(
+      endpoint: this.apiEndpointProvider.payments.addPaymentAccount,
+      body: token?.toJson(),
+      responseConverter: (json) => PaymentAccount.fromJson(json)
     );
   }
 

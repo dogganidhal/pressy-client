@@ -12,11 +12,13 @@ PaymentAccount _$PaymentAccountFromJson(Map<String, dynamic> json) {
       cvc: json['cvc'] as String,
       expiryMonth: json['expiryMonth'] as int,
       expiryYear: json['expiryYear'] as int,
-      holderName: json['holderName'] as String);
+      holderName: json['holderName'] as String,
+      id: json['id'] as String);
 }
 
 Map<String, dynamic> _$PaymentAccountToJson(PaymentAccount instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'cardAlias': instance.cardAlias,
       'cvc': instance.cvc,
       'holderName': instance.holderName,

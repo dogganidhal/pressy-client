@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
+import 'package:pressy_client/data/data_source/payment/payment_data_source.dart';
 import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/formatters/expiry_date_formatter.dart';
@@ -40,6 +41,7 @@ class _AddPaymentMethodWidgetState extends State<AddPaymentMethodWidget>
     this._bloc = new AddPaymentAccountBloc(
       memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>(),
       memberSession: ServiceProvider.of(this.context).getService<IMemberSession>(),
+      paymentDataSource: ServiceProvider.of(this.context).getService<IPaymentDataSource>()
     );
   }
 
@@ -177,7 +179,12 @@ class _AddPaymentMethodWidgetState extends State<AddPaymentMethodWidget>
             child: new FlatButton(
               child: new Text("CONFIRMER"),
               textColor: Colors.white,
-              onPressed: isFormValid ? () => print(this._cardNumberController.text.split(' ').join()) : null,
+              onPressed: isFormValid ? () => this._bloc.dispatch(ConfirmCreditCardEvent(
+                creditCardNumber: this._cardNumberController.text,
+                creditCardHolderName: this._cardHolderNameController.text,
+                expiryDateString: this._expiryDateController.text,
+                cvc: this._cvcController.text
+              )) : null,
             ),
           ),
         ),

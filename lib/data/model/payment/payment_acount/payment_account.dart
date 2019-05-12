@@ -5,6 +5,7 @@ part 'payment_account.g.dart';
 @JsonSerializable()
 class PaymentAccount {
 
+  final String id;
   final String cardAlias;
   final String cvc;
   final String holderName;
@@ -12,7 +13,7 @@ class PaymentAccount {
   final int expiryYear;
 
   PaymentAccount({
-    this.cardAlias, this.cvc, this.expiryMonth, this.expiryYear, this.holderName
+    this.cardAlias, this.cvc, this.expiryMonth, this.expiryYear, this.holderName, this.id
   });
 
   factory PaymentAccount.fromJson(Map<String, dynamic> json) => _$PaymentAccountFromJson(json);

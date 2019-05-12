@@ -5,6 +5,8 @@ import 'package:pressy_client/data/model/member/address/member_address/member_ad
 import 'package:pressy_client/data/model/member/profile/edit_member_profile/edit_member_profile_request.dart';
 import 'package:pressy_client/data/model/member/profile/member_profile/member_profile.dart';
 import 'package:pressy_client/data/model/member/sign_up_request/sign_up_request.dart';
+import 'package:pressy_client/data/model/payment/credit_card_token/credit_card_token.dart';
+import 'package:pressy_client/data/model/payment/payment_acount/payment_account.dart';
 
 
 abstract class IMemberDataSource {
@@ -18,5 +20,6 @@ abstract class IMemberDataSource {
   Future<void> editMemberAddress(EditMemberAddressRequestModel request);
   Future<MemberAddress> createMemberAddress(CreateMemberAddressDetails request);
   Future<void> deleteMemberAddress(int addressId);
+  Future<PaymentAccount> addPaymentAccount(CreditCardTokenModel token);
 
 }

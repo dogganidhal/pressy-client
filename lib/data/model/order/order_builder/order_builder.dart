@@ -56,7 +56,8 @@ class OrderRequestBuilder {
       pickupSlotId: this._pickupSlot.id,
       deliverySlotId: this._deliverySlot.id,
       addressId: this._address.id,
-      type: this._orderType.index.toString()
+      type: this._orderType.index.toString(),
+      paymentAccountId: this._paymentAccount.id
     );
   }
 

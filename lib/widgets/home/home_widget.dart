@@ -4,6 +4,7 @@ import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/widgets/order/order_widget.dart';
 import 'package:pressy_client/widgets/settings/settings_widget.dart';
+import 'package:pressy_client/widgets/commande/home_commande_widget.dart';
 
 class HomeWidget extends StatefulWidget {
 
@@ -36,9 +37,7 @@ class _HomeWidgetState extends State<HomeWidget>
       new OrderWidget(
         onOrderSuccessful: () => this.setState(() => this._currentIndex = 1),
       ),
-      new Center(
-        child: new Icon(Icons.calendar_today),
-      ),
+      new HomeCommandeWidget(),
       new SettingsWidget(
         memberSession: this._memberSession,
       ),

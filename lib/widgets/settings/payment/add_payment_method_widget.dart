@@ -199,7 +199,7 @@ class _AddPaymentMethodWidgetState extends State<AddPaymentMethodWidget>
       this.onWidgetDidBuild(() => this.hideErrorDialog(this._scaffoldKey.currentContext));
     }
     if (state is AddPaymentAccountErrorState) {
-      this.onWidgetDidBuild(() => this.showErrorDialog(this.context, state.error));
+      this.onWidgetDidBuild(() => this.showErrorDialog(this._scaffoldKey.currentContext, state.error));
     }
     if (state is AddPaymentAccountSuccessState) {
       this.onWidgetDidBuild(() => Navigator.pop(this.context));

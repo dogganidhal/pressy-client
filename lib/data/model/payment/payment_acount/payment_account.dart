@@ -9,8 +9,8 @@ class PaymentAccount {
   final String cardAlias;
   final String cvc;
   final String holderName;
-  final int expiryMonth;
-  final int expiryYear;
+  final dynamic expiryMonth;
+  final dynamic expiryYear;
 
   PaymentAccount({
     this.cardAlias, this.cvc, this.expiryMonth, this.expiryYear, this.holderName, this.id

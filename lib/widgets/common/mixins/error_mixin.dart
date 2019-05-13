@@ -33,13 +33,16 @@ mixin ErrorMixin {
     );
 
   void showErrorDialog(BuildContext context, AppError error) {
-    if (!this._isErrorModalActive) {
-      this._isErrorModalActive = true;
-      showDialog(
-          context: context,
-          builder: (context) => this.errorWidget(context, error)
-      );
-    }
+    Scaffold.of(context).showSnackBar(new SnackBar(
+      content: new Row(
+        children: <Widget>[
+          new CircularProgressIndicator(),
+          new SizedBox(width: 12),
+          new Text(error.message)
+        ],
+      ),
+      duration: new Duration(seconds: 10)
+    ));
   }
 
   void hideErrorDialog(BuildContext context) {

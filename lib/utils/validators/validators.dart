@@ -52,12 +52,12 @@ abstract class Validators {
 
   static String expiryDateValidator(String expiryDate) {
     final dateComponents = expiryDate.split("/");
-    if (dateComponents.length != 2)
+    if (dateComponents.length != 2 || dateComponents.where((c) => c.isEmpty).length > 0)
       return "Date de fin invalide";
-    if (DateTime.now().year - 2000 > int.parse(dateComponents[1]))
+    final expiryDateTime = DateTime(2000 + int.parse(dateComponents[1]), int.parse(dateComponents[0]));
+    if (expiryDateTime.isBefore(DateTime.now())) {
       return "Carte expirée";
-    if (DateTime.now().month > int.parse(dateComponents[0]))
-      return "Carte expirée";
+    }
     return null;
   }
 

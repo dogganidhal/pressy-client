@@ -10,41 +10,36 @@ class StripePaymentDataSourceImpl implements IPaymentDataSource {
   @override
   Future<CreditCardTokenModel> tokenizeCreditCard(CreateCreditCardRequestModel request) async {
     
-    try {
-      final dio = Dio();
-      final response = await dio.post("https://api.stripe.com/v1/tokens", 
-        options: Options(
-          headers: {
-            "Authorization": this._authorizationHeader
-          },
-          contentType: ContentType.parse("application/x-www-form-urlencoded")
-        ),
-        data: {
-          "card[number]": request.cardNumber,
-          "card[exp_month]": request.cardExpiryMonth,
-          "card[exp_year]": request.cardExpiryYear,
-          "card[cvc]": request.cvc
-        }
-      );
-      final json = response.data;
-      final cardAlias = "XXXXXXXXXXXX${request.cardNumber.substring(12, 16)}";
-      return CreditCardTokenModel(
-        cardAlias: cardAlias,
-        cardToken: json["id"],
-        cvc: request.cvc,
-        holderName: request.cardHolderName,
-        expiryMonth: request.cardExpiryMonth,
-        expiryYear: request.cardExpiryYear
-      );
-    } catch (exception) {
-      print(exception);
-      throw exception;
-    }
+    final dio = Dio();
+    final response = await dio.post("https://api.stripe.com/v1/tokens", 
+      options: Options(
+        headers: {
+          "Authorization": this._authorizationHeader
+        },
+        contentType: ContentType.parse("application/x-www-form-urlencoded")
+      ),
+      data: {
+        "card[number]": request.cardNumber,
+        "card[exp_month]": request.cardExpiryMonth,
+        "card[exp_year]": request.cardExpiryYear,
+        "card[cvc]": request.cvc
+      }
+    );
+    final json = response.data;
+    final cardAlias = "XXXXXXXXXXXX${request.cardNumber.substring(12, 16)}";
+    return CreditCardTokenModel(
+      cardAlias: cardAlias,
+      cardToken: json["id"],
+      cvc: request.cvc,
+      holderName: request.cardHolderName,
+      expiryMonth: request.cardExpiryMonth,
+      expiryYear: request.cardExpiryYear
+    );
     
   }
 
   String get _authorizationHeader => kReleaseMode ? 
-    "Basic c2tfbGl2ZV9tRzN2UDN6VXAydkZvZU05UEJVRTBQY0YwMFcwckhZTks4Og==" :
-    "Basic c2tfdGVzdF9iRTBxcHN1clVXUHRUckdocGxaelJYcmQwMDkwQTd1Z1lPOg==";
+    "Basic cmtfbGl2ZV9RSFRyZDZabnZQQmRwUWx6TVhJa09DMk4wMHNONGpEc2xuOg==" :
+    "Basic cmtfdGVzdF9BZjdmWWhSa283WVhYa014emlPYVlVVmcwMDJsQ1laTE9HOg==";
 
 }

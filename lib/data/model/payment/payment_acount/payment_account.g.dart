@@ -10,8 +10,8 @@ PaymentAccount _$PaymentAccountFromJson(Map<String, dynamic> json) {
   return PaymentAccount(
       cardAlias: json['cardAlias'] as String,
       cvc: json['cvc'] as String,
-      expiryMonth: json['expiryMonth'] as int,
-      expiryYear: json['expiryYear'] as int,
+      expiryMonth: json['expiryMonth'],
+      expiryYear: json['expiryYear'],
       holderName: json['holderName'] as String,
       id: json['id'] as String);
 }

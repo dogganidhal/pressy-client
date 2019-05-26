@@ -18,7 +18,7 @@ import 'package:pressy_client/widgets/common/mixins/lifecycle_mixin.dart';
 class AddressesWidget extends StatefulWidget {
 
   @override
-  State<StatefulWidget> createState() => new _AddressesWidgetState();
+  State<StatefulWidget> createState() => _AddressesWidgetState();
 
 }
 
@@ -26,7 +26,7 @@ class _AddressesWidgetState extends State<AddressesWidget>
   with LoaderMixin, WidgetLifeCycleMixin, ErrorMixin {
 
   AddressBloc _addressBloc;
-  GlobalKey _scaffoldKey = new GlobalKey();
+  GlobalKey _scaffoldKey = GlobalKey();
   List<MemberAddress> get _addresses => ServiceProvider
     .of(this.context)
     .getService<IMemberSession>()
@@ -35,7 +35,7 @@ class _AddressesWidgetState extends State<AddressesWidget>
   @override
   void initState() {
     super.initState();
-    this._addressBloc = new AddressBloc(
+    this._addressBloc = AddressBloc(
       memberSession: ServiceProvider.of(this.context).getService<IMemberSession>(),
       memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>()
     );
@@ -43,41 +43,41 @@ class _AddressesWidgetState extends State<AddressesWidget>
 
   @override
   Widget build(BuildContext context) {
-    return new BlocBuilder<AddressEvent, AddressState>(
+    return BlocBuilder<AddressEvent, AddressState>(
       bloc: this._addressBloc,
       builder: (context, state) {
         this._handleState(state);
-        return new Scaffold(
+        return Scaffold(
           backgroundColor: Colors.grey[100],
-          appBar: new AppBar(
-            iconTheme: new IconThemeData(color: ColorPalette.orange),
-            title: new Text("Mes adresses"),
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: ColorPalette.orange),
+            title: Text("Mes adresses"),
             backgroundColor: Colors.white,
             centerTitle: true,
             elevation: 1,
             actions: <Widget>[
-              new FlatButton.icon(
+              FlatButton.icon(
                 onPressed: this._launchAddAddressWidget,
-                icon: new Icon(Icons.add, color: ColorPalette.orange),
-                label: new Container()
+                icon: Icon(Icons.add, color: ColorPalette.orange),
+                label: Container()
               )
             ],
           ),
-          body: new Column(
+          body: Column(
             key: this._scaffoldKey,
             children: <Widget>[
-              new Container(
-                padding: new EdgeInsets.only(top: 24, bottom: 12, left: 12, right: 12),
-                child: new Text(
+              Container(
+                padding: EdgeInsets.only(top: 24, bottom: 12, left: 12, right: 12),
+                child: Text(
                   "Pour modifier ou supprimer une de vos adresses, glisser vers la gauche",
                   textAlign: TextAlign.center,
                 ),
               ),
-              new Expanded(
-                child: new ListView.separated(
-                  padding: new EdgeInsets.only(top: 12, bottom: 12),
+              Expanded(
+                child: ListView.separated(
+                  padding: EdgeInsets.only(top: 12, bottom: 12),
                   itemBuilder: (context, index) => this._addressRow(this._addresses[index]),
-                  separatorBuilder: (context, index) => new Divider(height: 1),
+                  separatorBuilder: (context, index) => Divider(height: 1),
                   itemCount: this._addresses.length,
                 )
               )
@@ -88,23 +88,23 @@ class _AddressesWidgetState extends State<AddressesWidget>
     );
   }
 
-  Widget _addressRow(MemberAddress memberAddress) => new Slidable(
-    delegate: new SlidableDrawerDelegate(),
-    child: new Container(
+  Widget _addressRow(MemberAddress memberAddress) => Slidable(
+    delegate: SlidableDrawerDelegate(),
+    child: Container(
       color: Colors.white,
-      child: new ListTile(
-        title: new Text(memberAddress.name ?? "Mon adresse"),
-        subtitle: new Text(memberAddress.formattedAddress),
+      child: ListTile(
+        title: Text(memberAddress.name ?? "Mon adresse"),
+        subtitle: Text(memberAddress.formattedAddress),
       ),
     ),
     secondaryActions: <Widget>[
-      new IconSlideAction(
+      IconSlideAction(
         caption: 'Supprimer',
         color: ColorPalette.red,
         icon: Icons.delete,
-        onTap: () => this._addressBloc.dispatch(new DeleteAddressEvent(addressId: memberAddress.id)),
+        onTap: () => this._addressBloc.dispatch(DeleteAddressEvent(addressId: memberAddress.id)),
       ),
-      new IconSlideAction(
+      IconSlideAction(
         foregroundColor: Colors.white,
         caption: 'Modifier',
         color: ColorPalette.orange,
@@ -117,11 +117,11 @@ class _AddressesWidgetState extends State<AddressesWidget>
   void _launchAddAddressWidget() {
     final services  = ServiceProvider.of(this.context);
     Navigator.of(this.context)
-      .push(new MaterialPageRoute(
-        builder: (context) => new ServiceProvider(
-          child: new BlocProvider(
+      .push(MaterialPageRoute(
+        builder: (context) => ServiceProvider(
+          child: BlocProvider(
             bloc: this._addressBloc,
-            child: new AddAddressWidget()
+            child: AddAddressWidget()
           ),
           services: services
         )

@@ -31,21 +31,21 @@ class SlotWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => new _SlotWidgetState();
+  State<StatefulWidget> createState() => _SlotWidgetState();
 
 }
 
 class _SlotWidgetState extends State<SlotWidget> {
 
-  DateFormat _dateFormat = new DateFormat("EEEE dd MMM HH'h'mm");
+  DateFormat _dateFormat = DateFormat("EEEE dd MMM HH'h'mm");
   int _selectedTab = 0;
   
   List<Slot> get _standardSlots => this.widget.slots
     .where((slot) => slot.slotType == SlotType.STANDARD)
     .toList();
 
-  List<Slot> get _vipSlots => this.widget.slots
-    .where((slot) => slot.slotType == SlotType.VIP)
+  List<Slot> get _expressSlots => this.widget.slots
+    .where((slot) => slot.slotType == SlotType.EXPRESS)
     .toList();
 
   Slot _selectedSlot;
@@ -66,9 +66,9 @@ class _SlotWidgetState extends State<SlotWidget> {
     if (!this.widget.isLoading && this._selectedSlot == null && this.widget.slots.isNotEmpty) {
       this._setSelectedSlot(this.widget.slots[0]);
     }
-    return new BaseStepWidget(
+    return BaseStepWidget(
       title: this.widget.title,
-      child: new Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: this._buildWidgets().toList(),
       ),
@@ -77,68 +77,68 @@ class _SlotWidgetState extends State<SlotWidget> {
 
   Iterable<Widget> _buildWidgets() sync* {
     if (this.widget.displaySlotTypeInfo) {
-      yield new CupertinoSegmentedControl<int>(
+      yield CupertinoSegmentedControl<int>(
         borderColor: ColorPalette.orange,
         selectedColor: ColorPalette.orange,
         unselectedColor: Colors.white,
         groupValue: this._selectedTab,
         children: {
-          0: new Text("Standard"),
-          1: new Text("VIP")
+          0: Text("Standard"),
+          1: Text("Express")
         },
         onValueChanged: (index) => this.setState(() => this._selectedTab = index)
       );
-      yield new SizedBox(height: 24);
+      yield SizedBox(height: 24);
     }
-    yield this._slotInformationWidget(this._selectedTab == 0 ? SlotType.STANDARD : SlotType.VIP);
+    yield this._slotInformationWidget(this._selectedTab == 0 ? SlotType.STANDARD : SlotType.EXPRESS);
   }
 
   Iterable<Widget> _buildSlotInfoWidgets(SlotType slotType) sync* {
     if (this.widget.displaySlotTypeInfo) {
-      yield new Row(
+      yield Row(
         children: <Widget>[
-          new Text("• Créneau de : ", style: new TextStyle(color: ColorPalette.textGray)),
-          new Text("30 minutes", style: new TextStyle(fontWeight: FontWeight.w600)),
+          Text("• Créneau de : ", style: TextStyle(color: ColorPalette.textGray)),
+          Text("30 minutes", style: TextStyle(fontWeight: FontWeight.w600)),
         ],
       );
-      yield new SizedBox(height: 8);
-      yield new Row(
+      yield SizedBox(height: 8);
+      yield Row(
         children: <Widget>[
-          new Text("• Frais de service : ", style: new TextStyle(color: ColorPalette.textGray)),
-          new Text(slotType == SlotType.STANDARD ? "GRATUIT" : "3.99€", style: new TextStyle(fontWeight: FontWeight.w600)),
+          Text("• Frais de service : ", style: TextStyle(color: ColorPalette.textGray)),
+          Text(slotType == SlotType.STANDARD ? "GRATUIT" : "3.99€", style: TextStyle(fontWeight: FontWeight.w600)),
         ],
       );
-      yield new SizedBox(height: 8);
-      yield new Row(
+      yield SizedBox(height: 8);
+      yield Row(
         children: <Widget>[
-          new Text("• Frais de service : ", style: new TextStyle(color: ColorPalette.textGray)),
-          new Text(slotType == SlotType.STANDARD ? "48h" : "24h", style: new TextStyle(fontWeight: FontWeight.w600)),
+          Text("• Frais de service : ", style: TextStyle(color: ColorPalette.textGray)),
+          Text(slotType == SlotType.STANDARD ? "48h" : "24h", style: TextStyle(fontWeight: FontWeight.w600)),
         ],
       );
-      yield new SizedBox(height: 48);
+      yield SizedBox(height: 48);
     }
-    yield new SizedBox(
+    yield SizedBox(
       height: 124,
       child: this._slotListWidget,
     );
-    yield new SizedBox(height: 48);
+    yield SizedBox(height: 48);
     yield this._nextButton(this.widget.canMoveForward);
   }
 
   Widget _slotInformationWidget(SlotType slotType) {
-    return new Column(
+    return Column(
       children: this._buildSlotInfoWidgets(slotType).toList()
     );
   }
 
-  Widget get _loadingWidget => new Container(
-    child: new Center(
-      child: new Column(
+  Widget get _loadingWidget => Container(
+    child: Center(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new CircularProgressIndicator(),
-          new SizedBox(height: 8),
-          new Text("Chargement des créneaux")
+          CircularProgressIndicator(),
+          SizedBox(height: 8),
+          Text("Chargement des créneaux")
         ],
       ),
     ),
@@ -146,38 +146,38 @@ class _SlotWidgetState extends State<SlotWidget> {
 
   Widget get _slotListWidget => this.widget.isLoading ?
     this._loadingWidget :
-    new Container(
-      child: new CupertinoPicker(
+    Container(
+      child: CupertinoPicker(
         useMagnifier: true,
         backgroundColor: Colors.transparent,
         itemExtent: Theme.of(context).textTheme.display2.fontSize,
         onSelectedItemChanged: (index) {
-          this._setSelectedSlot(this._selectedTab == 0 ? this._standardSlots[index] : this._vipSlots[index]);
+          this._setSelectedSlot(this._selectedTab == 0 ? this._standardSlots[index] : this._expressSlots[index]);
         },
-        children: (this._selectedTab == 0 ? this._standardSlots : this._vipSlots)
-          .map((slot) => new Container(
-            padding: new EdgeInsets.all(8),
-            child: new Center(
-              child: new Text(this._dateFormat.format(slot.startDate)),
+        children: (this._selectedTab == 0 ? this._standardSlots : this._expressSlots)
+          .map((slot) => Container(
+            padding: EdgeInsets.all(8),
+            child: Center(
+              child: Text(this._dateFormat.format(slot.startDate)),
             ),
           ))
           .toList()
       ),
     );
 
-  Widget _nextButton(bool enabled) => new Row(
+  Widget _nextButton(bool enabled) => Row(
     children: <Widget>[
-      new Expanded(
-        child: new Container(
+      Expanded(
+        child: Container(
           height: 40,
-          decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.circular(8),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
               color: enabled ? ColorPalette.orange : ColorPalette.lightGray
           ),
-          child: new ButtonTheme(
+          child: ButtonTheme(
             height: double.infinity,
-            child: new FlatButton(
-              child: new Text("SUIVANT"),
+            child: FlatButton(
+              child: Text("SUIVANT"),
               textColor: Colors.white,
               onPressed: enabled ? this.widget.onSlotConfirmed : null
             ),

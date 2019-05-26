@@ -49,7 +49,7 @@ class OrderDataSourceImpl extends DataSource implements IOrderDataSource {
     return this.handleRequest(
         endpoint: this.apiEndpointProvider.orders.getDeliverySlots(pickupSlot.id),
         responseConverter: (json) => json
-          .map((slot) => new Slot.fromJson(slot))
+          .map((slot) => Slot.fromJson(slot))
           .toList()
           .cast<Slot>()
     );
@@ -60,7 +60,7 @@ class OrderDataSourceImpl extends DataSource implements IOrderDataSource {
     return this.handleRequest(
       endpoint: this.apiEndpointProvider.orders.getOrders,
       responseConverter: (json) => json
-        .map((order) => new Order.fromJson(order))
+        .map((order) => Order.fromJson(order))
         .toList()
         .cast<Order>()
     );
@@ -78,7 +78,7 @@ class OrderDataSourceImpl extends DataSource implements IOrderDataSource {
   Future<Article> getWeightedArticle() {
     return this.handleRequest(
       endpoint: this.apiEndpointProvider.orders.getWeightedArticle,
-      responseConverter: (json) => new Article.fromJson(json)
+      responseConverter: (json) => Article.fromJson(json)
     );
   }
 

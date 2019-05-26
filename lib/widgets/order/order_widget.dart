@@ -22,7 +22,7 @@ class OrderWidget extends StatefulWidget {
   const OrderWidget({Key key, this.onOrderSuccessful}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => new _OrderWidgetState();
+  State<StatefulWidget> createState() => _OrderWidgetState();
 
 }
 
@@ -30,43 +30,43 @@ class _OrderWidgetState extends State<OrderWidget>
   with ErrorMixin, LoaderMixin, WidgetLifeCycleMixin {
 
   OrderBloc _orderBloc;
-  GlobalKey _scaffoldKey = new GlobalKey();
+  GlobalKey _scaffoldKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    this._orderBloc = new OrderBloc(
+    this._orderBloc = OrderBloc(
       orderDataSource: ServiceProvider.of(this.context).getService<IOrderDataSource>(),
       memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>()
     );
-    this._orderBloc.dispatch(new FetchOrderDataEvent());
+    this._orderBloc.dispatch(FetchOrderDataEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        iconTheme: new IconThemeData(color: ColorPalette.orange),
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: ColorPalette.orange),
         elevation: 1,
         backgroundColor: Colors.white,
-        title: new Text("Passer une commande"),
+        title: Text("Passer une commande"),
         centerTitle: true,
       ),
-      body: new BlocBuilder<OrderEvent, OrderState>(
+      body: BlocBuilder<OrderEvent, OrderState>(
         key: this._scaffoldKey,
         bloc: this._orderBloc,
         builder: (context, state) {
           this._handleState(state);
-          return new Stepper(
-            physics: new FixedExtentScrollPhysics(),
+          return Stepper(
+            physics: FixedExtentScrollPhysics(),
             currentStep: state.step,
             type: StepperType.horizontal,
             steps: [
-              new Step(
+              Step(
                 isActive: state.step >= 0,
                 state: this._stepState(state, 0),
-                title: new SizedBox(width: 0),
-                content: new SlotWidget(
+                title: SizedBox(width: 0),
+                content: SlotWidget(
                   title: "Créneau de collecte",
                   isLoading: state.pickupSlotState is OrderSlotLoadingState,
                   canMoveForward: state.pickupSlotState is OrderSlotReadyState ?
@@ -75,15 +75,15 @@ class _OrderWidgetState extends State<OrderWidget>
                   slots: state.pickupSlotState is OrderSlotReadyState ?
                     (state.pickupSlotState as OrderSlotReadyState).slots :
                     [],
-                  onSlotSelected: (slot) => this._orderBloc.dispatch(new SelectPickupSlotEvent(slot)),
-                  onSlotConfirmed: () => this._orderBloc.dispatch(new GoToNextStepEvent()),
+                  onSlotSelected: (slot) => this._orderBloc.dispatch(SelectPickupSlotEvent(slot)),
+                  onSlotConfirmed: () => this._orderBloc.dispatch(GoToNextStepEvent()),
                 )
               ),
-              new Step(
+              Step(
                 isActive: state.step >= 1,
                 state: this._stepState(state, 1),
-                title: new SizedBox(width: 0),
-                content: new SlotWidget(
+                title: SizedBox(width: 0),
+                content: SlotWidget(
                   title: "Créneau de livraison",
                   displaySlotTypeInfo: false,
                   slotType: state.orderRequestBuilder.pickupSlot?.slotType,
@@ -94,15 +94,15 @@ class _OrderWidgetState extends State<OrderWidget>
                   slots: state.deliverySlotState is OrderSlotReadyState ?
                     (state.deliverySlotState as OrderSlotReadyState).slots :
                     [],
-                  onSlotSelected: (slot) => this._orderBloc.dispatch(new SelectDeliverySlotEvent(slot)),
-                  onSlotConfirmed: () => this._orderBloc.dispatch(new GoToNextStepEvent()),
+                  onSlotSelected: (slot) => this._orderBloc.dispatch(SelectDeliverySlotEvent(slot)),
+                  onSlotConfirmed: () => this._orderBloc.dispatch(GoToNextStepEvent()),
                 )
               ),
-              new Step(
+              Step(
                 isActive: state.step >= 2,
                 state: this._stepState(state, 2),
-                title: new SizedBox(width: 0),
-                content: new EstimateOrderStepWidget(
+                title: SizedBox(width: 0),
+                content: EstimateOrderStepWidget(
                   articles: state.articleState is ArticlesReadyState ?
                     (state.articleState as ArticlesReadyState).articles :
                     [],
@@ -110,53 +110,53 @@ class _OrderWidgetState extends State<OrderWidget>
                     (state.articleState as ArticlesReadyState).weightedArticle:
                     null,
                   onFinish: (orderType, estimatedPrice) {
-                    this._orderBloc.dispatch(new SelectOrderTypeEvent(orderType, estimatedPrice));
-                    this._orderBloc.dispatch(new GoToNextStepEvent());
+                    this._orderBloc.dispatch(SelectOrderTypeEvent(orderType, estimatedPrice));
+                    this._orderBloc.dispatch(GoToNextStepEvent());
                   }
 
                 )
               ),
-              new Step(
+              Step(
                 isActive: state.step >= 3,
                 state: this._stepState(state, 3),
-                title: new SizedBox(width: 0),
-                content: new AddressStepWidget(
+                title: SizedBox(width: 0),
+                content: AddressStepWidget(
                   isLoading: state.addressState is OrderAddressLoadingState,
                   addresses: state.addressState is OrderAddressReadyState ?
                     (state.addressState as OrderAddressReadyState).addresses :
                     [],
-                  onAddressSelected: (address) => this._orderBloc.dispatch(new SelectAddressEvent(address)),
-                  onAddressConfirmed: () => this._orderBloc.dispatch(new GoToNextStepEvent()),
+                  onAddressSelected: (address) => this._orderBloc.dispatch(SelectAddressEvent(address)),
+                  onAddressConfirmed: () => this._orderBloc.dispatch(GoToNextStepEvent()),
                 )
               ),
-              new Step(
+              Step(
                 isActive: state.step >= 4,
                 state: this._stepState(state, 4),
-                title: new SizedBox(width: 0),
-                content: new PaymentAccountStepWidget(
+                title: SizedBox(width: 0),
+                content: PaymentAccountStepWidget(
                   isLoading: state.paymentAccountState is OrderPaymentAccountLoadingState,
                   paymentAccounts: state.paymentAccountState is OrderPaymentAccountReadyState ?
                     (state.paymentAccountState as OrderPaymentAccountReadyState).paymentAccounts :
                     [],
                   onPaymentAccountSelected: (account) =>
-                    this._orderBloc.dispatch(new SelectPaymentAccountEvent(account)),
-                  onPaymentAccountConfirmed: () => this._orderBloc.dispatch(new GoToNextStepEvent()),
+                    this._orderBloc.dispatch(SelectPaymentAccountEvent(account)),
+                  onPaymentAccountConfirmed: () => this._orderBloc.dispatch(GoToNextStepEvent()),
                 )
               ),
-              new Step(
+              Step(
                 isActive: state.step >= 5,
                 state: this._stepState(state, 5),
-                title: new SizedBox(width: 0),
-                content: new OrderConfirmationWidget(
+                title: SizedBox(width: 0),
+                content: OrderConfirmationWidget(
                   orderRequest: state.orderRequestBuilder,
-                  onOrderConfirmed: () => this._orderBloc.dispatch(new ConfirmOrderEvent()),
+                  onOrderConfirmed: () => this._orderBloc.dispatch(ConfirmOrderEvent()),
                 )
               )
             ],
             onStepContinue: this._onStepContinue,
             onStepCancel: this._onStepCancel,
             controlsBuilder: (context, {onStepContinue, onStepCancel}) {
-              return new Container();
+              return Container();
             },
           );
         },

@@ -16,7 +16,7 @@ import 'package:pressy_client/widgets/settings/profile/reset_password_widget.dar
 class MemberInfoWidget extends StatefulWidget {
 
   @override
-  State<StatefulWidget> createState() => new _MemberInfoWidgetState();
+  State<StatefulWidget> createState() => _MemberInfoWidgetState();
 
 }
 
@@ -24,17 +24,17 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
 
   MemberInfoBloc _memberInfoBloc;
 
-  TextEditingController _firstNameFieldController = new TextEditingController();
-  TextEditingController _lastNameFieldController = new TextEditingController();
-  TextEditingController _emailFieldController = new TextEditingController();
-  TextEditingController _phoneNumberFieldController = new TextEditingController();
+  TextEditingController _firstNameFieldController = TextEditingController();
+  TextEditingController _lastNameFieldController = TextEditingController();
+  TextEditingController _emailFieldController = TextEditingController();
+  TextEditingController _phoneNumberFieldController = TextEditingController();
 
-  GlobalKey _scaffoldKey = new GlobalKey();
+  GlobalKey _scaffoldKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    this._memberInfoBloc = new MemberInfoBloc(
+    this._memberInfoBloc = MemberInfoBloc(
       memberSession: ServiceProvider.of(this.context).getService<IMemberSession>(),
       memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>(),
     );
@@ -46,14 +46,14 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
 
   @override
   Widget build(BuildContext context) {
-    return new BlocBuilder<MemberInfoEvent, MemberInfoState>(
+    return BlocBuilder<MemberInfoEvent, MemberInfoState>(
       bloc: this._memberInfoBloc,
       builder: (context, state) {
         this._handleState(state);
-        return new Scaffold(
-          appBar: new AppBar(
-            iconTheme: new IconThemeData(color: ColorPalette.orange),
-            title: new Text("Mon Profil"),
+        return Scaffold(
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: ColorPalette.orange),
+            title: Text("Mon Profil"),
             backgroundColor: Colors.white,
             centerTitle: true,
             elevation: 1,
@@ -61,14 +61,14 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
               this._actionButton(state)
             ],
           ),
-          body: new Container(
+          body: Container(
             key: this._scaffoldKey,
-            child: new SingleChildScrollView(
-              child: new Column(
+            child: SingleChildScrollView(
+              child: Column(
                 children: <Widget>[
-                  new Container(
-                      padding: new EdgeInsets.all(16),
-                      child: new Form(
+                  Container(
+                      padding: EdgeInsets.all(16),
+                      child: Form(
                           child: this._signUpForm(state is MemberInfoEditableState),
                           autovalidate: true,
                           onChanged: this._memberInfoFormChanged
@@ -84,7 +84,7 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
     );
   }
 
-  Widget _signUpForm(bool editable) => new Column(
+  Widget _signUpForm(bool editable) => Column(
     children: <Widget>[
       this._nameFieldRow(editable),
       this._emailField(editable),
@@ -93,43 +93,43 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
   );
 
   Widget _resetPasswordWidget(MemberInfoState state) => state is MemberInfoUneditableState ?
-    new FlatButton(
+    FlatButton(
       onPressed: () => Navigator.push(
         context,
-        new MaterialPageRoute(
-          builder: (context) => new ResetPasswordWidget()
+        MaterialPageRoute(
+          builder: (context) => ResetPasswordWidget()
         )
       ),
-      child: new Text(
+      child: Text(
         "Réinitialiser mon mot de passe",
-        style: new TextStyle(
+        style: TextStyle(
           color: ColorPalette.orange,
           fontWeight: FontWeight.w600
         ),
       )
-    ) : new Container();
+    ) : Container();
 
-  Widget _nameFieldRow(bool editable) => new Row(
+  Widget _nameFieldRow(bool editable) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
-      new Flexible(
-        child: new Container(
-            padding: new EdgeInsets.only(right: 6),
+      Flexible(
+        child: Container(
+            padding: EdgeInsets.only(right: 6),
             child: this._lastNameField(editable)
         ),
       ),
-      new Flexible(
-          child: new Container(
-              padding: new EdgeInsets.only(left: 6),
+      Flexible(
+          child: Container(
+              padding: EdgeInsets.only(left: 6),
               child: this._firstNameField(editable)
           )
       )
     ],
   );
 
-  Widget _lastNameField(bool editable) => new TextFormField(
+  Widget _lastNameField(bool editable) => TextFormField(
     controller: this._firstNameFieldController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
         labelText: "Nom",
         helperText: "Votre nom"
     ),
@@ -139,9 +139,9 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
     enabled: editable,
   );
 
-  Widget _firstNameField(bool editable) => new TextFormField(
+  Widget _firstNameField(bool editable) => TextFormField(
     controller: this._lastNameFieldController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
         labelText: "Prénom",
         helperText: "Votre prénom"
     ),
@@ -151,9 +151,9 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
     enabled: editable,
   );
 
-  Widget _emailField(bool editable) => new TextFormField(
+  Widget _emailField(bool editable) => TextFormField(
     controller: this._emailFieldController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       helperText: "Votre email sera utilisé pour vous identifier",
       labelText: "Email",
     ),
@@ -162,9 +162,9 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
     enabled: editable,
   );
 
-  Widget _phoneField(bool editable) => new TextFormField(
+  Widget _phoneField(bool editable) => TextFormField(
     controller: this._phoneNumberFieldController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       helperText: "Votre téléphone sera utilisé pour vous contacter",
       labelText: "Numéro de téléphone",
     ),
@@ -175,28 +175,28 @@ class _MemberInfoWidgetState extends State<MemberInfoWidget> with LoaderMixin, W
 
   Widget _actionButton(MemberInfoState state) {
     if (state is MemberInfoUneditableState) {
-      return new FlatButton.icon(
-        onPressed: () => this._memberInfoBloc.dispatch(new MemberInfoBeginEditingEvent()),
-        icon: new Icon(Icons.edit, color: ColorPalette.orange),
-        label: new Container()
+      return FlatButton.icon(
+        onPressed: () => this._memberInfoBloc.dispatch(MemberInfoBeginEditingEvent()),
+        icon: Icon(Icons.edit, color: ColorPalette.orange),
+        label: Container()
       );
     } else if (state is MemberInfoEditableState) {
-      return new FlatButton.icon(
-          onPressed: state.isValid ? () => this._memberInfoBloc.dispatch(new MemberInfoConfirmEditingEvent(
+      return FlatButton.icon(
+          onPressed: state.isValid ? () => this._memberInfoBloc.dispatch(MemberInfoConfirmEditingEvent(
             firstName: this._firstNameFieldController.text,
             lastName: this._lastNameFieldController.text,
             email: this._emailFieldController.text,
             phone: this._phoneNumberFieldController.text,
           )) : null,
-          icon: new Icon(Icons.check),
-          label: new Container()
+          icon: Icon(Icons.check),
+          label: Container()
       );
     } else 
-      return new Container();
+      return Container();
   }
 
   void _memberInfoFormChanged() {
-    this._memberInfoBloc.dispatch(new MemberInfoSubmitEvent(
+    this._memberInfoBloc.dispatch(MemberInfoSubmitEvent(
       email: this._emailFieldController.text,
       firstName: this._firstNameFieldController.text,
       lastName: this._lastNameFieldController.text,

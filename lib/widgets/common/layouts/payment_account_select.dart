@@ -12,7 +12,7 @@ class PaymentAccountSelect extends StatefulWidget {
     : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => new _PaymentAccountSelectState();
+  State<StatefulWidget> createState() => _PaymentAccountSelectState();
 
 }
 
@@ -22,12 +22,12 @@ class _PaymentAccountSelectState extends State<PaymentAccountSelect> {
 
   @override
   Widget build(BuildContext context) {
-    return new ListView.separated(
+    return ListView.separated(
         shrinkWrap: true,
         itemCount: this.widget.paymentAccounts.length,
-        separatorBuilder: (context, index) => new SizedBox(height: 12),
-        physics: new NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => new _PaymentAccountRowWidget(
+        separatorBuilder: (context, index) => SizedBox(height: 12),
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) => _PaymentAccountRowWidget(
           paymentAccount: this.widget.paymentAccounts[index],
           onTapped: () => this.setState(() {
             this.widget.onPaymentAccountSelected(this.widget.paymentAccounts[index]);
@@ -51,23 +51,23 @@ class _PaymentAccountRowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new GestureDetector(
+    return GestureDetector(
       onTap: this.onTapped,
-      child: new Container(
-        decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.circular(4),
-            border: new Border.all(color: this.isSelected ? ColorPalette.orange : ColorPalette.borderGray),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: this.isSelected ? ColorPalette.orange : ColorPalette.borderGray),
             color: this.isSelected ? ColorPalette.orange.withOpacity(0.33) : Colors.transparent
         ),
-        child: new ListTile(
-            title: new Text(this.paymentAccount.cardAlias),
-            subtitle: new Text(
+        child: ListTile(
+            title: Text(this.paymentAccount.cardAlias),
+            subtitle: Text(
               "Expire le : ${this.paymentAccount.expiryYear}/${this.paymentAccount.expiryMonth}\n"
               "${this.paymentAccount.holderName}"
             ),
             trailing: this.isSelected ?
-            new Icon(Icons.check_circle, color: ColorPalette.orange) :
-            new Icon(Icons.radio_button_unchecked, color: ColorPalette.borderGray)
+            Icon(Icons.check_circle, color: ColorPalette.orange) :
+            Icon(Icons.radio_button_unchecked, color: ColorPalette.borderGray)
         ),
       ),
     );

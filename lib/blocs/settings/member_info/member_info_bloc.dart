@@ -16,7 +16,7 @@ class MemberInfoBloc extends Bloc<MemberInfoEvent, MemberInfoState> {
   MemberInfoBloc({@required this.memberSession, @required this.memberDataSource});
 
   @override
-  MemberInfoState get initialState => new MemberInfoUneditableState(
+  MemberInfoState get initialState => MemberInfoUneditableState(
     this.memberSession.connectedMemberProfile.email,
     this.memberSession.connectedMemberProfile.firstName,
     this.memberSession.connectedMemberProfile.lastName,
@@ -34,7 +34,7 @@ class MemberInfoBloc extends Bloc<MemberInfoEvent, MemberInfoState> {
 
     if (event is MemberInfoBeginEditingEvent && currentState is MemberInfoUneditableState) {
 
-      yield new MemberInfoEditableState(
+      yield MemberInfoEditableState(
         currentState.email, currentState.firstName,
         currentState.lastName, currentState.phone, true, false
       );
@@ -48,7 +48,7 @@ class MemberInfoBloc extends Bloc<MemberInfoEvent, MemberInfoState> {
       isValid &= Validators.nameValidator(event.firstName) == null;
       isValid &= Validators.nameValidator(event.lastName) == null;
 
-      yield new MemberInfoEditableState(
+      yield MemberInfoEditableState(
         currentState.email, currentState.firstName, currentState.lastName,
         currentState.phone, isValid, false
       );
@@ -59,17 +59,17 @@ class MemberInfoBloc extends Bloc<MemberInfoEvent, MemberInfoState> {
 
       assert(currentState.isValid);
 
-      yield new MemberInfoEditableState(
+      yield MemberInfoEditableState(
           currentState.email, currentState.firstName, currentState.lastName,
           currentState.phone, true, true
       );
 
-      var editMemberProfileRequest = new EditMemberProfileRequestModel(
+      var editMemberProfileRequest = EditMemberProfileRequestModel(
         email: event.email, phone: event.phone, firstName: event.firstName,
         lastName: event.lastName
       );
       await this.memberDataSource.editMemberProfile(editMemberProfileRequest);
-      yield new MemberInfoEditingSuccessfulState();
+      yield MemberInfoEditingSuccessfulState();
       final updatedMemberProfile = await this.memberDataSource.getMemberProfile();
       await this.memberSession.persistMemberProfile(updatedMemberProfile);
 

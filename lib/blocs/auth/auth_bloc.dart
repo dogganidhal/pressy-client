@@ -27,37 +27,37 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       _memberDataSource = services.getService<IMemberDataSource>();
   
   @override
-  AuthState get initialState => new AuthUninitializedState();
+  AuthState get initialState => AuthUninitializedState();
 
   @override
   Stream<AuthState> mapEventToState(AuthState currentState, AuthEvent event) async* {
     
     if (event is AuthAppStartedEvent) {
 
-      yield new AuthLoadingState();
+      yield AuthLoadingState();
       final hasToken = await this._authSession.hasCredentials();
 
       if (hasToken) {
 
         final authCredentials = await this._authSession.getPersistedAuthCredentials();
         final memberProfile = await this._memberSession.getPersistedMemberProfile();
-        yield new AuthAuthenticated(
+        yield AuthAuthenticated(
           authCredentials: authCredentials,
           memberProfile: memberProfile
         );
         this._refreshSession(authCredentials.refreshToken);
 
       } else
-        yield new AuthUnauthenticatedState();
+        yield AuthUnauthenticatedState();
 
     }
 
     if (event is AuthLoggedInEvent) {
 
-      yield new AuthLoadingState();
+      yield AuthLoadingState();
       await _authSession.persistAuthCredentials(event.authCredentials);
       MemberProfile memberProfile = await this._memberDataSource.getMemberProfile();
-      yield new AuthAuthenticated(
+      yield AuthAuthenticated(
         authCredentials: event.authCredentials,
         memberProfile: memberProfile
       );
@@ -67,10 +67,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (event is AuthLoggedOutEvent) {
 
-      yield new AuthLoadingState();
+      yield AuthLoadingState();
       await this._authSession.deleteAuthCredentials();
       await this._memberSession.deletePersistedMemberProfile();
-      yield new AuthUnauthenticatedState();
+      yield AuthUnauthenticatedState();
 
     }
 

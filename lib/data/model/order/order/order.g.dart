@@ -9,7 +9,8 @@ part of 'order.dart';
 Order _$OrderFromJson(Map<String, dynamic> json) {
   return Order(
       id: json['id'] as int,
-      type: _$enumDecodeNullable(_$OrderTypeEnumMap, json['type']),
+      type:
+          json['type'] == null ? null : Order._orderTypeFromJson(json['type']),
       pickupSlot: json['pickupSlot'] == null
           ? null
           : Slot.fromJson(json['pickupSlot'] as Map<String, dynamic>),
@@ -33,26 +34,6 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'items': instance.items,
       'address': instance.address
     };
-
-T _$enumDecode<T>(Map<T, dynamic> enumValues, dynamic source) {
-  if (source == null) {
-    throw ArgumentError('A value must be provided. Supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-  return enumValues.entries
-      .singleWhere((e) => e.value == source,
-          orElse: () => throw ArgumentError(
-              '`$source` is not one of the supported values: '
-              '${enumValues.values.join(', ')}'))
-      .key;
-}
-
-T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues, dynamic source) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<T>(enumValues, source);
-}
 
 const _$OrderTypeEnumMap = <OrderType, dynamic>{
   OrderType.PRESSING: 'PRESSING',

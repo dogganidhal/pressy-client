@@ -14,17 +14,17 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
   AddressBloc({@required this.memberSession, @required this.memberDataSource});
 
   @override
-  AddressState get initialState => new AddressState();
+  AddressState get initialState => AddressState();
 
   @override
   Stream<AddressState> mapEventToState(AddressState currentState, AddressEvent event) async* {
 
     if (event is DeleteAddressEvent) {
-      yield new AddressState(isLoading: true);
+      yield AddressState(isLoading: true);
       await this.memberDataSource.deleteMemberAddress(event.addressId);
       final memberProfile = await this.memberDataSource.getMemberProfile();
       this.memberSession.persistMemberProfile(memberProfile);
-      yield new AddressState(isLoading: false);
+      yield AddressState(isLoading: false);
     }
 
   }

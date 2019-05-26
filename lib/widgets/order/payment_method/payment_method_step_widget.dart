@@ -18,7 +18,7 @@ class PaymentAccountStepWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => new _PaymentAccountStepWidgetState();
+  State<StatefulWidget> createState() => _PaymentAccountStepWidgetState();
 
 }
 
@@ -27,9 +27,9 @@ class _PaymentAccountStepWidgetState extends State<PaymentAccountStepWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new BaseStepWidget(
+    return BaseStepWidget(
       title: "MOYEN DE PAIEMENT",
-      child: new Column(
+      child: Column(
         children: this._buildRows()
           .toList()
       )
@@ -42,12 +42,12 @@ class _PaymentAccountStepWidgetState extends State<PaymentAccountStepWidget> {
       yield this._loadingWidget;
 
     else {
-      yield new Text(
+      yield Text(
         "Veuillez sélectionner votre carte bancaire avec laquelle vous voulez passer votre commande.",
-        style: new TextStyle(color: ColorPalette.darkGray),
+        style: TextStyle(color: ColorPalette.darkGray),
       );
-      yield new SizedBox(height: 12);
-      yield new PaymentAccountSelect(
+      yield SizedBox(height: 12);
+      yield PaymentAccountSelect(
         paymentAccounts: this.widget.paymentAccounts,
         onPaymentAccountSelected: (account) {
           this.widget.onPaymentAccountSelected(account);
@@ -58,38 +58,38 @@ class _PaymentAccountStepWidgetState extends State<PaymentAccountStepWidget> {
       );
     }
 
-    yield new SizedBox(height: 12);
+    yield SizedBox(height: 12);
 
     yield this._nextButton(!this.widget.isLoading && this._didSelectPaymentMethod);
 
   }
 
-  Widget get _loadingWidget => new Container(
-    child: new Center(
-      child: new Column(
+  Widget get _loadingWidget => Container(
+    child: Center(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new CircularProgressIndicator(),
-          new SizedBox(height: 8),
-          new Text("Chargement de vos moyens de paiement")
+          CircularProgressIndicator(),
+          SizedBox(height: 8),
+          Text("Chargement de vos moyens de paiement")
         ],
       ),
     ),
   );
 
-  Widget _nextButton(bool enabled) => new Row(
+  Widget _nextButton(bool enabled) => Row(
     children: <Widget>[
-      new Expanded(
-        child: new Container(
+      Expanded(
+        child: Container(
           height: 40,
-          decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.circular(8),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
               color: enabled ? ColorPalette.orange : ColorPalette.lightGray
           ),
-          child: new ButtonTheme(
+          child: ButtonTheme(
             height: double.infinity,
-            child: new FlatButton(
-                child: new Text("SUIVANT"),
+            child: FlatButton(
+                child: Text("SUIVANT"),
                 textColor: Colors.white,
                 onPressed: enabled ? this.widget.onPaymentAccountConfirmed : null
             ),

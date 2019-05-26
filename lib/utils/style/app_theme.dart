@@ -14,7 +14,7 @@ abstract class ColorPalette {
 
 mixin AppThemeMixin {
 
-  ThemeData get appThemeData => new ThemeData(
+  ThemeData get appThemeData => ThemeData(
     primaryColor: ColorPalette.orange,
     indicatorColor: ColorPalette.orange,
     cursorColor: ColorPalette.orange,

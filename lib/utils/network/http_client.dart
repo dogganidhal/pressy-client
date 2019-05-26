@@ -5,7 +5,7 @@ import 'package:pressy_client/utils/network/base_client.dart';
 
 class HttpClient extends IClient {
 
-  final Client _inner = new Client();
+  final Client _inner = Client();
 
   @override
   Future<StreamedResponse> send(BaseRequest request) => this._inner.send(request);
@@ -51,7 +51,7 @@ class HttpClient extends IClient {
   }
 
   void _logRequest({String method, String url, Map<String, String> headers, dynamic body}) async {
-    final stringBuffer = new StringBuffer();
+    final stringBuffer = StringBuffer();
     stringBuffer.write(
       'Http Request : $method $url\n'
       'Headers: $headers\n'

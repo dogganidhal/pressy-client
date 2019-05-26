@@ -12,28 +12,28 @@ class RoundCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      child: new DecoratedBox(
-        child: new MaterialButton(
+    return Container(
+      child: DecoratedBox(
+        child: MaterialButton(
           elevation: 1,
           padding: EdgeInsets.all(0),
           splashColor: Colors.transparent,
           onPressed: this.onPressed,
-          child: new Center(
+          child: Center(
             child: Icon(Icons.close, color: Colors.white) 
           ),
         ),
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(this.dimension / 2),
           color: ColorPalette.red
         ),
       ),
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(this.dimension / 2),
         boxShadow: [
-          new BoxShadow(
+          BoxShadow(
             color: ColorPalette.textBlack.withAlpha(64),
-            offset: new Offset(0, 1),
+            offset: Offset(0, 1),
             blurRadius: 6,
             spreadRadius: 2
           )

@@ -52,7 +52,7 @@ class OrderRequestBuilder {
   }
 
   OrderRequestModel build() {
-    return new OrderRequestModel(
+    return OrderRequestModel(
       pickupSlotId: this._pickupSlot.id,
       deliverySlotId: this._deliverySlot.id,
       addressId: this._address.id,

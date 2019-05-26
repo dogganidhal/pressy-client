@@ -18,7 +18,7 @@ class AddressStepWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => new _AddressStepWidgetState();
+  State<StatefulWidget> createState() => _AddressStepWidgetState();
 
 }
 
@@ -27,9 +27,9 @@ class _AddressStepWidgetState extends State<AddressStepWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new BaseStepWidget(
+    return BaseStepWidget(
       title: "Adresse",
-      child: new Column(
+      child: Column(
         children: this._buildRows()
           .toList()
       )
@@ -42,12 +42,12 @@ class _AddressStepWidgetState extends State<AddressStepWidget> {
       yield this._loadingWidget;
 
     else {
-      yield new Text(
+      yield Text(
         "Veuillez sélectionner ou créer l’adresse où vous voulez vous faire livré votre linge.",
-        style: new TextStyle(color: ColorPalette.darkGray),
+        style: TextStyle(color: ColorPalette.darkGray),
       );
-      yield new SizedBox(height: 12);
-      yield new AddressSelect(
+      yield SizedBox(height: 12);
+      yield AddressSelect(
         addresses: this.widget.addresses,
         onAddressSelected: (address) {
           this.widget.onAddressSelected(address);
@@ -58,38 +58,38 @@ class _AddressStepWidgetState extends State<AddressStepWidget> {
       );
     }
 
-    yield new SizedBox(height: 12);
+    yield SizedBox(height: 12);
 
     yield this._nextButton(!this.widget.isLoading && this._didSelectAddress);
 
   }
 
-  Widget get _loadingWidget => new Container(
-    child: new Center(
-      child: new Column(
+  Widget get _loadingWidget => Container(
+    child: Center(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new CircularProgressIndicator(),
-          new SizedBox(height: 8),
-          new Text("Chargement de vos adresses")
+          CircularProgressIndicator(),
+          SizedBox(height: 8),
+          Text("Chargement de vos adresses")
         ],
       ),
     ),
   );
 
-  Widget _nextButton(bool enabled) => new Row(
+  Widget _nextButton(bool enabled) => Row(
     children: <Widget>[
-      new Expanded(
-        child: new Container(
+      Expanded(
+        child: Container(
           height: 40,
-          decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.circular(8),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
               color: enabled ? ColorPalette.orange : ColorPalette.lightGray
           ),
-          child: new ButtonTheme(
+          child: ButtonTheme(
             height: double.infinity,
-            child: new FlatButton(
-                child: new Text("SUIVANT"),
+            child: FlatButton(
+                child: Text("SUIVANT"),
                 textColor: Colors.white,
                 onPressed: enabled ? this.widget.onAddressConfirmed : null
             ),

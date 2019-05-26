@@ -17,12 +17,12 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderBloc({@required this.orderDataSource, @required this.memberDataSource});
   
   @override
-  OrderState get initialState => new OrderState(
-    orderRequestBuilder: new OrderRequestBuilder(),
-    deliverySlotState: new OrderSlotLoadingState(),
-    pickupSlotState: new OrderSlotLoadingState(),
-    addressState: new OrderAddressLoadingState(),
-    paymentAccountState: new OrderPaymentAccountLoadingState()
+  OrderState get initialState => OrderState(
+    orderRequestBuilder: OrderRequestBuilder(),
+    deliverySlotState: OrderSlotLoadingState(),
+    pickupSlotState: OrderSlotLoadingState(),
+    addressState: OrderAddressLoadingState(),
+    paymentAccountState: OrderPaymentAccountLoadingState()
   );
 
   @override
@@ -33,7 +33,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       List<Slot> pickupSlots = await this.orderDataSource.getPickupSlots();
 
       yield currentState.copyWith(
-        pickupSlotState: new OrderSlotReadyState(
+        pickupSlotState: OrderSlotReadyState(
           slots: pickupSlots,
           canMoveForward: pickupSlots.isNotEmpty
         )
@@ -47,12 +47,12 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       switch(state.step) {
         case 1:
           state = state.copyWith(
-            deliverySlotState: new OrderSlotLoadingState()
+            deliverySlotState: OrderSlotLoadingState()
           );
           yield state;
           final deliverySlots = await this.orderDataSource.getDeliverySlots(state.orderRequestBuilder.pickupSlot);
           yield state.copyWith(
-            deliverySlotState: new OrderSlotReadyState(
+            deliverySlotState: OrderSlotReadyState(
               slots: deliverySlots,
               canMoveForward: deliverySlots.isNotEmpty
             )
@@ -60,13 +60,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           break;
         case 2:
             state = state.copyWith(
-              articleState: new ArticlesLoadingState()
+              articleState: ArticlesLoadingState()
             );
             yield state;
             final articles = await this.orderDataSource.getArticles();
             final weightedArticle = await this.orderDataSource.getWeightedArticle();
             yield state.copyWith(
-              articleState: new ArticlesReadyState(
+              articleState: ArticlesReadyState(
                 articles: articles,
                 weightedArticle: weightedArticle
               )
@@ -74,19 +74,19 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
             break;
         case 3:
           state = state.copyWith(
-            addressState: new OrderAddressLoadingState()
+            addressState: OrderAddressLoadingState()
           );
           yield state;
           final addresses = await this.memberDataSource.getMemberAddresses();
           yield state.copyWith(
-            addressState: new OrderAddressReadyState(
+            addressState: OrderAddressReadyState(
               addresses: addresses
             )
           );
           break;
         case 4:
           state = state.copyWith(
-            paymentAccountState: new OrderPaymentAccountLoadingState()
+            paymentAccountState: OrderPaymentAccountLoadingState()
           );
           yield state;
           final memberProfile = await this.memberDataSource.getMemberProfile();

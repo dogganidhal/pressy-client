@@ -20,7 +20,7 @@ import 'package:pressy_client/blocs/settings/add_payment_acount/add_payment_acco
 class AddPaymentMethodWidget extends StatefulWidget {
 
   @override
-  State<StatefulWidget> createState() => new _AddPaymentMethodWidgetState();
+  State<StatefulWidget> createState() => _AddPaymentMethodWidgetState();
 
 }
 
@@ -29,16 +29,16 @@ class _AddPaymentMethodWidgetState extends State<AddPaymentMethodWidget>
     with LoaderMixin, WidgetLifeCycleMixin, ErrorMixin {
 
   AddPaymentAccountBloc _bloc;
-  TextEditingController _cardNumberController = new TextEditingController();
-  TextEditingController _expiryDateController = new TextEditingController();
-  TextEditingController _cvcController = new TextEditingController();
-  TextEditingController _cardHolderNameController = new TextEditingController();
-  GlobalKey _scaffoldKey = new GlobalKey();
+  TextEditingController _cardNumberController = TextEditingController();
+  TextEditingController _expiryDateController = TextEditingController();
+  TextEditingController _cvcController = TextEditingController();
+  TextEditingController _cardHolderNameController = TextEditingController();
+  GlobalKey _scaffoldKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    this._bloc = new AddPaymentAccountBloc(
+    this._bloc = AddPaymentAccountBloc(
       memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>(),
       memberSession: ServiceProvider.of(this.context).getService<IMemberSession>(),
       paymentDataSource: ServiceProvider.of(this.context).getService<IPaymentDataSource>()
@@ -47,29 +47,29 @@ class _AddPaymentMethodWidgetState extends State<AddPaymentMethodWidget>
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        iconTheme: new IconThemeData(color: ColorPalette.orange),
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: ColorPalette.orange),
         elevation: 1,
-        title: new Text("Ajouter une CB"),
+        title: Text("Ajouter une CB"),
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
-      body: new SafeArea(
+      body: SafeArea(
         key: this._scaffoldKey,
-        child: new BlocBuilder<AddPaymentAccountEvent, AddPaymentAccountState>(
+        child: BlocBuilder<AddPaymentAccountEvent, AddPaymentAccountState>(
           bloc: this._bloc,
           builder: (context, state) {
             this._handleState(state);      
-            return new Column(
+            return Column(
               children: <Widget>[
-                new Expanded(
-                  child: new Container(
-                    padding: new EdgeInsets.all(12),
-                    child: new Form(
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(12),
+                    child: Form(
                       child: this._creditCardForm,
                       autovalidate: true,
-                      onChanged: () => this._bloc.dispatch(new SubmitCreditCardEvent(
+                      onChanged: () => this._bloc.dispatch(SubmitCreditCardEvent(
                         expiryDateString: this._expiryDateController.text, 
                         creditCardHolderName: this._cardHolderNameController.text, 
                         creditCardNumber: this._cardNumberController.text, 
@@ -87,7 +87,7 @@ class _AddPaymentMethodWidgetState extends State<AddPaymentMethodWidget>
     );
   }
 
-  Widget get _creditCardForm => new Column(
+  Widget get _creditCardForm => Column(
     children: <Widget>[
       this._cardNumberField,
       this._expiryDateCvcRow,
@@ -95,67 +95,67 @@ class _AddPaymentMethodWidgetState extends State<AddPaymentMethodWidget>
     ],
   );
 
-  Widget get _expiryDateCvcRow => new Row(
+  Widget get _expiryDateCvcRow => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
-      new Flexible(
-        child: new Container(
-            padding: new EdgeInsets.only(right: 6),
+      Flexible(
+        child: Container(
+            padding: EdgeInsets.only(right: 6),
             child: this._expiryDateField
         ),
       ),
-      new Flexible(
-          child: new Container(
-              padding: new EdgeInsets.only(left: 6),
+      Flexible(
+          child: Container(
+              padding: EdgeInsets.only(left: 6),
               child: this._cvcField
           )
       )
     ],
   );
 
-  Widget get _expiryDateField => new TextFormField(
+  Widget get _expiryDateField => TextFormField(
     controller: this._expiryDateController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
         labelText: "Date d'expiration",
     ),
     keyboardType: TextInputType.number,
     inputFormatters: [
-      new MaskedTextInputFormatter(mask: "xx/xx", separator: "/"),
-      new LengthLimitingTextInputFormatter(5),
-      new ExpiryDateInputFormatter()
+      MaskedTextInputFormatter(mask: "xx/xx", separator: "/"),
+      LengthLimitingTextInputFormatter(5),
+      ExpiryDateInputFormatter()
     ],
     validator: Validators.expiryDateValidator,
   );
 
-  Widget get _cvcField => new TextFormField(
+  Widget get _cvcField => TextFormField(
     controller: this._cvcController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       labelText: "CVC",
     ),
     keyboardType: TextInputType.number,
     inputFormatters: [
-      new LengthLimitingTextInputFormatter(3)
+      LengthLimitingTextInputFormatter(3)
     ],
     validator: Validators.cvcValidator,
   );
 
-  Widget get _cardNumberField => new TextFormField(
+  Widget get _cardNumberField => TextFormField(
     controller: this._cardNumberController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       helperText: "Le numéro de votre carte à 16 chiffres",
       labelText: "Numéro de carte",
     ),
     inputFormatters: [
-      new MaskedTextInputFormatter(mask: "xxxx xxxx xxxx xxxx", separator: " "),
-      new LengthLimitingTextInputFormatter(19)
+      MaskedTextInputFormatter(mask: "xxxx xxxx xxxx xxxx", separator: " "),
+      LengthLimitingTextInputFormatter(19)
     ],
     validator: Validators.creditCardValidator,
     keyboardType: TextInputType.number,
   );
 
-  Widget get _cardHolderNameField => new TextFormField(
+  Widget get _cardHolderNameField => TextFormField(
     controller: this._cardHolderNameController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       helperText: "Le nom qui figure sur la carte",
       labelText: "Nom du proteur",
     ),
@@ -164,20 +164,20 @@ class _AddPaymentMethodWidgetState extends State<AddPaymentMethodWidget>
     textCapitalization: TextCapitalization.words,
   );
 
-  Widget _confirmStickyButton(bool isFormValid) => new Row(
+  Widget _confirmStickyButton(bool isFormValid) => Row(
     children: <Widget>[
-      new Expanded(
-        child: new Container(
+      Expanded(
+        child: Container(
           height: 48,
-          margin: new EdgeInsets.all(12),
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.circular(8),
+          margin: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
             color: isFormValid ? ColorPalette.orange : ColorPalette.borderGray
           ),
-          child: new ButtonTheme(
+          child: ButtonTheme(
             height: double.infinity,
-            child: new FlatButton(
-              child: new Text("CONFIRMER"),
+            child: FlatButton(
+              child: Text("CONFIRMER"),
               textColor: Colors.white,
               onPressed: isFormValid ? () => this._bloc.dispatch(ConfirmCreditCardEvent(
                 creditCardNumber: this._cardNumberController.text,

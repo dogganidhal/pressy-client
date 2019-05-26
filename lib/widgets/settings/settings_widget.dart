@@ -22,7 +22,7 @@ class SettingsWidget extends StatefulWidget {
   SettingsWidget({@required this.memberSession});
 
   @override
-  State<StatefulWidget> createState() => new _SettingsWidgetState();
+  State<StatefulWidget> createState() => _SettingsWidgetState();
 
 }
 
@@ -39,20 +39,20 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   @override
   Widget build(BuildContext context) {
     final widgets = this._buildWidgets();
-    return new Scaffold(
+    return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: new AppBar(
-        iconTheme: new IconThemeData(color: ColorPalette.orange),
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: ColorPalette.orange),
         elevation: 1,
         backgroundColor: Colors.white,
-        title: new Text("Paramètres"),
+        title: Text("Paramètres"),
         centerTitle: true,
       ),
-      body: new ListView.separated(
+      body: ListView.separated(
         itemCount: widgets.length,
         itemBuilder: (context, index) => widgets[index],
-        padding: new EdgeInsets.only(top: 12, bottom: 12),
-        separatorBuilder: (context, index) => new Container(height: 12),
+        padding: EdgeInsets.only(top: 12, bottom: 12),
+        separatorBuilder: (context, index) => Container(height: 12),
       ),
     );
   }
@@ -63,20 +63,20 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     this._logoutButton
   ];
 
-  Widget _userInfoWidget(MemberProfile profile) => new Container(
+  Widget _userInfoWidget(MemberProfile profile) => Container(
     color: Colors.white,
-    child: new Column(
+    child: Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        new Container(
-          padding: new EdgeInsets.all(12),
-          child: new Row(
+        Container(
+          padding: EdgeInsets.all(12),
+          child: Row(
             children: <Widget>[
-              new Text("Bonjour", style: new TextStyle(fontSize: 16)),
-              new SizedBox(width: 4),
-              new Text(
+              Text("Bonjour", style: TextStyle(fontSize: 16)),
+              SizedBox(width: 4),
+              Text(
                 profile.firstName,
-                style: new TextStyle(
+                style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: ColorPalette.orange
@@ -85,65 +85,65 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ],
           ),
         ),
-        new Container(
-          padding: new EdgeInsets.only(bottom: 12, top: 12),
-          child: new ButtonTheme(
+        Container(
+          padding: EdgeInsets.only(bottom: 12, top: 12),
+          child: ButtonTheme(
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            child: new FlatButton(
+            child: FlatButton(
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
-                  new Icon(Icons.person),
-                  new SizedBox(width: 12),
-                  new Expanded(
-                    child: new Text("Mon profil"),
+                  Icon(Icons.person),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text("Mon profil"),
                   ),
-                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
+                  Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchProfileWidget,
             ),
           ),
         ),
-        new Divider(height: 1),
-        new Container(
-          padding: new EdgeInsets.only(bottom: 12, top: 12),
-          child: new ButtonTheme(
+        Divider(height: 1),
+        Container(
+          padding: EdgeInsets.only(bottom: 12, top: 12),
+          child: ButtonTheme(
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            child: new FlatButton(
+            child: FlatButton(
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
-                  new Icon(Icons.credit_card),
-                  new SizedBox(width: 12),
-                  new Expanded(
-                    child: new Text("Mes moyens de paiement"),
+                  Icon(Icons.credit_card),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text("Mes moyens de paiement"),
                   ),
-                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
+                  Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchPaymentAccountsWidget,
             ),
           ),
         ),
-        new Divider(height: 1),
-        new Container(
-          padding: new EdgeInsets.only(bottom: 12, top: 12),
-          child: new ButtonTheme(
+        Divider(height: 1),
+        Container(
+          padding: EdgeInsets.only(bottom: 12, top: 12),
+          child: ButtonTheme(
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            child: new FlatButton(
+            child: FlatButton(
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
-                  new Icon(Icons.location_city),
-                  new SizedBox(width: 12),
-                  new Expanded(
-                    child: new Text("Mes adresses"),
+                  Icon(Icons.location_city),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text("Mes adresses"),
                   ),
-                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
+                  Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchAddressesWidget,
@@ -155,70 +155,70 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   );
 
 
-  Widget get _pressyServiceWidget => new Container(
+  Widget get _pressyServiceWidget => Container(
     color: Colors.white,
-    child: new Column(
+    child: Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        new Container(
-          padding: new EdgeInsets.only(bottom: 12, top: 12),
-          child: new ButtonTheme(
+        Container(
+          padding: EdgeInsets.only(bottom: 12, top: 12),
+          child: ButtonTheme(
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            child: new FlatButton(
+            child: FlatButton(
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
-                  new Icon(Icons.info),
-                  new SizedBox(width: 12),
-                  new Expanded(
-                    child: new Text("Comment ça marche ?"),
+                  Icon(Icons.info),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text("Comment ça marche ?"),
                   ),
-                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
+                  Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchFaqWidget,
             ),
           ),
         ),
-        new Divider(height: 1),
-        new Container(
-          padding: new EdgeInsets.only(bottom: 12, top: 12),
-          child: new ButtonTheme(
+        Divider(height: 1),
+        Container(
+          padding: EdgeInsets.only(bottom: 12, top: 12),
+          child: ButtonTheme(
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            child: new FlatButton(
+            child: FlatButton(
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
-                  new Icon(Icons.mail),
-                  new SizedBox(width: 12),
-                  new Expanded(
-                    child: new Text("Nous contacter"),
+                  Icon(Icons.mail),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text("Nous contacter"),
                   ),
-                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
+                  Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchContactWidget,
             ),
           ),
         ),
-        new Divider(height: 1),
-        new Container(
-          padding: new EdgeInsets.only(bottom: 12, top: 12),
-          child: new ButtonTheme(
+        Divider(height: 1),
+        Container(
+          padding: EdgeInsets.only(bottom: 12, top: 12),
+          child: ButtonTheme(
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            child: new FlatButton(
+            child: FlatButton(
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              child: new Row(
+              child: Row(
                 children: <Widget>[
-                  new Icon(Icons.lock),
-                  new SizedBox(width: 12),
-                  new Expanded(
-                    child: new Text("Conditions générales d'utilisation"),
+                  Icon(Icons.lock),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text("Conditions générales d'utilisation"),
                   ),
-                  new Icon(Icons.chevron_right, color: ColorPalette.orange)
+                  Icon(Icons.chevron_right, color: ColorPalette.orange)
                 ],
               ),
               onPressed: this._launchTermsOfUseWidget,
@@ -229,21 +229,21 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     ),
   );
 
-  Widget get _logoutButton => new Container(
+  Widget get _logoutButton => Container(
     height: 48,
     margin: EdgeInsets.only(left: 4),
-    child: new FlatButton(
-      shape: new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(8)
+    child: FlatButton(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8)
       ),
-      onPressed: () => this._authBloc.dispatch(new AuthLoggedOutEvent()),
+      onPressed: () => this._authBloc.dispatch(AuthLoggedOutEvent()),
       textColor: ColorPalette.lightGray,
-      child: new Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new Text(
+          Text(
             "DECONNEXION",
-            style: new TextStyle(
+            style: TextStyle(
               color: ColorPalette.orange,
               fontWeight: FontWeight.w600
             )
@@ -255,9 +255,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   void _launchProfileWidget() {
     final services = ServiceProvider.of(this.context);
-    Navigator.push(this.context, new MaterialPageRoute(
-      builder: (_) => new ServiceProvider(
-        child: new MemberInfoWidget(),
+    Navigator.push(this.context, MaterialPageRoute(
+      builder: (_) => ServiceProvider(
+        child: MemberInfoWidget(),
         services: services
       )
     ));
@@ -265,9 +265,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   void _launchPaymentAccountsWidget() {
     final services = ServiceProvider.of(this.context);
-    Navigator.push(this.context, new MaterialPageRoute(
-      builder: (_) => new ServiceProvider(
-        child: new PaymentMethodsWidget(),
+    Navigator.push(this.context, MaterialPageRoute(
+      builder: (_) => ServiceProvider(
+        child: PaymentMethodsWidget(),
         services: services
       )
     ));
@@ -275,28 +275,28 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   void _launchAddressesWidget() {
     final services = ServiceProvider.of(this.context);
-    Navigator.push(this.context, new MaterialPageRoute(
-      builder: (_) => new ServiceProvider(
-        child: new AddressesWidget(),
+    Navigator.push(this.context, MaterialPageRoute(
+      builder: (_) => ServiceProvider(
+        child: AddressesWidget(),
         services: services)
     ));
   }
 
   void _launchFaqWidget() {
-    Navigator.push(this.context, new MaterialPageRoute(
-        builder: (_) => new FaqWidget()
+    Navigator.push(this.context, MaterialPageRoute(
+        builder: (_) => FaqWidget()
     ));
   }
 
   void _launchContactWidget() {
-    Navigator.push(this.context, new MaterialPageRoute(
-        builder: (_) => new ContactWidget()
+    Navigator.push(this.context, MaterialPageRoute(
+        builder: (_) => ContactWidget()
     ));
   }
 
   void _launchTermsOfUseWidget() {
-    Navigator.push(this.context, new MaterialPageRoute(
-        builder: (_) => new TermsOfUseWidget()
+    Navigator.push(this.context, MaterialPageRoute(
+        builder: (_) => TermsOfUseWidget()
     ));
   }
 

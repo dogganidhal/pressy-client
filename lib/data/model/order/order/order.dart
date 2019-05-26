@@ -6,13 +6,15 @@ import 'package:pressy_client/data/model/order/slot/slot.dart';
 part 'order.g.dart';
 
 enum OrderType {
-  PRESSING, WEIGHT
+  PRESSING, 
+  WEIGHT
 }
 
 @JsonSerializable()
 class Order {
 
   final int id;
+  @JsonKey(fromJson: _orderTypeFromJson)
   final OrderType type;
   final Slot pickupSlot;
   final Slot deliverySlot;
@@ -25,5 +27,9 @@ class Order {
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
   Map<String, dynamic> toJson() => _$OrderToJson(this);
+
+  static OrderType _orderTypeFromJson(dynamic json) {
+    return OrderType.values.firstWhere((value) => value.index + 1 == json);
+  }
 
 }

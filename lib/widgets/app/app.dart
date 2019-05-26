@@ -18,31 +18,31 @@ class Application extends StatelessWidget with AppThemeMixin {
 
   Application({@required this.services}) :
       assert(services != null),
-      authBloc = new AuthBloc(services: services) {
-    this.authBloc.dispatch(new AuthAppStartedEvent());
+      authBloc = AuthBloc(services: services) {
+    this.authBloc.dispatch(AuthAppStartedEvent());
   }
   
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Pressy',
       theme: this.appThemeData,
       debugShowCheckedModeBanner: false,
-      home: new ServiceProvider(
+      home: ServiceProvider(
         services: this.services,
-        child: new BlocProvider<AuthBloc>(
+        child: BlocProvider<AuthBloc>(
           bloc: this.authBloc,
-          child: new BlocBuilder<AuthEvent, AuthState>(
+          child: BlocBuilder<AuthEvent, AuthState>(
             bloc: this.authBloc,
             builder: (BuildContext context, AuthState state) {
               if (state is AuthLoadingState) {
-                return new Scaffold(
-                  body: new Center(
-                    child: new CircularProgressIndicator(),
+                return Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
                   ),
                 );
               }
-              return state is AuthAuthenticated ? new HomeWidget() : new AuthWidget(
+              return state is AuthAuthenticated ? HomeWidget() : AuthWidget(
                 authBloc: this.authBloc,
                 memberSession: this.services.getService<IMemberSession>(),
               );

@@ -6,9 +6,9 @@ class LoaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      decoration: new BoxDecoration(
-        gradient: new LinearGradient(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           stops: [0.0, 0.25],
@@ -18,37 +18,37 @@ class LoaderWidget extends StatelessWidget {
           ]
         )
       ),
-      child: new Center(
-        child: new Row(
+      child: Center(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            new SizedBox(width: 36),
-            new Expanded(
-              child: new Container(
-                padding: new EdgeInsets.all(8),
-                decoration: new BoxDecoration(
+            SizedBox(width: 36),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: new BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: new Column(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    new SizedBox(height: 8),
-                    new CircularProgressIndicator(),
-                    new SizedBox(height: 16),
-                    new Text(
+                    SizedBox(height: 8),
+                    CircularProgressIndicator(),
+                    SizedBox(height: 16),
+                    Text(
                       "CHARGEMENT",
                       style: Theme.of(context)
                         .textTheme
                         .title
                         .copyWith(fontSize: 14, color: Colors.grey)
                     ),
-                    new SizedBox(height: 8)
+                    SizedBox(height: 8)
                   ],
                 ),
               )
             ),
-            new SizedBox(width: 36),
+            SizedBox(width: 36),
           ],
         )
       ),

@@ -8,11 +8,11 @@ mixin ErrorMixin {
 
   bool _isErrorModalActive = false;
 
-  Widget errorWidget(BuildContext context, AppError error) => new Modal(
+  Widget errorWidget(BuildContext context, AppError error) => Modal(
       title: error.title ?? "Erreur",
-      child: new Container(
-        margin: new EdgeInsets.only(bottom: 16),
-        child: new Text(
+      child: Container(
+        margin: EdgeInsets.only(bottom: 16),
+        child: Text(
           error.message,
           style: Theme.of(context)
             .textTheme
@@ -25,7 +25,7 @@ mixin ErrorMixin {
         ),
       ),
       actions: [
-        new ModalAction(
+        ModalAction(
           title: "OK",
           callback: () => this._isErrorModalActive = false
         )
@@ -33,15 +33,15 @@ mixin ErrorMixin {
     );
 
   void showErrorDialog(BuildContext context, AppError error) {
-    Scaffold.of(context).showSnackBar(new SnackBar(
-      content: new Row(
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Row(
         children: <Widget>[
-          new CircularProgressIndicator(),
-          new SizedBox(width: 12),
-          new Text(error.message)
+          CircularProgressIndicator(),
+          SizedBox(width: 12),
+          Text(error.message)
         ],
       ),
-      duration: new Duration(seconds: 10)
+      duration: Duration(seconds: 10)
     ));
   }
 

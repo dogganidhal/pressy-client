@@ -24,7 +24,7 @@ class LoginWidget extends StatefulWidget {
     assert(memberSession != null);
 
   @override
-  State<StatefulWidget> createState() => new _LoginWidgetState();
+  State<StatefulWidget> createState() => _LoginWidgetState();
   
 }
 
@@ -32,13 +32,13 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
   LoaderMixin, ErrorMixin {
 
   LoginBloc _loginBloc;
-  TextEditingController _emailFieldController = new TextEditingController();
-  TextEditingController _passwordFieldController = new TextEditingController();
+  TextEditingController _emailFieldController = TextEditingController();
+  TextEditingController _passwordFieldController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    this._loginBloc = new LoginBloc(
+    this._loginBloc = LoginBloc(
       authBloc: this.widget.authBloc,
       authDataSource: ServiceProvider.of(this.context).getService<IAuthDataSource>(),
       memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>(),
@@ -47,21 +47,21 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
 
   @override
   Widget build(BuildContext context) {
-    return new BlocBuilder<LoginEvent, LoginState>(
+    return BlocBuilder<LoginEvent, LoginState>(
       bloc: this._loginBloc, 
       builder: (context, state) {
         this.onWidgetDidBuild(() => this._handleState(state));
-        return new SafeArea(
-          child: new Column(
+        return SafeArea(
+          child: Column(
             children: <Widget>[
-              new Expanded(
-                child: new SingleChildScrollView(
-                  child: new Container(
-                    padding: new EdgeInsets.all(16),
-                    child: new Form(
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Form(
                       child: this._loginForm,
                       autovalidate: true,
-                      onChanged: () => this._loginBloc.dispatch(new LoginSubmitFormEvent(
+                      onChanged: () => this._loginBloc.dispatch(LoginSubmitFormEvent(
                         email: this._emailFieldController.text,
                         password: this._passwordFieldController.text
                       )),
@@ -77,20 +77,20 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
     );
   }
 
-  Widget get _loginForm => new Column(
+  Widget get _loginForm => Column(
     children: <Widget>[
-      new TextFormField(
+      TextFormField(
         controller: this._emailFieldController,
-        decoration: new InputDecoration(
+        decoration: InputDecoration(
           helperText: "Votre email sera utilisé pour vous identifier",
           labelText: "Email",
         ),
         validator: Validators.emailValidator,
         keyboardType: TextInputType.emailAddress,
       ),
-      new TextFormField(
+      TextFormField(
         controller: this._passwordFieldController,
-        decoration: new InputDecoration(
+        decoration: InputDecoration(
           helperText: "Votre mot de passe",
           labelText: "Mot de passe"
         ),
@@ -100,23 +100,23 @@ class _LoginWidgetState extends State<LoginWidget> with WidgetLifeCycleMixin,
     ],
   );
 
-  Widget _loginStickyButton(bool isFormValid) => new Row(
+  Widget _loginStickyButton(bool isFormValid) => Row(
     children: <Widget>[
-      new Expanded(
-        child: new Container(
+      Expanded(
+        child: Container(
           height: 48,
-          margin: new EdgeInsets.all(12),
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.circular(8),
+          margin: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
             color: isFormValid ? ColorPalette.orange : ColorPalette.borderGray
           ),
-          child: new ButtonTheme(
+          child: ButtonTheme(
             height: double.infinity,
-            child: new FlatButton(
-              child: new Text("CONNEXION"),
+            child: FlatButton(
+              child: Text("CONNEXION"),
               textColor: Colors.white,
               onPressed: isFormValid ? () => this._loginBloc.dispatch(
-                new LoginButtonPressedEvent(
+                LoginButtonPressedEvent(
                   email: this._emailFieldController.text,
                   password: this._passwordFieldController.text
                 )

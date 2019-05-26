@@ -4,12 +4,12 @@ import 'package:location/location.dart';
 
 class FlutterUserLocationProvider implements IUserLocationProvider {
 
-  final _location = new Location();
+  final _location = Location();
 
   @override
   Future<Coordinate> getUserLocation() async {
     final locationData = await this._location.getLocation();
-    return new Coordinate(latitude: locationData["latitude"], longitude: locationData["longitude"]);
+    return Coordinate(latitude: locationData["latitude"], longitude: locationData["longitude"]);
   }
 
 }

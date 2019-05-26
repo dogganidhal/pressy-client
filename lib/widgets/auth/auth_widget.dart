@@ -19,7 +19,7 @@ class AuthWidget extends StatefulWidget {
   }) : assert(authBloc != null), assert(memberSession != null);
 
   @override
-  State<StatefulWidget> createState() => new _AuthWidgetState();
+  State<StatefulWidget> createState() => _AuthWidgetState();
   
 }
 
@@ -30,43 +30,43 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    this._tabController = new TabController(length: 2, vsync: this);
+    this._tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
-    return new BlocProvider(
+    return BlocProvider(
       bloc: this.widget.authBloc,
-      child: new Scaffold(
-        appBar: new AppBar(
-          iconTheme: new IconThemeData(color: ColorPalette.orange),
+      child: Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: ColorPalette.orange),
           elevation: 1,
           backgroundColor: Colors.white,
-          title: new Text("Authentification"),
+          title: Text("Authentification"),
           centerTitle: true,
-          bottom: new TabBar(
+          bottom: TabBar(
             controller: this._tabController,
             tabs: <Widget>[
-              new Container(
-                padding: new EdgeInsets.only(bottom: 8, top: 8),
-                child: new Text("INSCRIPTION")
+              Container(
+                padding: EdgeInsets.only(bottom: 8, top: 8),
+                child: Text("INSCRIPTION")
               ),
-              new Container(
-                padding: new EdgeInsets.only(bottom: 8, top: 8),
-                child: new Text("CONNEXION"),
+              Container(
+                padding: EdgeInsets.only(bottom: 8, top: 8),
+                child: Text("CONNEXION"),
               )
             ],
           ),
         ),/**/
-        body: new TabBarView(
+        body: TabBarView(
           controller: this._tabController,
           children: <Widget>[
-            new SignUpWidget(
+            SignUpWidget(
               authBloc: this.widget.authBloc,
               onAuthCompleted: () => Navigator.pop(this.context),
               memberSession: this.widget.memberSession,
             ),
-            new LoginWidget(
+            LoginWidget(
               authBloc: this.widget.authBloc,
               onAuthCompleted: () => Navigator.pop(this.context),
               memberSession: this.widget.memberSession,

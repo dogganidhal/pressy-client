@@ -20,7 +20,7 @@ class EstimateOrderStepWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => new _EstimateOrderStepWidgetState();
+  State<StatefulWidget> createState() => _EstimateOrderStepWidgetState();
 
 }
 
@@ -32,19 +32,19 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new BaseStepWidget(
+    return BaseStepWidget(
       title: "Estimer votre commande",
-      child: new Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          new CupertinoSegmentedControl<int>(
+          CupertinoSegmentedControl<int>(
             borderColor: ColorPalette.orange,
             selectedColor: ColorPalette.orange,
             unselectedColor: Colors.white,
             groupValue: this._selectedIndex,
             children: {
-              0: new Text("Pressing"),
-              1: new Text("Linge au kilo")
+              0: Text("Pressing"),
+              1: Text("Linge au kilo")
             },
             onValueChanged: (index) => this.setState(() => this._selectedIndex = index)
           ),
@@ -54,15 +54,15 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
     );
   }
 
-  Widget get _weightedServiceWidget => new Column(
+  Widget get _weightedServiceWidget => Column(
     children: <Widget>[
-      new SizedBox(height: 18),
-      new Text(
+      SizedBox(height: 18),
+      Text(
         "Prix par sac de 5kg",
-        style: new TextStyle(color: ColorPalette.darkGray),
+        style: TextStyle(color: ColorPalette.darkGray),
       ),
-      new SizedBox(height: 18),
-      new StaggeredGridView.countBuilder(
+      SizedBox(height: 18),
+      StaggeredGridView.countBuilder(
         shrinkWrap: true,
         itemCount: 1,
         crossAxisCount: 1,
@@ -70,23 +70,23 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
         staggeredTileBuilder: (index) => StaggeredTile.fit(1),
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
-        physics: new NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
       ),
-      new SizedBox(height: 12),
+      SizedBox(height: 12),
       this._priceAndPassButtonWidget
     ],
   );
 
-  Widget get _laundryWidget => new Column(
+  Widget get _laundryWidget => Column(
     children: <Widget>[
-      new SizedBox(height: 18),
-      new Text(
+      SizedBox(height: 18),
+      Text(
         "Veuillez sélectionner vos articles, vous serez facturé à la carte."
             "Le montant est indicatif et risque de changer.",
-        style: new TextStyle(color: ColorPalette.darkGray),
+        style: TextStyle(color: ColorPalette.darkGray),
       ),
-      new SizedBox(height: 18),
-      new StaggeredGridView.countBuilder(
+      SizedBox(height: 18),
+      StaggeredGridView.countBuilder(
         shrinkWrap: true,
         itemCount: this.widget.articles.length,
         crossAxisCount: 2,
@@ -94,63 +94,63 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
         staggeredTileBuilder: (index) => StaggeredTile.fit(1),
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
-        physics: new NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
       ),
-      new SizedBox(height: 12),
+      SizedBox(height: 12),
       this._priceAndPassButtonWidget
     ],
   );
 
-  Widget get _priceAndPassButtonWidget => new Container(
-    padding: new EdgeInsets.only(top: 12),
-    decoration: new BoxDecoration(
-        border: new Border(
-            top: new BorderSide(color: ColorPalette.borderGray, width: 1)
+  Widget get _priceAndPassButtonWidget => Container(
+    padding: EdgeInsets.only(top: 12),
+    decoration: BoxDecoration(
+        border: Border(
+            top: BorderSide(color: ColorPalette.borderGray, width: 1)
         )
     ),
-    child: new Row(
+    child: Row(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        new Text("Total :", style: new TextStyle(
+        Text("Total :", style: TextStyle(
             color: ColorPalette.darkGray,
             fontSize: 14
         )),
-        new Text("${this._totalPrice.toStringAsFixed(2)} €", style: new TextStyle(
+        Text("${this._totalPrice.toStringAsFixed(2)} €", style: TextStyle(
             color: ColorPalette.textBlack,
             fontWeight: FontWeight.bold
         )),
-        new Expanded(child: new Container()),
-        new FlatButton(
+        Expanded(child: Container()),
+        FlatButton(
           onPressed: () => this.widget.onFinish(
             this._selectedIndex == 0 ? OrderType.PRESSING : OrderType.WEIGHT,
             this._calculateTotalPrice()
           ),
-          child: new Text(
+          child: Text(
             "SUIVANT",
-            style: new TextStyle(color: ColorPalette.orange)
+            style: TextStyle(color: ColorPalette.orange)
           )
         ),
       ],
     ),
   );
 
-  Widget _buildArticleWidget(Article article) => new Container(
-    padding: new EdgeInsets.all(12),
-    decoration: new BoxDecoration(
-      border: new Border.all(color: ColorPalette.borderGray, width: 1),
-      borderRadius: new BorderRadius.circular(4),
+  Widget _buildArticleWidget(Article article) => Container(
+    padding: EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      border: Border.all(color: ColorPalette.borderGray, width: 1),
+      borderRadius: BorderRadius.circular(4),
       color: Colors.white
     ),
-    child: new Column(
+    child: Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        new Image.network(article.photoUrl),
-        new SizedBox(height: 12),
-        new Text(article.name, style: new TextStyle(fontWeight: FontWeight.bold)),
-        new SizedBox(height: 4),
-        new Text("${article.laundryPrice}€", style: new TextStyle(color: ColorPalette.darkGray, fontWeight: FontWeight.bold)),
-        new SizedBox(height: 12),
-        new NumericStepper(
+        Image.network(article.photoUrl),
+        SizedBox(height: 12),
+        Text(article.name, style: TextStyle(fontWeight: FontWeight.bold)),
+        SizedBox(height: 4),
+        Text("${article.laundryPrice}€", style: TextStyle(color: ColorPalette.darkGray, fontWeight: FontWeight.bold)),
+        SizedBox(height: 12),
+        NumericStepper(
           onValueChanged: (value) {
             this._cart[article] = value;
             this.setState(() {

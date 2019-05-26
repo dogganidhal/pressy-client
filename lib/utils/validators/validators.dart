@@ -5,7 +5,7 @@ abstract class Validators {
   static String emailValidator(String email) {
 
     String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regExp = new RegExp(pattern);
+    RegExp regExp = RegExp(pattern);
     if (email.length == 0) {
       return null;
     } else if(!regExp.hasMatch(email)){
@@ -20,7 +20,7 @@ abstract class Validators {
     if (password == null || password.isEmpty) return null;
     if (password.length < 6)
       return "Le mot de passe doit avoir au moins 6 caractères";
-    if (!password.contains(new RegExp("(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)")))
+    if (!password.contains(RegExp("(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)")))
       return "Le mot de passe doit avoir au moins une lettre et un chiffre";
     return null;
 
@@ -31,7 +31,7 @@ abstract class Validators {
   static String phoneNumberValidator(String phone) {
     
     // TODO: Find a better regex to validate phone numbers
-    RegExp regExp = new RegExp(r'^0[0-9]{9}$');
+    RegExp regExp = RegExp(r'^0[0-9]{9}$');
     if (!regExp.hasMatch(phone)) {
       return "Numéro de téléphone non valide";
     }
@@ -46,7 +46,7 @@ abstract class Validators {
     password == passwordConfirmation ? null : "Les mots de passes ne sont pas identiques";
 
   static String creditCardValidator(String cardNumber) {
-    RegExp regExp = new RegExp("^[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}\$");
+    RegExp regExp = RegExp("^[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}\$");
     return regExp.hasMatch(cardNumber) ? null : "Numéro de carte invalide";
   }
 

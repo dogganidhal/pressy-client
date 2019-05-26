@@ -30,8 +30,8 @@ class Modal extends StatelessWidget {
   Modal({Key key, @required this.child, this.actions = const [], this.title}) : super(key: key);
 
   BoxDecoration _boxDecoration() {
-    return new BoxDecoration(
-      gradient: new LinearGradient(
+    return BoxDecoration(
+      gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         stops: [0.0, 0.25],
@@ -55,12 +55,12 @@ class Modal extends StatelessWidget {
   }
 
   Widget _actionButton(BuildContext context, ModalAction action) {
-    return new Container(
-      child: new SizedBox.expand(
-        child: new FlatButton(
-          child: new Text(
+    return Container(
+      child: SizedBox.expand(
+        child: FlatButton(
+          child: Text(
             action.title.toUpperCase(), 
-            style: new TextStyle(
+            style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 16
@@ -72,27 +72,27 @@ class Modal extends StatelessWidget {
               action.callback();
           },
           color: _actionButtonColor(action.type),
-          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(8))
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
         ),
       ),
       height: 56,
-      padding: new EdgeInsets.only(left: 8, right: 8, bottom: 8),
-      decoration: new BoxDecoration(
-        borderRadius: new BorderRadius.circular(8)
+      padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8)
       ),
     );
   }
 
   List<Widget> _buildWidgets(BuildContext context) {
     
-    List<Widget> widgets = new List();
+    List<Widget> widgets = List();
     
     if (this.title != null)
       widgets.add(
-        new Container(
+        Container(
           padding: EdgeInsets.only(top: 8, bottom: 16),
-          child: new Center(
-            child: new Text(
+          child: Center(
+            child: Text(
               this.title.toUpperCase(), 
               style: Theme.of(context)
                 .textTheme
@@ -113,29 +113,29 @@ class Modal extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return new KeyboardAvoidingWidget(
-      child: new Container(
-        child: new Center(
-          child: new Row(
+    return KeyboardAvoidingWidget(
+      child: Container(
+        child: Center(
+          child: Row(
             children: <Widget>[
-              new SizedBox(width: 36),
-              new Expanded(
-                child: new Container(
-                  child: new Stack(
+              SizedBox(width: 36),
+              Expanded(
+                child: Container(
+                  child: Stack(
                     overflow: Overflow.visible,
                     children: <Widget>[
-                      new DecoratedBox(
-                        decoration: new BoxDecoration(
+                      DecoratedBox(
+                        decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: new BorderRadius.all(new Radius.circular(8))
+                          borderRadius: BorderRadius.all(Radius.circular(8))
                         ),
-                        child: new Container(
-                          child: new Row(
+                        child: Container(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              new Expanded(
-                                child: new Column(
+                              Expanded(
+                                child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: this._buildWidgets(context),
@@ -145,10 +145,10 @@ class Modal extends StatelessWidget {
                           ),
                         )
                       ),
-                      new Positioned(
+                      Positioned(
                         top: -18,
                         right: 18,
-                        child: new RoundCloseButton(
+                        child: RoundCloseButton(
                           onPressed: () => Navigator.pop(context)
                         ),
                       ),
@@ -156,7 +156,7 @@ class Modal extends StatelessWidget {
                   ),
                 )
               ),
-              new SizedBox(width: 36)
+              SizedBox(width: 36)
             ],
           )
         ),

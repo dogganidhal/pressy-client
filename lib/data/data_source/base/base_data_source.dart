@@ -53,7 +53,7 @@ abstract class DataSource {
     if (responseConverter != null) {
       final map = response.contentLength > 0 ? json.decode(response.body) : null;
       if (response.statusCode >= 400) {
-        throw new ApiError.fromJson(map);
+        throw ApiError.fromJson(map);
       }
       return Future.value(responseConverter(map));
     }
@@ -69,7 +69,7 @@ abstract class DataSource {
     var response = await this.client.get(url, headers: this._injectHeaders(headers));
     var map = json.decode(response.body);
     if (response.statusCode >= 400) {
-      throw new ApiError.fromJson(map);
+      throw ApiError.fromJson(map);
     }
     return Future.value(responseConverter != null ? responseConverter(map) : null);
 
@@ -83,7 +83,7 @@ abstract class DataSource {
     var response = await this.client.post(url, headers: this._injectHeaders(headers), body: json.encode(body));
     var map = json.decode(response.body);
     if (response.statusCode >= 400) {
-      throw new ApiError.fromJson(map);
+      throw ApiError.fromJson(map);
     }
     return Future.value(responseConverter != null ? responseConverter(map) : null);
 
@@ -97,7 +97,7 @@ abstract class DataSource {
     var response = await this.client.patch(url, headers: this._injectHeaders(headers), body: json.encode(body));
     var map = json.decode(response.body);
     if (response.statusCode >= 400) {
-      throw new ApiError.fromJson(map);
+      throw ApiError.fromJson(map);
     }
     return Future.value(responseConverter != null ? responseConverter(map) : null);
 
@@ -110,7 +110,7 @@ abstract class DataSource {
     var response = await this.client.delete(url, headers: this._injectHeaders(headers));
     var map = json.decode(response.body);
     if (response.statusCode >= 400) {
-      throw new ApiError.fromJson(map);
+      throw ApiError.fromJson(map);
     }
     return Future.value(responseConverter != null ? responseConverter(map) : null);
 

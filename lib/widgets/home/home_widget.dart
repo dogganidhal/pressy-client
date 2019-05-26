@@ -3,8 +3,8 @@ import 'package:pressy_client/data/session/member/member_session.dart';
 import 'package:pressy_client/services/di/service_provider.dart';
 import 'package:pressy_client/utils/style/app_theme.dart';
 import 'package:pressy_client/widgets/order/order_widget.dart';
+import 'package:pressy_client/widgets/orders/orders_widget.dart';
 import 'package:pressy_client/widgets/settings/settings_widget.dart';
-import 'package:pressy_client/widgets/commande/home_commande_widget.dart';
 
 class HomeWidget extends StatefulWidget {
 
@@ -34,11 +34,11 @@ class _HomeWidgetState extends State<HomeWidget>
     this._memberSession = ServiceProvider.of(this.context).getService<IMemberSession>();
     this._currentIndex = this.widget.initialSelectedTab;
     this._widgets = [
-      new OrderWidget(
+      OrderWidget(
         onOrderSuccessful: () => this.setState(() => this._currentIndex = 1),
       ),
-      new HomeCommandeWidget(),
-      new SettingsWidget(
+      OrdersWidget(),
+      SettingsWidget(
         memberSession: this._memberSession,
       ),
     ];
@@ -51,7 +51,7 @@ class _HomeWidgetState extends State<HomeWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return new Scaffold(
+    return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: this._widgets[this._currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -60,16 +60,16 @@ class _HomeWidgetState extends State<HomeWidget>
         currentIndex: this._currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(Icons.shopping_cart),
-            title: new Text('Commander', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
+            icon: Icon(Icons.shopping_cart),
+            title: Text('Commander', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.calendar_today),
-            title: new Text('Mes commandes', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
+            icon: Icon(Icons.calendar_today),
+            title: Text('Mes commandes', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.settings),
-            title: new Text('Paramètres', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12))
+            icon: Icon(Icons.settings),
+            title: Text('Paramètres', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12))
           ),
         ],
         onTap: this._onTap,

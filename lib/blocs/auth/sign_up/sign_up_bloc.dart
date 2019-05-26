@@ -23,7 +23,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   });
   
   @override
-  SignUpState get initialState => new SignUpInitialState();
+  SignUpState get initialState => SignUpInitialState();
 
   @override
   Stream<SignUpState> mapEventToState(SignUpState currentState, SignUpEvent event) async* {
@@ -39,28 +39,28 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       isValid &= Validators.newPasswordValidator(event.password) == null;
       isValid &= Validators.passwordConfirmationValidator(event.password, event.passwordConfirmation) == null;
 
-      yield new SignUpInitialState(isValid: isValid);
+      yield SignUpInitialState(isValid: isValid);
       
     }
 
     if (event is SignUpButtonPressedEvent) {
 
-      yield new SignUpLoadingState();
+      yield SignUpLoadingState();
 
       try {
 
-        var signUpRequest = new SignUpRequestModel(
+        var signUpRequest = SignUpRequestModel(
           email: event.email, password: event.password, firstName: event.firstName,
           lastName: event.lastName, phoneNumber: event.phoneNumber
         );
         var authCredentials = await this.memberDataSource.signUp(signUpRequest);
-        this.authBloc.dispatch(new AuthLoggedInEvent(
+        this.authBloc.dispatch(AuthLoggedInEvent(
           authCredentials: authCredentials,
         ));
-        yield new SignUpSuccessState();
+        yield SignUpSuccessState();
 
       } on ApiError catch (error) {
-        yield new SignUpFailureState(error: error);
+        yield SignUpFailureState(error: error);
       }
 
     }

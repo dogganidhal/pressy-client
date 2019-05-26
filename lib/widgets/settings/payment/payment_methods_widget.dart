@@ -10,13 +10,13 @@ import 'package:pressy_client/widgets/settings/payment/add_payment_method_widget
 class PaymentMethodsWidget extends StatefulWidget {
 
   @override
-  State<StatefulWidget> createState() => new _PaymentMethodsWidgetState();
+  State<StatefulWidget> createState() => _PaymentMethodsWidgetState();
 
 }
 
 class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
 
-  GlobalKey _scaffoldKey = new GlobalKey();
+  GlobalKey _scaffoldKey = GlobalKey();
   List<PaymentAccount> get _paymentAccounts => ServiceProvider
     .of(this.context)
     .getService<IMemberSession>()
@@ -24,37 +24,37 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
     .paymentAccounts;
 
   @override
-  Widget build(BuildContext context) => new Scaffold(
+  Widget build(BuildContext context) => Scaffold(
     backgroundColor: Colors.grey[100],
-    appBar: new AppBar(
-      iconTheme: new IconThemeData(color: ColorPalette.orange),
-      title: new Text("Mes CB"),
+    appBar: AppBar(
+      iconTheme: IconThemeData(color: ColorPalette.orange),
+      title: Text("Mes CB"),
       backgroundColor: Colors.white,
       centerTitle: true,
       elevation: 1,
       actions: <Widget>[
-        new FlatButton.icon(
+        FlatButton.icon(
           onPressed: this._launchAddAddressWidget,
-          icon: new Icon(Icons.add, color: ColorPalette.orange),
-          label: new Container()
+          icon: Icon(Icons.add, color: ColorPalette.orange),
+          label: Container()
         )
       ],
     ),
-    body: new Column(
+    body: Column(
       key: this._scaffoldKey,
       children: <Widget>[
-        new Container(
-          padding: new EdgeInsets.only(top: 24, bottom: 12, left: 12, right: 12),
-          child: new Text(
+        Container(
+          padding: EdgeInsets.only(top: 24, bottom: 12, left: 12, right: 12),
+          child: Text(
             "Pour modifier ou supprimer une de vos moyens de paiement, glisser vers la gauche",
             textAlign: TextAlign.center,
           ),
         ),
-        new Expanded(
-          child: new ListView.separated(
-            padding: new EdgeInsets.only(top: 12, bottom: 12),
+        Expanded(
+          child: ListView.separated(
+            padding: EdgeInsets.only(top: 12, bottom: 12),
             itemBuilder: (context, index) => this._paymentAccountRow(this._paymentAccounts[index]),
-            separatorBuilder: (context, index) => new Divider(height: 1),
+            separatorBuilder: (context, index) => Divider(height: 1),
             itemCount: this._paymentAccounts.length,
           )
         )
@@ -62,13 +62,13 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
     ),
   );
 
-  Widget _paymentAccountRow(PaymentAccount paymentAccount) => new Slidable(
-    delegate: new SlidableDrawerDelegate(),
-    child: new Container(
+  Widget _paymentAccountRow(PaymentAccount paymentAccount) => Slidable(
+    delegate: SlidableDrawerDelegate(),
+    child: Container(
       color: Colors.white,
-      child: new ListTile(
-        title: new Text(this._formatCardAlias(paymentAccount.cardAlias)),
-        subtitle: new Text(
+      child: ListTile(
+        title: Text(this._formatCardAlias(paymentAccount.cardAlias)),
+        subtitle: Text(
           "Expire le : ${paymentAccount.expiryMonth}/${paymentAccount.expiryYear}\n"
           "${paymentAccount.holderName}"
         ),
@@ -76,13 +76,13 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
       ),
     ),
     secondaryActions: <Widget>[
-      new IconSlideAction(
+      IconSlideAction(
         caption: 'Supprimer',
         color: ColorPalette.red,
         icon: Icons.delete,
         onTap: () => print('Supprimer'),
       ),
-      new IconSlideAction(
+      IconSlideAction(
         foregroundColor: Colors.white,
         caption: 'Modifier',
         color: ColorPalette.orange,
@@ -95,9 +95,9 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
   void _launchAddAddressWidget() {
     final services  = ServiceProvider.of(this.context);
     Navigator.of(this.context)
-      .push(new MaterialPageRoute(
-        builder: (context) => new ServiceProvider(
-          child: new AddPaymentMethodWidget(),
+      .push(MaterialPageRoute(
+        builder: (context) => ServiceProvider(
+          child: AddPaymentMethodWidget(),
           services: services
         )
       )
@@ -105,7 +105,7 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
   }
 
   String _formatCardAlias(String cardAlias) {
-    final regexp = new RegExp(".{4}");
+    final regexp = RegExp(".{4}");
     final matches = regexp.allMatches(cardAlias)
       .map((match) => cardAlias.substring(match.start, match.end));
     return matches.join(" ");

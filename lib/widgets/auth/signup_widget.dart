@@ -24,7 +24,7 @@ class SignUpWidget extends StatefulWidget {
     assert(memberSession != null);
 
   @override
-  State<StatefulWidget> createState() => new _SignUpWidgetState();
+  State<StatefulWidget> createState() => _SignUpWidgetState();
   
 }
 
@@ -32,19 +32,19 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
   LoaderMixin, ErrorMixin {
 
   SignUpBloc _signUpBloc;
-  TextEditingController _firstNameFieldController = new TextEditingController();
-  TextEditingController _lastNameFieldController = new TextEditingController();
-  TextEditingController _emailFieldController = new TextEditingController();
-  TextEditingController _phoneNumberFieldController = new TextEditingController();
-  TextEditingController _passwordFieldController = new TextEditingController();
-  TextEditingController _passwordConfirmationFieldController = new TextEditingController();
+  TextEditingController _firstNameFieldController = TextEditingController();
+  TextEditingController _lastNameFieldController = TextEditingController();
+  TextEditingController _emailFieldController = TextEditingController();
+  TextEditingController _phoneNumberFieldController = TextEditingController();
+  TextEditingController _passwordFieldController = TextEditingController();
+  TextEditingController _passwordConfirmationFieldController = TextEditingController();
 
   bool _acceptsTerms = false;
 
   @override
   void initState() {
     super.initState();
-    this._signUpBloc = new SignUpBloc(
+    this._signUpBloc = SignUpBloc(
       authBloc: this.widget.authBloc,
       memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>(),
       memberSession: this.widget.memberSession
@@ -53,18 +53,18 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
 
   @override
   Widget build(BuildContext context) {
-    return new SafeArea(
-      child: new BlocBuilder<SignUpEvent, SignUpState>(
+    return SafeArea(
+      child: BlocBuilder<SignUpEvent, SignUpState>(
         bloc: this._signUpBloc, 
         builder: (context, state) {
           this.onWidgetDidBuild(() => this._handleState(state));
-          return new Column(
+          return Column(
             children: <Widget>[
-              new Expanded(
-                child: new SingleChildScrollView(
-                  child: new Container(
-                    padding: new EdgeInsets.all(16),
-                    child: new Form(
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Form(
                       child: this._signUpForm,
                       autovalidate: true,
                       onChanged: this._signUpFormChanged
@@ -81,7 +81,7 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
   }
 
   void _signUpFormChanged() {
-    this._signUpBloc.dispatch(new SignUpSubmitFormEvent(
+    this._signUpBloc.dispatch(SignUpSubmitFormEvent(
       email: this._emailFieldController.text,
       password: this._passwordFieldController.text,
       firstName: this._firstNameFieldController.text,
@@ -110,7 +110,7 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
     this.widget.onAuthCompleted();
   }
 
-  Widget get _signUpForm => new Column(
+  Widget get _signUpForm => Column(
     children: <Widget>[
       this._nameFieldRow,
       this._emailField,
@@ -121,27 +121,27 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
     ],
   );
 
-  Widget get _nameFieldRow => new Row(
+  Widget get _nameFieldRow => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
-      new Flexible(
-        child: new Container(
-          padding: new EdgeInsets.only(right: 6),
+      Flexible(
+        child: Container(
+          padding: EdgeInsets.only(right: 6),
           child: this._lastNameField
         ),
       ),
-      new Flexible(
-        child: new Container(
-          padding: new EdgeInsets.only(left: 6),
+      Flexible(
+        child: Container(
+          padding: EdgeInsets.only(left: 6),
           child: this._firstNameField
         )
       )
     ],
   );
 
-  Widget get _lastNameField => new TextFormField(
+  Widget get _lastNameField => TextFormField(
     controller: this._firstNameFieldController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       labelText: "Nom",
       helperText: "Votre nom"
     ),
@@ -150,9 +150,9 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
     textCapitalization: TextCapitalization.words,
   );
 
-  Widget get _firstNameField => new TextFormField(
+  Widget get _firstNameField => TextFormField(
     controller: this._lastNameFieldController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       labelText: "Prénom",
       helperText: "Votre prénom"
     ),
@@ -161,9 +161,9 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
     textCapitalization: TextCapitalization.words,
   );
 
-  Widget get _emailField => new TextFormField(
+  Widget get _emailField => TextFormField(
     controller: this._emailFieldController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       helperText: "Votre email sera utilisé pour vous identifier",
       labelText: "Email",
     ),
@@ -171,9 +171,9 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
     keyboardType: TextInputType.emailAddress,
   );
 
-  Widget get _phoneField => new TextFormField(
+  Widget get _phoneField => TextFormField(
     controller: this._phoneNumberFieldController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       helperText: "Votre téléphone sera utilisé pour vous contacter",
       labelText: "Numéro de téléphone",
     ),
@@ -181,9 +181,9 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
     keyboardType: TextInputType.phone,
   );
 
-  Widget get _passwordField => new TextFormField(
+  Widget get _passwordField => TextFormField(
     controller: this._passwordFieldController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       helperText: "Votre mot de passe",
       labelText: "Mot de passe"
     ),
@@ -191,9 +191,9 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
     validator: Validators.newPasswordValidator
   );
 
-  Widget get _passwordConfirmationField => new TextFormField(
+  Widget get _passwordConfirmationField => TextFormField(
     controller: this._passwordConfirmationFieldController,
-    decoration: new InputDecoration(
+    decoration: InputDecoration(
       helperText: "Confirmer votre mot de passe",
       labelText: "Confirmation"
     ),
@@ -204,10 +204,10 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
       )
   );
 
-  Widget get _termsCheckbox => new Row(
+  Widget get _termsCheckbox => Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[
-      new Checkbox(
+      Checkbox(
         value: this._acceptsTerms,
         onChanged: (value) {
           this.setState(() => this._acceptsTerms = value);
@@ -216,30 +216,30 @@ class _SignUpWidgetState extends State<SignUpWidget> with WidgetLifeCycleMixin,
         materialTapTargetSize: MaterialTapTargetSize.padded,
         activeColor: ColorPalette.orange,
       ),
-      new Text(
+      Text(
         "J'accepte les conditions générales d'utilisation",
-        style: new TextStyle(color: ColorPalette.darkGray)
+        style: TextStyle(color: ColorPalette.darkGray)
       )
     ],
   );
 
-  Widget _signUpStickyButton(bool isFormValid) => new Row(
+  Widget _signUpStickyButton(bool isFormValid) => Row(
     children: <Widget>[
-      new Expanded(
-        child: new Container(
+      Expanded(
+        child: Container(
           height: 48,
-          margin: new EdgeInsets.all(12),
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.circular(8),
+          margin: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
             color: isFormValid ? ColorPalette.orange : ColorPalette.borderGray
           ),
-          child: new ButtonTheme(
+          child: ButtonTheme(
             height: double.infinity,
-            child: new FlatButton(
-              child: new Text("S'INSCRIRE"),
+            child: FlatButton(
+              child: Text("S'INSCRIRE"),
               textColor: Colors.white,
               onPressed: isFormValid ? () => this._signUpBloc.dispatch(
-                new SignUpButtonPressedEvent(
+                SignUpButtonPressedEvent(
                   email: this._emailFieldController.text,
                   password: this._passwordFieldController.text,
                   firstName: this._firstNameFieldController.text,

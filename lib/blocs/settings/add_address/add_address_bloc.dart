@@ -22,8 +22,8 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   final IUserLocationProvider userLocationProvider;
 
   static const _kGooglePlacesApiKey = "AIzaSyAfTv8yb7lNverE7jxCk2ZQgMQQRVodIvI";
-  final _googlePlacesAutocomplete = new GoogleMapsPlaces(apiKey: _kGooglePlacesApiKey, httpClient: new HttpClient());
-  final _googlePlacesGeoCoder = new GoogleMapsGeocoding(apiKey: _kGooglePlacesApiKey, httpClient: new HttpClient());
+  final _googlePlacesAutocomplete = GoogleMapsPlaces(apiKey: _kGooglePlacesApiKey, httpClient: HttpClient());
+  final _googlePlacesGeoCoder = GoogleMapsGeocoding(apiKey: _kGooglePlacesApiKey, httpClient: HttpClient());
   String _sessionToken;
 
   AddAddressBloc({
@@ -32,21 +32,21 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   });
 
   @override
-  AddAddressState get initialState => new AddAddressInputState(predictions: []);
+  AddAddressState get initialState => AddAddressInputState(predictions: []);
 
   @override
   Stream<AddAddressState> mapEventToState(AddAddressState currentState, AddAddressEvent event) async* {
 
     if (event is UseDeviceLocationEvent && currentState is AddAddressInputState) {
 
-      yield new AddAddressInputState(predictions: currentState.predictions, isLoading: true);
+      yield AddAddressInputState(predictions: currentState.predictions, isLoading: true);
       final coordinates = await this.userLocationProvider.getUserLocation();
       final result = await this._googlePlacesGeoCoder
-        .searchByLocation(new Location(coordinates.latitude, coordinates.longitude));
+        .searchByLocation(Location(coordinates.latitude, coordinates.longitude));
       final place = result.results.first;
-      final prediction = new Prediction(
+      final prediction = Prediction(
         place.formattedAddress, null, [], place.placeId, null, [], [], null);
-      yield new AddAddressExtraInfoState(confirmedPrediction: prediction);
+      yield AddAddressExtraInfoState(confirmedPrediction: prediction);
 
     }
 
@@ -57,12 +57,12 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
         event.query,
         sessionToken: _sessionToken,
         strictbounds: true,
-        location: new Location(48.8639135, 2.3420433),
+        location: Location(48.8639135, 2.3420433),
         radius: 10000,
         language: "FR",
         types: ["address"]
       );
-      yield new AddAddressInputState(predictions: predictions.predictions);
+      yield AddAddressInputState(predictions: predictions.predictions);
     }
 
     if (event is ConfirmPredictionEvent && currentState is AddAddressInputState) {
@@ -73,10 +73,10 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
         this._checkPlaceDetails(details.result);
         
         this._sessionToken = null;
-        yield new AddAddressExtraInfoState(confirmedPrediction: event.prediction);
+        yield AddAddressExtraInfoState(confirmedPrediction: event.prediction);
         
       } on AppError catch (error) {
-        yield new AddAddressInputState(
+        yield AddAddressInputState(
           predictions: currentState.predictions,
           error: error
         );
@@ -86,15 +86,15 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
     if (event is ConfirmAddAddressEvent && currentState is AddAddressExtraInfoState) {
 
-      yield new AddAddressExtraInfoState(confirmedPrediction: currentState.confirmedPrediction, isLoading: true);
-      await this.memberDataSource.createMemberAddress(new CreateMemberAddressDetails(
+      yield AddAddressExtraInfoState(confirmedPrediction: currentState.confirmedPrediction, isLoading: true);
+      await this.memberDataSource.createMemberAddress(CreateMemberAddressDetails(
         googlePlaceId: event.prediction.placeId,
         name: event.name,
         extraLine: event.extraLine
       ));
       final memberProfile = await this.memberDataSource.getMemberProfile();
       await this.memberSession.persistMemberProfile(memberProfile);
-      yield new AddAddressSuccessState();
+      yield AddAddressSuccessState();
 
     }
 
@@ -106,10 +106,10 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
         .firstWhere((component) => component.types.contains("postal_code"), orElse: () => null);
 
     if (postalCodeComponent == null)
-      throw new PlaceIsNotAddressError();
+      throw PlaceIsNotAddressError();
 
     if (!postalCodeComponent.shortName.startsWith("75"))
-      throw new AddressNotCoveredError();
+      throw AddressNotCoveredError();
 
   }
 

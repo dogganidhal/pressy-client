@@ -9,7 +9,7 @@ class ExpiryDateInputFormatter implements TextInputFormatter {
     switch (newValue.text.length) {
       case 1:
         if (int.parse(newValue.text) > 1) {
-          return new TextEditingValue();
+          return TextEditingValue();
         }
         break;
       case 2:
@@ -20,7 +20,7 @@ class ExpiryDateInputFormatter implements TextInputFormatter {
       case 4:
         final dateComponents = newValue.text.split("/");
         final month = dateComponents[0], year = dateComponents[1];
-        final minYear = int.parse(month) <= new DateTime.now().month ? new DateTime.now().year + 1 : new DateTime.now().year;
+        final minYear = int.parse(month) <= DateTime.now().month ? DateTime.now().year + 1 : DateTime.now().year;
         if (int.parse(year) < minYear ~/ 10 % 10) {
           return oldValue;
         }
@@ -28,7 +28,7 @@ class ExpiryDateInputFormatter implements TextInputFormatter {
       case 5:
         final dateComponents = newValue.text.split("/");
         final month = dateComponents[0], year = dateComponents[1];
-        if (new DateTime(int.parse(year) + 2000, int.parse(month)).isBefore(DateTime.now()))
+        if (DateTime(int.parse(year) + 2000, int.parse(month)).isBefore(DateTime.now()))
           return oldValue;
         break;
       default:

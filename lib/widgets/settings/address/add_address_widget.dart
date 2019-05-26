@@ -17,7 +17,7 @@ import 'package:pressy_client/widgets/common/mixins/lifecycle_mixin.dart';
 class AddAddressWidget extends StatefulWidget {
   
   @override
-  State<StatefulWidget> createState() => new _AddAddressWidgetState();
+  State<StatefulWidget> createState() => _AddAddressWidgetState();
 
 }
 
@@ -26,15 +26,15 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
   with LoaderMixin, WidgetLifeCycleMixin, ErrorMixin {
 
   AddAddressBloc _addAddressBloc;
-  TextEditingController _addressController = new TextEditingController();
-  TextEditingController _addressNameController = new TextEditingController();
-  TextEditingController _extraLineController = new TextEditingController();
-  GlobalKey _scaffoldKey = new GlobalKey();
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _addressNameController = TextEditingController();
+  TextEditingController _extraLineController = TextEditingController();
+  GlobalKey _scaffoldKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    this._addAddressBloc = new AddAddressBloc(
+    this._addAddressBloc = AddAddressBloc(
       memberDataSource: ServiceProvider.of(this.context).getService<IMemberDataSource>(),
       memberSession: ServiceProvider.of(this.context).getService<IMemberSession>(),
       userLocationProvider: ServiceProvider.of(this.context).getService<IUserLocationProvider>()
@@ -42,22 +42,22 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
     this._addressController.addListener(() {
       final query = this._addressController.text;
       if (query != null && query.isNotEmpty && query.length > 1)
-        this._addAddressBloc.dispatch(new SubmitAddressQueryEvent(query: query));
+        this._addAddressBloc.dispatch(SubmitAddressQueryEvent(query: query));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        iconTheme: new IconThemeData(color: ColorPalette.orange),
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: ColorPalette.orange),
         elevation: 1,
-        title: new Text("Ajouter une adresse"),
+        title: Text("Ajouter une adresse"),
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
-      body: new SafeArea(
-        child: new BlocBuilder<AddAddressEvent, AddAddressState>(
+      body: SafeArea(
+        child: BlocBuilder<AddAddressEvent, AddAddressState>(
           key: this._scaffoldKey,
           bloc: this._addAddressBloc,
           builder: (context, state) {
@@ -68,7 +68,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
             else if (state is AddAddressExtraInfoState)
               widget = this._addressExtraInfoWidget(state);
             else
-              widget = new Container();
+              widget = Container();
             return widget;
           },
         )
@@ -76,35 +76,35 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
     );
   }
 
-  Widget _addressExtraInfoWidget(AddAddressExtraInfoState state) => new Container(
-    padding: new EdgeInsets.all(12),
-    child: new Column(
+  Widget _addressExtraInfoWidget(AddAddressExtraInfoState state) => Container(
+    padding: EdgeInsets.all(12),
+    child: Column(
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        new Expanded(
-          child: new SingleChildScrollView(
-            child: new Column(
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
               children: <Widget>[
-                new TextFormField(
-                  decoration: new InputDecoration(
+                TextFormField(
+                  decoration: InputDecoration(
                     labelText: "Adresse",
                   ),
                   keyboardType: TextInputType.emailAddress,
                   initialValue: state.confirmedPrediction.description,
                   enabled: false,
                 ),
-                new TextFormField(
+                TextFormField(
                   controller: this._addressNameController,
-                  decoration: new InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Alias de l'adresse",
                     helperText: "Ex : Maison, Travail ..."
                   ),
                   keyboardType: TextInputType.text,
                 ),
-                new TextFormField(
+                TextFormField(
                   controller: this._extraLineController,
-                  decoration: new InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Informations supplémentaires",
                     helperText: "Ex : Etage, Batiment ..."
                   ),
@@ -114,28 +114,28 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
             ),
           )
         ),
-        new Row(
+        Row(
           children: <Widget>[
-            new Expanded(
-                child: new Container(
-                  margin: new EdgeInsets.only(top: 12),
-                  decoration: new BoxDecoration(
-                    borderRadius: new BorderRadius.circular(8),
+            Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(top: 12),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
                     color: ColorPalette.orange
                   ),
                   height: 48,
-                  child: new ButtonTheme(
+                  child: ButtonTheme(
                     height: double.infinity,
-                    child: new FlatButton(
+                    child: FlatButton(
                       textColor: Colors.white,
                       disabledTextColor: Colors.white,
                       onPressed: () => this._addAddressBloc
-                        .dispatch(new ConfirmAddAddressEvent(
+                        .dispatch(ConfirmAddAddressEvent(
                           prediction: state.confirmedPrediction,
                           name: this._addressNameController.text.isNotEmpty ? this._addressNameController.text : null,
                           extraLine: this._extraLineController.text.isNotEmpty ? this._extraLineController.text : null
                         )),
-                      child: new Text("Valider".toUpperCase()),
+                      child: Text("Valider".toUpperCase()),
                     ),
                   ),
                 )
@@ -146,32 +146,32 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
     ),
   );
 
-  Widget _addressInputWidget(AddAddressInputState state) => new Container(
-    child: new SingleChildScrollView(
-      child: new Column(
+  Widget _addressInputWidget(AddAddressInputState state) => Container(
+    child: SingleChildScrollView(
+      child: Column(
         children: <Widget>[
-          new Container(
-            padding: new EdgeInsets.all(16),
-            margin: new EdgeInsets.all(8),
-            decoration: new BoxDecoration(
+          Container(
+            padding: EdgeInsets.all(16),
+            margin: EdgeInsets.all(8),
+            decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: new BorderRadius.circular(8),
-                border: new Border.all(color: ColorPalette.borderGray, width: 1)
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: ColorPalette.borderGray, width: 1)
             ),
             child: Row(
               children: <Widget>[
-                new Expanded(
-                  child: new TextField(
-                    decoration: new InputDecoration.collapsed(
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration.collapsed(
                       hintText: "Saisissez une adresse, quartier, arrondissement...",
-                      hintStyle: new TextStyle(fontWeight: FontWeight.w600)
+                      hintStyle: TextStyle(fontWeight: FontWeight.w600)
                     ),
                     controller: this._addressController,
                   ),
                 ),
-                new GestureDetector(
-                  child: new Icon(Icons.location_on, color: ColorPalette.orange),
-                  onTap: () => this._addAddressBloc.dispatch(new UseDeviceLocationEvent()),
+                GestureDetector(
+                  child: Icon(Icons.location_on, color: ColorPalette.orange),
+                  onTap: () => this._addAddressBloc.dispatch(UseDeviceLocationEvent()),
                 )
               ],
             ),
@@ -183,27 +183,27 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
   );
 
   Widget _placesListView(List<Prediction> predictions) => predictions.length > 0 ?
-  new Container(
-    padding: new EdgeInsets.all(8),
-    margin: new EdgeInsets.only(left: 8, right: 8, bottom: 8),
-    decoration: new BoxDecoration(
+  Container(
+    padding: EdgeInsets.all(8),
+    margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+    decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: new BorderRadius.circular(8),
-        border: new Border.all(color: ColorPalette.borderGray, width: 1)
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: ColorPalette.borderGray, width: 1)
     ),
-    child: new ListView.separated(
-      physics: new NeverScrollableScrollPhysics(),
+    child: ListView.separated(
+      physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      separatorBuilder: (context, index) =>  new Divider(),
+      separatorBuilder: (context, index) =>  Divider(),
       itemBuilder: (BuildContext context, int index) {
-        return index == predictions.length ? new PoweredByGoogleImage() : new FlatButton(
+        return index == predictions.length ? PoweredByGoogleImage() : FlatButton(
           onPressed: () => this._addAddressBloc
-            .dispatch(new ConfirmPredictionEvent(prediction: predictions[index])),
-          child: new Container(
-            padding: new EdgeInsets.only(top: 8, bottom: 8),
-            child: new SizedBox(
+            .dispatch(ConfirmPredictionEvent(prediction: predictions[index])),
+          child: Container(
+            padding: EdgeInsets.only(top: 8, bottom: 8),
+            child: SizedBox(
               width: double.infinity,
-              child: new Text(
+              child: Text(
                 predictions[index].description,
                 textAlign: TextAlign.start
               )
@@ -213,7 +213,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
       },
       itemCount: predictions.length + 1,
     )
-  ) : new Container();
+  ) : Container();
 
   void _handleState(AddAddressState state) {
     if (state.isLoading) {

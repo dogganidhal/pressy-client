@@ -12,7 +12,7 @@ class AddressSelect extends StatefulWidget {
     super(key: key);
 
   @override
-  State<StatefulWidget> createState() => new _AddressSelectState();
+  State<StatefulWidget> createState() => _AddressSelectState();
 
 }
 
@@ -22,12 +22,12 @@ class _AddressSelectState extends State<AddressSelect> {
 
   @override
   Widget build(BuildContext context) {
-    return new ListView.separated(
+    return ListView.separated(
       shrinkWrap: true,
       itemCount: this.widget.addresses.length,
-      separatorBuilder: (context, index) => new SizedBox(height: 12),
-      physics: new NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => new _AddressRowWidget(
+      separatorBuilder: (context, index) => SizedBox(height: 12),
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) => _AddressRowWidget(
         address: this.widget.addresses[index],
         onTapped: () => this.setState(() {
           this.widget.onAddressSelected(this.widget.addresses[index]);
@@ -51,20 +51,20 @@ class _AddressRowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new GestureDetector(
+    return GestureDetector(
       onTap: this.onTapped,
-      child: new Container(
-        decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.circular(4),
-          border: new Border.all(color: this.isSelected ? ColorPalette.orange : ColorPalette.borderGray),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(color: this.isSelected ? ColorPalette.orange : ColorPalette.borderGray),
           color: this.isSelected ? ColorPalette.orange.withOpacity(0.33) : Colors.transparent
         ),
-        child: new ListTile(
-          title: new Text(this.address.name),
-          subtitle: new Text(this.address.formattedAddress),
+        child: ListTile(
+          title: Text(this.address.name),
+          subtitle: Text(this.address.formattedAddress),
           trailing: this.isSelected ? 
-            new Icon(Icons.check_circle, color: ColorPalette.orange) : 
-            new Icon(Icons.radio_button_unchecked, color: ColorPalette.borderGray)
+            Icon(Icons.check_circle, color: ColorPalette.orange) : 
+            Icon(Icons.radio_button_unchecked, color: ColorPalette.borderGray)
         ),
       ),
     );

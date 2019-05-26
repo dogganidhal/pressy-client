@@ -44,7 +44,7 @@ class OrderState extends Equatable {
     bool isLoading,
     bool success,
     AppError error
-  }) => new OrderState(
+  }) => OrderState(
     orderRequestBuilder: orderRequestBuilder ?? this.orderRequestBuilder,
     pickupSlotState: pickupSlotState ?? this.pickupSlotState,
     deliverySlotState: deliverySlotState ?? this.deliverySlotState,

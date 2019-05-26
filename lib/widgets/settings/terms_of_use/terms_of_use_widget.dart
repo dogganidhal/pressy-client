@@ -6,17 +6,17 @@ class TermsOfUseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        iconTheme: new IconThemeData(color: ColorPalette.orange),
-        title: new Text("CGU"),
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: ColorPalette.orange),
+        title: Text("CGU"),
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 1,
       ),
-      body: new SingleChildScrollView(
-        padding: new EdgeInsets.all(12),
-        child: new Text(
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(12),
+        child: Text(
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi justo '
           'metus, tempus vitae cursus tincidunt, scelerisque eget eros. Donec et '
           'turpis sit amet sem rhoncus tincidunt. Donec egestas blandit diam. '

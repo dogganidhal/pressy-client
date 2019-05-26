@@ -9,7 +9,7 @@ class NumericStepper extends StatefulWidget {
   const NumericStepper({Key key, this.onValueChanged}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => new _NumericStepperState();
+  State<StatefulWidget> createState() => _NumericStepperState();
 
 }
 
@@ -19,41 +19,41 @@ class _NumericStepperState extends State<NumericStepper> {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      decoration: new BoxDecoration(
-        borderRadius: new BorderRadius.circular(4),
-        border: new Border.all(color: ColorPalette.orange, width: 1)
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: ColorPalette.orange, width: 1)
       ),
-      child: new Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          new Container(
+          Container(
             width: 32, height: 32,
             color: ColorPalette.orange,
-            child: new Center(
-              child: new ButtonTheme(
+            child: Center(
+              child: ButtonTheme(
                 height: 18,
-                child: new IconButton(
+                child: IconButton(
                   icon: Icon(Icons.remove, size: 18, color: Colors.white),
                   onPressed: this._value > 0 ? this._subtract : null
                 )
               )
             ),
           ),
-          new Container(
+          Container(
             width: 32, height: 32,
             color: Colors.transparent,
-            child: new Center(
-              child: new Text("${this._value}")
+            child: Center(
+              child: Text("${this._value}")
             ),
           ),
-          new Container(
+          Container(
             width: 32, height: 32,
             color: ColorPalette.orange,
-            child: new Center(
-              child: new ButtonTheme(
+            child: Center(
+              child: ButtonTheme(
                 height: 18,
-                child: new IconButton(
+                child: IconButton(
                   icon: Icon(Icons.add, size: 18, color: Colors.white),
                   onPressed: this._add
                 ),

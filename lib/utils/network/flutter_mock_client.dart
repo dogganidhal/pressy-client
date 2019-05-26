@@ -9,9 +9,9 @@ class FlutterMockClient extends HttpTesting.MockClient implements IClient {
 
   FlutterMockClient({this.delayInMilliSeconds = 3000}) : super((Request request) async {
 
-    return Future.delayed(new Duration(milliseconds: delayInMilliSeconds), () async {
+    return Future.delayed(Duration(milliseconds: delayInMilliSeconds), () async {
       var json = await rootBundle.loadString("assets/mocks${request.url.path}/${request.method.toLowerCase()}.json");
-      return new Response(json, 200);
+      return Response(json, 200);
     });
 
   });

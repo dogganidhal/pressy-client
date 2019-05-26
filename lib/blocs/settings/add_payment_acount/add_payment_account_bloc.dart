@@ -22,7 +22,7 @@ class AddPaymentAccountBloc extends Bloc<AddPaymentAccountEvent, AddPaymentAccou
   });
 
   @override
-  AddPaymentAccountState get initialState => new AddPaymentAccountInputState();
+  AddPaymentAccountState get initialState => AddPaymentAccountInputState();
 
   @override
   Stream<AddPaymentAccountState> mapEventToState(AddPaymentAccountState currentState, AddPaymentAccountEvent event) async* {
@@ -34,7 +34,7 @@ class AddPaymentAccountBloc extends Bloc<AddPaymentAccountEvent, AddPaymentAccou
       isValid &= Validators.expiryDateValidator(event.expiryDateString) == null;
       isValid &= Validators.cvcValidator(event.cvc) == null;
 
-      yield new AddPaymentAccountInputState(isInputValid: isValid);
+      yield AddPaymentAccountInputState(isInputValid: isValid);
 
     }
 

@@ -8,7 +8,7 @@ import 'package:pressy_client/widgets/order/base_step_widget.dart';
 
 class OrderConfirmationWidget extends StatelessWidget {
   final OrderRequestBuilder orderRequest;
-  final DateFormat _dateFormat = DateFormat("EEEE dd MMM HH'h'mm");
+  final DateFormat _dateFormat = DateFormat("EEEE dd MMM HH'h'mm", "fr");
   final VoidCallback onOrderConfirmed;
 
   OrderConfirmationWidget({Key key, this.orderRequest, this.onOrderConfirmed}) :

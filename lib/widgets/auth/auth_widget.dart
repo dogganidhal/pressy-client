@@ -49,24 +49,24 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
             tabs: <Widget>[
               Container(
                 padding: EdgeInsets.only(bottom: 8, top: 8),
-                child: Text("INSCRIPTION")
+                child: Text("CONNEXION"),
               ),
               Container(
                 padding: EdgeInsets.only(bottom: 8, top: 8),
-                child: Text("CONNEXION"),
+                child: Text("INSCRIPTION")
               )
             ],
           ),
-        ),/**/
+        ),
         body: TabBarView(
           controller: this._tabController,
           children: <Widget>[
-            SignUpWidget(
+            LoginWidget(
               authBloc: this.widget.authBloc,
               onAuthCompleted: () => Navigator.pop(this.context),
               memberSession: this.widget.memberSession,
             ),
-            LoginWidget(
+            SignUpWidget(
               authBloc: this.widget.authBloc,
               onAuthCompleted: () => Navigator.pop(this.context),
               memberSession: this.widget.memberSession,

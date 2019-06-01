@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -17,7 +18,7 @@ class OrdersWidget extends StatefulWidget {
 
 class _OrdersWidgetState extends State<OrdersWidget> with SingleTickerProviderStateMixin {
   
-  DateFormat _dateFormat = DateFormat("EEEE dd MMM HH'h'mm");
+  DateFormat _dateFormat = DateFormat("EEEE dd MMM HH'h'mm", "fr");
   TabController _tabController;
   OrdersBloc _ordersBloc;
 
@@ -43,7 +44,7 @@ class _OrdersWidgetState extends State<OrdersWidget> with SingleTickerProviderSt
           tabs: <Widget>[
             Container(
               padding: EdgeInsets.only(bottom: 8, top: 8),
-              child: Text("PRÉCEDENTES", style: TextStyle(color: ColorPalette.orange))
+              child: Text("PASSÉES", style: TextStyle(color: ColorPalette.orange))
             ),
             Container(
               padding: EdgeInsets.only(bottom: 8, top: 8),
@@ -102,12 +103,12 @@ class _OrdersWidgetState extends State<OrdersWidget> with SingleTickerProviderSt
     if (state is OrdersLoadingState) {
       return this._loadingWidget;
     } else if (state is OrdersReadyState) {
-      return state.ongoingOrders.length > 0 ?
+      return state.futureOrders.length > 0 ?
       ListView.builder(
-        itemCount: state.ongoingOrders.length,
-        itemBuilder: (context, index) => this._orderWidget(state.ongoingOrders[index]),
+        itemCount: state.futureOrders.length,
+        itemBuilder: (context, index) => this._orderWidget(state.futureOrders[index]),
         padding: EdgeInsets.all(8),
-      ) : Center(child: Text("Aucune commande dans le future"));
+      ) : Center(child: Text("Aucune commande à venir"));
     }
     return Container();
   }
@@ -125,6 +126,7 @@ class _OrdersWidgetState extends State<OrdersWidget> with SingleTickerProviderSt
   );
 
   Widget _orderWidget(Order order) => Container(
+    margin: EdgeInsets.only(bottom: 8),
     padding: EdgeInsets.all(8),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(8),

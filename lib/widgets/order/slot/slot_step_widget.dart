@@ -37,7 +37,7 @@ class SlotWidget extends StatefulWidget {
 
 class _SlotWidgetState extends State<SlotWidget> {
 
-  DateFormat _dateFormat = DateFormat("EEEE dd MMM HH'h'mm");
+  DateFormat _dateFormat = DateFormat("EEEE dd MMM HH'h'mm", "fr");
   int _selectedTab = 0;
   
   List<Slot> get _standardSlots => this.widget.slots

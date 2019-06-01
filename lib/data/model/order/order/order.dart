@@ -18,6 +18,7 @@ class Order {
   final OrderType type;
   final Slot pickupSlot;
   final Slot deliverySlot;
+  @JsonKey(nullable: true)
   final List<OrderItem> items;
   final MemberAddress address;
 
@@ -29,7 +30,7 @@ class Order {
   Map<String, dynamic> toJson() => _$OrderToJson(this);
 
   static OrderType _orderTypeFromJson(dynamic json) {
-    return OrderType.values.firstWhere((value) => value.index + 1 == json);
+    return OrderType.values.firstWhere((value) => value.index == json);
   }
 
 }

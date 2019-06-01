@@ -25,6 +25,7 @@ class Application extends StatelessWidget with AppThemeMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: Locale("fr-FR"),
       title: 'Pressy',
       theme: this.appThemeData,
       debugShowCheckedModeBanner: false,

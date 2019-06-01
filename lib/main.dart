@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:pressy_client/data/data_source/auth/auth_data_source_impl.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/data_source/member/member_data_source_impl.dart';
@@ -46,6 +47,7 @@ IServiceCollection configureServices() {
     client: services.getService<IClient>(),
     authSession: services.getService<IAuthSession>()
   ));
+  initializeDateFormatting("fr", null);
 
   return services;
   

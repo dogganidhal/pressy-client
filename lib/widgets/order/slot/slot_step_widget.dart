@@ -86,7 +86,9 @@ class _SlotWidgetState extends State<SlotWidget> {
           0: Text("Standard"),
           1: Text("Express")
         },
-        onValueChanged: (index) => this.setState(() => this._selectedTab = index)
+        onValueChanged: (index) {
+          this.setState(() => this._selectedTab = index);
+        }
       );
       yield SizedBox(height: 24);
     }
@@ -111,7 +113,7 @@ class _SlotWidgetState extends State<SlotWidget> {
       yield SizedBox(height: 8);
       yield Row(
         children: <Widget>[
-          Text("• Frais de service : ", style: TextStyle(color: ColorPalette.textGray)),
+          Text("• Délai de livraison : ", style: TextStyle(color: ColorPalette.textGray)),
           Text(slotType == SlotType.STANDARD ? "48h" : "24h", style: TextStyle(fontWeight: FontWeight.w600)),
         ],
       );

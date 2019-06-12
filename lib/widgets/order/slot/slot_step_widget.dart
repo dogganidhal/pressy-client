@@ -107,7 +107,7 @@ class _SlotWidgetState extends State<SlotWidget> {
       yield Row(
         children: <Widget>[
           Text("• Frais de service : ", style: TextStyle(color: ColorPalette.textGray)),
-          Text(slotType == SlotType.STANDARD ? "GRATUIT" : "3.99€", style: TextStyle(fontWeight: FontWeight.w600)),
+          Text(slotType == SlotType.STANDARD ? "GRATUIT" : "8.99€", style: TextStyle(fontWeight: FontWeight.w600)),
         ],
       );
       yield SizedBox(height: 8);

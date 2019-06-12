@@ -22,7 +22,7 @@ class _AddressSelectState extends State<AddressSelect> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    return this.widget.addresses.length > 0 ? ListView.separated(
       shrinkWrap: true,
       itemCount: this.widget.addresses.length,
       separatorBuilder: (context, index) => SizedBox(height: 12),
@@ -35,6 +35,8 @@ class _AddressSelectState extends State<AddressSelect> {
         }),
         isSelected: this._selectedIndex == index,
       )
+    ) : new Center(
+      child: new Text("Vous n'avez pas encore renseigné votre adresse, veuillez la renseigner dans l'onglet paramètres > Mes adresses")
     );
   }
 

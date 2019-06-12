@@ -36,7 +36,6 @@ mixin ErrorMixin {
     Scaffold.of(context).showSnackBar(SnackBar(
       content: Row(
         children: <Widget>[
-          CircularProgressIndicator(),
           SizedBox(width: 12),
           Text(error.message)
         ],

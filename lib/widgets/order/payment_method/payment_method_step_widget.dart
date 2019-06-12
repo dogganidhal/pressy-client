@@ -43,7 +43,7 @@ class _PaymentAccountStepWidgetState extends State<PaymentAccountStepWidget> {
 
     else {
       yield Text(
-        "Veuillez sélectionner votre carte bancaire avec laquelle vous voulez passer votre commande.",
+        "Veuillez sélectionner votre carte bancaire avec laquelle vous voulez passer votre commande. \nPour ajouter une nouvelle carte bancaire sélectionnez l'onglet paramètres > Mes moyens de paiement.",
         style: TextStyle(color: ColorPalette.darkGray),
       );
       yield SizedBox(height: 12);

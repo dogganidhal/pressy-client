@@ -43,7 +43,7 @@ class _AddressStepWidgetState extends State<AddressStepWidget> {
 
     else {
       yield Text(
-        "Veuillez sélectionner ou créer l’adresse où vous voulez vous faire livré votre linge.",
+        "Veuillez sélectionner l’adresse où vous voulez vous faire livré votre linge. \nPour créer une nouvelle adresse sélectionnez l'onglet paramètres > mes adresses.",
         style: TextStyle(color: ColorPalette.darkGray),
       );
       yield SizedBox(height: 12);

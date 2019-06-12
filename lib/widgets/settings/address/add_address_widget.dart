@@ -222,7 +222,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget>
       this.onWidgetDidBuild(() => this.hideLoaderSnackBar(this._scaffoldKey.currentContext));
     }
     if (state.error != null) {
-      this.onWidgetDidBuild(() => this.showErrorDialog(this.context, state.error));
+      this.onWidgetDidBuild(() => this.showErrorDialog(this._scaffoldKey.currentContext, state.error));
     }
     if (state is AddAddressSuccessState) {
       this.onWidgetDidBuild(() => Navigator.of(this.context).pop(/* TODO: Maybe return something? */));

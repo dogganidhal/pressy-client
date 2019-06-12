@@ -5,9 +5,7 @@ class AddressNotCoveredError implements AppError {
 
   @override
   String get message =>
-    "Cette adresse n'est pas dans une région couverte par notre service, "
-    "si cette dernière est dans Paris, veuillez prendre contact avec notre "
-    "service client";
+    "Veuillez choisir une adresse à Paris";
 
   @override
   String get title => "Addresse non supportée";

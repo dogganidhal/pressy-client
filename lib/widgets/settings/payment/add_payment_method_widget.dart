@@ -157,7 +157,7 @@ class _AddPaymentMethodWidgetState extends State<AddPaymentMethodWidget>
     controller: this._cardHolderNameController,
     decoration: InputDecoration(
       helperText: "Le nom qui figure sur la carte",
-      labelText: "Nom du proteur",
+      labelText: "Prénom et nom du porteur",
     ),
     validator: Validators.nameValidator,
     keyboardType: TextInputType.text,

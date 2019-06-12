@@ -40,14 +40,22 @@ class _SlotWidgetState extends State<SlotWidget> {
   DateFormat _dateFormat = DateFormat("EEEE dd MMM HH'h'mm", "fr");
   int _selectedTab = 0;
   
-  List<Slot> get _standardSlots => this.widget.slots
-    .where((slot) => slot.slotType == SlotType.STANDARD)
-    .toList();
+  List<Slot> get _standardSlots {
+    var slots = this.widget.slots
+      .where((slot) => slot.slotType == SlotType.STANDARD)
+      .toList();
+    slots.sort((lhs, rhs) => lhs.startDate.compareTo(rhs.startDate));
+    return slots;
+  } 
 
-  List<Slot> get _expressSlots => this.widget.slots
-    .where((slot) => slot.slotType == SlotType.EXPRESS)
-    .toList();
-
+  List<Slot> get _expressSlots {
+    var slots = this.widget.slots
+      .where((slot) => slot.slotType == SlotType.EXPRESS)
+      .toList();
+    slots.sort((lhs, rhs) => lhs.startDate.compareTo(rhs.startDate));
+    return slots;
+  }
+ 
   Slot _selectedSlot;
   void _setSelectedSlot(Slot slot) {
     this.widget.onSlotSelected(slot);

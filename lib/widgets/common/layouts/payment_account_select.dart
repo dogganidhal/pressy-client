@@ -22,7 +22,8 @@ class _PaymentAccountSelectState extends State<PaymentAccountSelect> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    return this.widget.paymentAccounts.length > 0 ?
+      ListView.separated(
         shrinkWrap: true,
         itemCount: this.widget.paymentAccounts.length,
         separatorBuilder: (context, index) => SizedBox(height: 12),
@@ -35,7 +36,10 @@ class _PaymentAccountSelectState extends State<PaymentAccountSelect> {
           }),
           isSelected: this._selectedIndex == index,
         )
-    );
+      ) : 
+      new Center(
+        child: new Text("Vous n'avez pas encore renseigné votre carte bancaire, veuillez la renseigner dans l'onglet paramètres > Mes moyens de paiements")
+      );
   }
 
 }

@@ -58,7 +58,7 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
     children: <Widget>[
       SizedBox(height: 18),
       Text(
-        "Prix par sac de 5kg",
+        "Prix/kg",
         style: TextStyle(color: ColorPalette.darkGray),
       ),
       SizedBox(height: 18),
@@ -81,8 +81,7 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
     children: <Widget>[
       SizedBox(height: 18),
       Text(
-        "Veuillez sélectionner vos articles, vous serez facturé à la carte."
-            "Le montant est indicatif et risque de changer.",
+        "Veuillez sélectionner vos articles afin d'établir un devis/\n celui-ci sera confirmé lors de la collecte.",
         style: TextStyle(color: ColorPalette.darkGray),
       ),
       SizedBox(height: 18),
@@ -144,7 +143,7 @@ class _EstimateOrderStepWidgetState extends State<EstimateOrderStepWidget> {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Image.network(article.photoUrl),
+        // Image.network(article.photoUrl),
         SizedBox(height: 12),
         Text(article.name, style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 4),

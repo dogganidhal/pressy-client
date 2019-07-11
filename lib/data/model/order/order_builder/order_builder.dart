@@ -1,8 +1,6 @@
 import 'package:pressy_client/data/model/model.dart';
 
-
 class OrderRequestBuilder {
-
   Slot _pickupSlot;
   Slot get pickupSlot => this._pickupSlot;
 
@@ -14,7 +12,7 @@ class OrderRequestBuilder {
 
   PaymentAccount _paymentAccount;
   PaymentAccount get paymentAccount => this._paymentAccount;
-  
+
   OrderType _orderType;
   OrderType get orderType => this._orderType;
 
@@ -40,7 +38,7 @@ class OrderRequestBuilder {
     this._paymentAccount = paymentAccount;
     return this;
   }
-  
+
   OrderRequestBuilder setOrderType(OrderType orderType) {
     this._orderType = orderType;
     return this;
@@ -57,8 +55,7 @@ class OrderRequestBuilder {
       deliverySlotId: this._deliverySlot.id,
       addressId: this._address.id,
       type: this._orderType.index.toString(),
-      paymentAccountId: this._paymentAccount.id
+      paymentAccountId: this._paymentAccount.id,
     );
   }
-
 }

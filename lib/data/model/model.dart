@@ -16,3 +16,4 @@ export './order/slot/slot.dart';
 export './payment/credit_card_token/credit_card_token.dart';
 export './payment/create_credit_card/create_credit_card_request.dart';
 export './payment/payment_acount/payment_account.dart';
+export './order/coupon/coupon.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pressy_client/data/data_source/auth/auth_data_source_impl.dart';
+import 'package:pressy_client/data/data_source/coupon/coupon_data_source_impl.dart';
 import 'package:pressy_client/data/data_source/data_source.dart';
 import 'package:pressy_client/data/data_source/member/member_data_source_impl.dart';
 import 'package:pressy_client/data/data_source/order/order_data_source.dart';
@@ -23,32 +24,35 @@ import 'data/data_source/payment/payment_data_source.dart';
 void main() => runApp(Application(services: configureServices()));
 
 IServiceCollection configureServices() {
-  
   final services = ServiceCollectionImpl();
 
   services.addSingleton<IAuthSession>((_) => AuthSessionImpl());
   services.addSingleton<IMemberSession>((_) => MemberSessionImpl());
   services.addScoped<IClient>((_) => HttpClient());
   services.addScoped<ApiEndpointProvider>((_) => ApiEndpointProvider());
-  services.addScoped<IUserLocationProvider>((_) => FlutterUserLocationProvider());
-  services.addScoped<IPaymentDataSource>((services) => StripePaymentDataSourceImpl());
+  services
+      .addScoped<IUserLocationProvider>((_) => FlutterUserLocationProvider());
+  services.addScoped<IPaymentDataSource>(
+      (services) => StripePaymentDataSourceImpl());
   services.addScoped<IMemberDataSource>((services) => MemberDataSourceImpl(
-    apiEndpointProvider: services.getService<ApiEndpointProvider>(),
-    client: services.getService<IClient>(),
-    authSession: services.getService<IAuthSession>()
-  ));
+      apiEndpointProvider: services.getService<ApiEndpointProvider>(),
+      client: services.getService<IClient>(),
+      authSession: services.getService<IAuthSession>()));
   services.addScoped<IAuthDataSource>((services) => AuthDataSourceImpl(
-    apiEndpointProvider: services.getService<ApiEndpointProvider>(),
-    client: services.getService<IClient>(),
-    authSession: services.getService<IAuthSession>()
-  ));
+      apiEndpointProvider: services.getService<ApiEndpointProvider>(),
+      client: services.getService<IClient>(),
+      authSession: services.getService<IAuthSession>()));
   services.addScoped<IOrderDataSource>((services) => OrderDataSourceImpl(
-    apiEndpointProvider: services.getService<ApiEndpointProvider>(),
-    client: services.getService<IClient>(),
-    authSession: services.getService<IAuthSession>()
-  ));
+      apiEndpointProvider: services.getService<ApiEndpointProvider>(),
+      client: services.getService<IClient>(),
+      authSession: services.getService<IAuthSession>()));
+  services.addScoped<ICouponsDataSource>((services) => CouponDataSourceImpl(
+        apiEndpointProvider: services.getService<ApiEndpointProvider>(),
+//        apiEndpointProvider:
+//            ApiEndpointProvider(baseUrl: "https://eee24642.ngrok.io/v1"),
+        client: services.getService<IClient>(),
+      ));
   initializeDateFormatting("fr", null);
 
   return services;
-  
 }

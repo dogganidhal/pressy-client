@@ -5,7 +5,6 @@ import 'package:pressy_client/data/model/order/order_builder/order_builder.dart'
 import 'package:pressy_client/utils/errors/base_error.dart';
 
 class OrderState extends Equatable {
-  
   final OrderRequestBuilder orderRequestBuilder;
   final OrderSlotState pickupSlotState;
   final OrderSlotState deliverySlotState;
@@ -17,21 +16,39 @@ class OrderState extends Equatable {
   final bool success;
   final AppError error;
 
-  OrderState({
-    @required this.orderRequestBuilder,
-    this.pickupSlotState,
-    this.deliverySlotState,
-    this.articleState,
-    this.paymentAccountState,
-    this.addressState,
-    this.step = 0,
-    this.isLoading = false,
-    this.success = false,
-    this.error
-  }) : super([
-    orderRequestBuilder, pickupSlotState, deliverySlotState, error,
-    paymentAccountState, addressState, step, articleState, isLoading, success
-  ]);
+  //Coupon
+  final bool isCouponValid;
+  final Coupon coupon;
+  final String category;
+  OrderState(
+      {@required this.orderRequestBuilder,
+      this.pickupSlotState,
+      this.deliverySlotState,
+      this.articleState,
+      this.paymentAccountState,
+      this.addressState,
+      this.step = 0,
+      this.isLoading = false,
+      this.success = false,
+      this.error,
+      this.category,
+      this.coupon,
+      this.isCouponValid = false})
+      : super([
+          orderRequestBuilder,
+          pickupSlotState,
+          deliverySlotState,
+          error,
+          paymentAccountState,
+          addressState,
+          step,
+          articleState,
+          isLoading,
+          success,
+          category,
+          coupon,
+          isCouponValid
+        ]);
 
   OrderState copyWith({
     OrderRequestBuilder orderRequestBuilder,
@@ -43,20 +60,25 @@ class OrderState extends Equatable {
     int step,
     bool isLoading,
     bool success,
-    AppError error
-  }) => OrderState(
-    orderRequestBuilder: orderRequestBuilder ?? this.orderRequestBuilder,
-    pickupSlotState: pickupSlotState ?? this.pickupSlotState,
-    deliverySlotState: deliverySlotState ?? this.deliverySlotState,
-    articleState: articleState ?? this.articleState,
-    paymentAccountState: paymentAccountState ?? this.paymentAccountState,
-    addressState: addressState ?? this.addressState,
-    step: step ?? this.step,
-    isLoading: isLoading ?? this.isLoading,
-    success: success ?? this.success,
-    error: error ?? this.error
-  );
-  
+    AppError error,
+    bool isCouponValid,
+    Coupon coupon,
+    String category,
+  }) =>
+      OrderState(
+          orderRequestBuilder: orderRequestBuilder ?? this.orderRequestBuilder,
+          pickupSlotState: pickupSlotState ?? this.pickupSlotState,
+          deliverySlotState: deliverySlotState ?? this.deliverySlotState,
+          articleState: articleState ?? this.articleState,
+          paymentAccountState: paymentAccountState ?? this.paymentAccountState,
+          addressState: addressState ?? this.addressState,
+          step: step ?? this.step,
+          isLoading: isLoading ?? this.isLoading,
+          success: success ?? this.success,
+          error: error ?? this.error,
+          category: category ?? this.category,
+          coupon: coupon ?? this.coupon,
+          isCouponValid: isCouponValid ?? this.isCouponValid);
 }
 
 abstract class ArticleState extends Equatable {
@@ -75,45 +97,39 @@ abstract class OrderSlotState extends Equatable {
   OrderSlotState([List props]) : super(props);
 }
 
-class OrderAddressLoadingState extends OrderAddressState { }
+class OrderAddressLoadingState extends OrderAddressState {}
 
-class OrderPaymentAccountLoadingState extends OrderPaymentAccountState { }
+class OrderPaymentAccountLoadingState extends OrderPaymentAccountState {}
 
-class OrderSlotLoadingState extends OrderSlotState { }
+class OrderSlotLoadingState extends OrderSlotState {}
 
-class ArticlesLoadingState extends ArticleState { }
+class ArticlesLoadingState extends ArticleState {}
 
 class OrderPaymentAccountReadyState extends OrderPaymentAccountState {
-  
   final List<PaymentAccount> paymentAccounts;
 
-  OrderPaymentAccountReadyState({this.paymentAccounts}) : super([paymentAccounts]);
-  
+  OrderPaymentAccountReadyState({this.paymentAccounts})
+      : super([paymentAccounts]);
 }
 
 class OrderAddressReadyState extends OrderAddressState {
-  
   final List<MemberAddress> addresses;
 
   OrderAddressReadyState({this.addresses}) : super([addresses]);
-  
 }
 
 class OrderSlotReadyState extends OrderSlotState {
-
   final bool canMoveForward;
   final List<Slot> slots;
 
-  OrderSlotReadyState({this.slots, this.canMoveForward}) : super([slots, canMoveForward]);
-
+  OrderSlotReadyState({this.slots, this.canMoveForward})
+      : super([slots, canMoveForward]);
 }
 
-class ArticlesReadyState extends ArticleState{
-
+class ArticlesReadyState extends ArticleState {
   final Article weightedArticle;
   final List<Article> articles;
 
-  ArticlesReadyState({this.weightedArticle, this.articles}) :
-    super([articles, weightedArticle]);
-
+  ArticlesReadyState({this.weightedArticle, this.articles})
+      : super([articles, weightedArticle]);
 }

@@ -1,5 +1,13 @@
-# Pressy client
+# Pressy Client Mobile Application
 
-Pressy Client Mobile Application.
+### Technologies
 
-### [Pressy mobile REST API](https://pressy-mobile-api-dev.herokuapp.com/v1/docs)
+  * **UI Framework** : [Flutter](https://flutter.dev)
+
+  * **Language** : [Dart](http://www.dartlang.org)
+
+  * **State management** : [BLoC](https://felangel.github.io/bloc)
+  
+### Resources 
+
+[Pressy mobile REST API](https://pressy-mobile-api-dev.herokuapp.com/v1/docs)
